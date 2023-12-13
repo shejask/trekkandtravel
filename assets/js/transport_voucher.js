@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
 import { ref } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 import { getDatabase, ref as databaseRef, push, set, get,   onValue } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
  
@@ -653,7 +653,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Close the document stream
 printWindow.document.close();
-
+printWindow.print();
 // Print the page
 setTimeout(() => {
     printWindow.print();
