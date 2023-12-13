@@ -1,0 +1,116 @@
+// Import Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDA1ufLnKII3J72aqdPW_5ePacTWBiEgHg",
+    authDomain: "share2care-99b93.firebaseapp.com",
+    databaseURL: "https://share2care-99b93-default-rtdb.firebaseio.com",
+    projectId: "share2care-99b93",
+    storageBucket: "share2care-99b93.appspot.com",
+    messagingSenderId: "749651496086",
+    appId: "1:749651496086:web:e9cb696743d37f367486b7"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+// Reference to your formData in the database
+const formDataRef = ref(database, 'formData');
+
+// Get the formData entries and update the HTML
+onValue(formDataRef, (snapshot) => {
+    const formData = snapshot.val();
+    const formDataListElement = document.getElementById('formDataList');
+
+    if (formDataListElement) {
+        formDataListElement.innerHTML = '';
+
+        for (const key in formData) {
+            const listItem = document.createElement('li');
+            const entry = formData[key];
+            const confirmationNumber = entry ? entry.confirmationnumber : undefined;
+
+            if (confirmationNumber !== undefined) {
+                listItem.textContent = confirmationNumber;
+                formDataListElement.appendChild(listItem);
+            } else {
+                console.log(`Confirmation number is undefined for entry with key: ${key}`);
+                console.log(`Entry for key ${key}:`, entry);
+            }
+        }
+    }
+
+    const formDataTotal = formData ? Object.keys(formData).length : 0;
+    document.getElementById('formdataTotal').textContent = formDataTotal;
+});
+
+
+
+// Reference to your TransportVoucher data in the database
+ 
+// Reference to your TransportVoucher data in the database
+const transportVoucherRef = ref(database, 'TransportVoucher');
+
+// Get the TransportVoucher entries and update the HTML
+onValue(transportVoucherRef, (snapshot) => {
+    const transportVoucherData = snapshot.val();
+    const transportVoucherListElement = document.getElementById('transportVoucherList'); // Adjust the ID as needed
+
+    if (transportVoucherListElement) {
+        transportVoucherListElement.innerHTML = '';
+
+        for (const key in transportVoucherData) {
+            const listItem = document.createElement('li');
+            const entry = transportVoucherData[key];
+            const confirmationNumber = entry ? entry.confirmationnumber : undefined;
+
+            if (confirmationNumber !== undefined) {
+                listItem.textContent = confirmationNumber;
+                transportVoucherListElement.appendChild(listItem);
+            } else {
+                console.log(`Confirmation number is undefined for entry with key: ${key}`);
+                console.log(`Entry for key ${key}:`, entry);
+            }
+        }
+    }
+
+    const transportVoucherTotal = transportVoucherData ? Object.keys(transportVoucherData).length : 0;
+    document.getElementById('TransportVoucherTotal').textContent = transportVoucherTotal;
+});
+
+//////////////////////////////////////
+//////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+// add hovered class to selected list item
+let list = document.querySelectorAll(".navigation li");
+
+function activeLink() {
+  list.forEach((item) => {
+    item.classList.remove("hovered");
+  });
+  this.classList.add("hovered");
+}
+
+list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+// Menu Toggle
+let toggle = document.querySelector(".toggle");
+let navigation = document.querySelector(".navigation");
+let main = document.querySelector(".main");
+
+toggle.onclick = function () {
+  navigation.classList.toggle("active");
+  main.classList.toggle("active");
+};
+//////////////////////////////////////
+//////////////////////////////////////
+//////////////////////////////////////
+ //////////////////////////////////////
+//////////////////////////////////////
+
+// Add this script in your existing HTML file or link it through a separate script file
+
+// Reference to the View Vouchers button
+ 
