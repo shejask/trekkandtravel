@@ -114,99 +114,233 @@
 
             <!-- ======================= Cards ================== -->
              
-
-            <!DOCTYPE html>
-<html lang="en">
  
 
+
+     
+
+            <div class="p-4">
+                <h1 class="text-2xl font-bold  mb-4">Itinerary</h1>
+            
+                <!-- Tour ID Input -->
+                <div class="mb-4">
+                    <label for="tourId" class="block">Tour ID:</label>
+                    <input type="text" id="tourId" readonly name="tourId" placeholder="Enter Tour ID" required
+                        class="w-full p-2 border rounded border border-slate-700">
+                </div>
+            
+                <label for="travelDate" class="block">Travel Date:</label>
+                <input type="date" id="travelDate" name="travelDate" class="w-full p-2 border rounded border border-slate-700">
+            
+                <div class="mb-4">
+                    <label for="guest-name" class="block">Guest Name:</label>
+                    <div class="flex">
+                        <input type="text" id="guest-name" placeholder="Type to search" class="w-full p-2 border rounded border border-slate-700">
+                        <div id="guest-name-dropdown" class="ml-2"></div>
+                    </div>
+                </div>
+            
+                <div class="mb-4">
+                    <label for="guest-number" class="block">Guest Number:</label>
+                    <input type="text" id="guest-number" class="w-full p-2 border rounded border border-slate-700">
+                </div>
+            
+                <div class="mb-4">
+                    <label for="arrival-details" class="block">Arrival Details:</label>
+                    <input type="text" id="arrival-details" class="w-full p-2 border rounded border border-slate-700">
+                </div>
+            
+                <div class="mb-4">
+                    <label for="departure-details" class="block">Departure Details:</label>
+                    <input type="text" id="departure-details" class="w-full p-2 border rounded border border-slate-700">
+                </div>
+            
+                <div class="mb-4">
+                    <label for="number-of-pax" class="block">Number of Pax:</label>
+                    <input type="number" id="number-of-pax" min="1" class="w-full p-2 border rounded border border-slate-700">
+                </div>
+            
+                <div class="mb-4">
+                    <label for="duration" class="block">Duration:</label>
+                    <input type="text" id="duration" class="w-full p-2 border rounded border border-slate-700">
+                </div>
+            
+                <div class="mb-4">
+                    <label for="tour-highlights" class="block">Tour Highlights:</label>
+                    <input type="text" id="tour-highlights" placeholder="Enter tour highlights"
+                        class="w-full p-2 border rounded border border-slate-700">
+                    <div id="tour-highlights-dropdown" class="mt-2"></div>
+                </div>
+            
+                <div id="tour-highlights-container" class="mb-4"></div>
+                <button type="button" id="addhighlights"
+                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add</button>
+            
+                <label for="night" class="block">Duration (Night):</label>
+                <select id="night" name="night" class="w-full p-2 border rounded border border-slate-700">
+                    <option value="1">1 Night</option>
+                    <option value="2">2 Nights</option>
+                </select>
+            
+                <!-- <label for="packageName" class="block">Package Name:</label>
+                <input type="text" id="packageName" name="packageName" placeholder="Enter package name" required
+                    class="w-full p-2 border rounded mb-4">
+                <input type="hidden" id="packageKey" name="packageKey" value=""> -->
+            
+                <div id="packageDropdown" class="mb-4"></div>
+            
+                <div class="mb-4">
+                    <label for="Description" class="block">Description:</label>
+                    <textarea id="Description" min="1" class="w-full p-2 border rounded border border-slate-700"></textarea>
+                </div>
+            
+                <table id="originalTable" class="mb-4">
+                    <thead>
+                        <tr>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Destination</th>
+                            <th>Hotel</th>
+                            <th>Number of Rooms</th>
+                            <th>Matters</th>
+                            <th>Meal Plan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="row1">
+                            <td><input type="date" class="w-full p-2 border rounded border border-slate-700"></td>
+                            <td><input type="date" class="w-full p-2 border rounded border border-slate-700"></td>
+                            <td><input type="text" class="w-full p-2 border rounded border border-slate-700"></td>
+                            <td><input type="text" class="w-full p-2 border rounded border border-slate-700"></td>
+                            <td><input type="text" class="w-full p-2 border rounded border border-slate-700"></td>
+                            <td><input type="text" class="w-full p-2 border rounded border border-slate-700"></td>
+                            <td><input type="text" class="w-full p-2 border rounded border border-slate-700"></td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            
+                <button type="button" id="addRowBtn"
+                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4">Add Row</button>
+            
+                    <div class="w-full p-2 border rounded border border-slate-700smb-4">
+                        <h1 class="text-2xl font-bold">Tour Inclusions</h1>
+                    
+                        <div class="mb-4">
+                            <textarea id="personal-nature" rows="4"
+                                class="w-full p-2 border rounded border border-slate-700">Items of personal nature, such as, laundry, telephone calls, alcoholic beverages, minibar charges, etc.</textarea>
+                        </div>
+                    
+                        <div class="mb-4">
+                            <textarea id="applicable-taxes" rows="4"
+                                class="w-full p-2 border rounded border border-slate-700">All presently applicable taxes</textarea>
+                        </div>
+                    
+                        <div class="mb-4">
+                            <textarea id="transfers-sightseeing" rows="4"
+                                class="w-full p-2 border rounded border border-slate-700">Transfers / Sightseeing’s / Excursions by Air Conditioned Transportation on Private basis () as per itinerary</textarea>
+                        </div>
+                    
+                        <div class="mb-4">
+                            <textarea id="driver-allowances" rows="4"
+                                class="w-full p-2 border rounded border border-slate-700">Driver allowances, Petrol/Gas cost, Toll Tax, Parking and Vehicle Insurance</textarea>
+                        </div>
+                    
+                        <div class="mb-4">
+                            <textarea id="govt-taxes" rows="4"
+                                class="w-full p-2 border rounded border border-slate-700">All currently applicable Govt Service Taxes</textarea>
+                        </div>
+                    
+                        <div class="mb-4">
+                            <textarea id="customer-support" rows="4"
+                                class="w-full p-2 border rounded border border-slate-700">24 x 7 customer support</textarea>
+                        </div>
+                    
+                        <div id="tour-inclusions-container" class="mb-4"></div>
+                        <button type="button" id="addMoree"
+                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add More</button>
+                    </div>
+                    
+                     <div class="mb-4 mt-5">
+                        <h1 class="text-2xl font-bold">TOUR EXCLUSIONS</h1>
+                    
+                        <div class="mb-4">
+                            <textarea id="field-one" rows="4"
+                                class="w-full p-2 border rounded border border-slate-700">Items of personal nature, such as, laundry, telephone calls, alcoholic beverages, minibar charges, etc.</textarea>
+                        </div>
+                    
+                        <div class="mb-4">
+                            <textarea id="field-two" rows="4"
+                                class="w-full p-2 border rounded border border-slate-700">Meals other than those specified as per itinerary</textarea>
+                        </div>
+                    
+                        <div class="mb-4">
+                            <textarea id="field-three" rows="4"
+                                class="w-full p-2 border rounded border border-slate-700">Monuments Entrance on spot payment subject to monument visits</textarea>
+                        </div>
+                    
+                        <div class="mb-4">
+                            <textarea id="field-four" rows="4"
+                                class="w-full p-2 border rounded border border-slate-700">Any tours not specified within the above itinerary</textarea>
+                        </div>
+                    
+                        <div class="mb-4">
+                            <textarea id="field-five" rows="4"
+                                class="w-full p-2 border rounded border border-slate-700">Tipping for Tour Guide, Driver, etc. – client’s own discretion</textarea>
+                        </div>
+                    
+                        <div id="tour-exclusions-container" class="mb-4"></div>
+                        <button type="button" id="addMoreexclusions"
+                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add More</button>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="notes" class="block">Notes:</label>
+                        <input type="text" id="notes" name="notes" value="No bookings on hold and bookings are subject to availability"
+                            required class="w-full p-2 border rounded border border-slate-700">
+                    </div>
+                    
+                    <div id="notes-container" class="mb-4"></div>
+                    <button type="button" id="add-notes" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add Notes</button>
+                    
+                    <div class="mb-4">
+                        <label for="cancellation-policy" class="block mt-5">Cancellation Policy:</label>
+                        <div id="cancellation-notes-container" class="mb-4"></div>
+                        <button type="button" id="addCancellationNote"
+                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add Note</button>
+                    </div>
+                    
+                    <div class="mb-4 mt-5">
+                        <label for="amount-executive" class="block">Tour Executive :</label>
+                        <input type="number" id="amount-executive" min="1" class="w-full p-2 border rounded border border-slate-700">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="tour-contact" class="block">Contact no :</label>
+                        <input type="number" id="tour-contact" min="1" class="w-full p-2 border rounded border border-slate-700">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="tour-mail" class="block">Mail Id :</label>
+                        <input type="number" id="tour-mail" min="1" class="w-full p-2 border rounded border border-slate-700">
+                    </div>
+                    </div>
+                    
+                    <button type="button" id="printButton"
+                        class="bg-blue-500 ml-5 mb-5 text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">Print</button>
+                    <button type="button" id="submitBtn"
+                        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Submit</button>
+                    
+            
+
+
+
+
  
-    <div class="max-w-md rounded ml-5  bg-gray-100 mx-auto mt-8">
-        <div class="bg-white p-8 rounded-lg  bg-gray-400 text-white shadow-md text-center sm:text-left">
-            <div class="text-2xl font-bold text-gray-800 mb-4">Hotel Vouchers</div>
-            <div class="text-sm font-semibold text-gray-600 mb-2">No of Vouchers:</div>
-            <span class="text-2xl font-bold text-gray-800 mb-4" id="formdataTotal">Loading...</span>
-
-            <div class="mt-5">
-                <button onclick="window.location.href='Edit_hotel.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-                    View Vouchers
-                </button>
-                
-             
-            </div>
-        </div>
-    </div>
-
-
-    <div class="max-w-md rounded ml-5  bg-gray-100 mx-auto mt-8">
-        <div class="bg-white p-8 rounded-lg  bg-gray-400 text-white shadow-md text-center sm:text-left">
-            <div class="text-2xl font-bold text-gray-800 mb-4">Transport Voucher</div>
-            <div class="text-sm font-semibold text-gray-600 mb-2">No of Transport Voucher:</div>
-            <span class="text-2xl font-bold text-gray-800 mb-4" id="TransportVoucherTotal">Loading...</span>
-
-            <div class="mt-5">
-                <button onclick="window.location.href='View_transportvoucher.html'"  class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-                    View Vouchers
-                </button>
-                
-             
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="max-w-md rounded ml-5  bg-gray-100 mx-auto mt-8">
-        <div class="bg-white p-8 rounded-lg  bg-gray-400 text-white shadow-md text-center sm:text-left">
-            <div class="text-2xl font-bold text-gray-800 mb-4">Itnery</div>
-            <div class="text-sm font-semibold text-gray-600 mb-2">No of Itnery:</div>
-            <span class="text-2xl font-bold text-gray-800 mb-4" id="formdataTotal">Loading...</span>
-
-            <div class="mt-5">
-                <button onclick="window.location.href='Edit_hotel.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-                    View Vouchers
-                </button>
-                
-             
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script type="module" src="/assets/js/index.js"></script>
-
-</body>
-
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <!-- =========== Scripts =========  -->
-    <script src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/Itnery.js"></script>
 
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
