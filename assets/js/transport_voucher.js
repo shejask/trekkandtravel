@@ -1,4 +1,4 @@
- import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
 import { ref } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 import { getDatabase, ref as databaseRef, push, set, get,   onValue } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
  
@@ -973,3 +973,36 @@ toggle.onclick = function () {
 //////////////////////////////////////
  //////////////////////////////////////
 //////////////////////////////////////
+
+
+
+
+
+
+/////////////////
+////////////////
+/////////////////
+////////////////
+
+
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.key === 'd') {
+        window.open('index.html');
+    } else if (event.ctrlKey  && event.key === 'v') {
+        window.open('Hotel_voucher.html');
+    } else if (event.ctrlKey   && event.key === 'm') {
+        window.open('transport_voucher.html');
+    } else if (event.ctrlKey && event.key === 'i') {
+        window.open('Itnery.html');
+    } else if (event.ctrlKey && event.key === 'r') {
+        window.open('add_resort.html');
+    } else if (event.ctrlKey && event.key === 'c') {
+        window.open('Contacts.html');
+    } else if (event.ctrlKey && event.key === 's') {
+        window.open('settings.html');
+    }
+});
+/////////////////
+////////////////
+/////////////////
+////////////////

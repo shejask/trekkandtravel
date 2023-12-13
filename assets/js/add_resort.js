@@ -490,10 +490,7 @@ document.getElementById("add-cancellation-button").addEventListener("click", fun
 
 
 
-
-
-
-
+ 
 
 
 

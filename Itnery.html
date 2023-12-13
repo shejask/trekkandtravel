@@ -82,17 +82,16 @@
                     </a>
                 </li>
 
-                <!-- <li>
-                    <a href="#">
+                <li>
+                    <a href="Settings.html">
                         <span class="icon">
-                            <ion-icon name="log-out-outline"></ion-icon>
+                            <ion-icon name="cog-outline"></ion-icon>
                         </span>
-                        <span class="title">Sign Out</span>
+                        <span class="title">Settings</span>
                     </a>
-                </li> -->
+                </li>
             </ul>
         </div>
-
         <!-- ========================= Main ==================== -->
         <div class="main">
             <div class="topbar">
@@ -100,7 +99,7 @@
                     <ion-icon name="menu-outline"></ion-icon>
                 </div>
 
-                <div class="search">
+                <div hidden class="search">
                     <label>
                         <input type="text" placeholder="Search here">
                         <ion-icon name="search-outline"></ion-icon>
@@ -120,7 +119,7 @@
      
 
             <div class="p-4">
-                <h1 class="text-2xl font-bold  mb-4">Itinerary</h1>
+                <h1 class="text-2xl font-bold  mb-4">Create Itinerary</h1>
             
                 <!-- Tour ID Input -->
                 <div class="mb-4">
@@ -128,11 +127,13 @@
                     <input type="text" id="tourId" readonly name="tourId" placeholder="Enter Tour ID" required
                         class="w-full p-2 border rounded border border-slate-700">
                 </div>
+
+                <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             
                 <label for="travelDate" class="block">Travel Date:</label>
                 <input type="date" id="travelDate" name="travelDate" class="w-full p-2 border rounded border border-slate-700">
             
-                <div class="mb-4">
+                <div class="mb-4 pt-5">
                     <label for="guest-name" class="block">Guest Name:</label>
                     <div class="flex">
                         <input type="text" id="guest-name" placeholder="Type to search" class="w-full p-2 border rounded border border-slate-700">
@@ -140,7 +141,7 @@
                     </div>
                 </div>
             
-                <div class="mb-4">
+                <div class="mb-4 pt-2">
                     <label for="guest-number" class="block">Guest Number:</label>
                     <input type="text" id="guest-number" class="w-full p-2 border rounded border border-slate-700">
                 </div>
@@ -164,6 +165,8 @@
                     <label for="duration" class="block">Duration:</label>
                     <input type="text" id="duration" class="w-full p-2 border rounded border border-slate-700">
                 </div>
+
+                <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             
                 <div class="mb-4">
                     <label for="tour-highlights" class="block">Tour Highlights:</label>
@@ -171,10 +174,18 @@
                         class="w-full p-2 border rounded border border-slate-700">
                     <div id="tour-highlights-dropdown" class="mt-2"></div>
                 </div>
+
+               
             
                 <div id="tour-highlights-container" class="mb-4"></div>
                 <button type="button" id="addhighlights"
                     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add</button>
+
+                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+                    ///////////Package Name
+                  
+                    ///////////Day Name
             
                 <label for="night" class="block">Duration (Night):</label>
                 <select id="night" name="night" class="w-full p-2 border rounded border border-slate-700">
@@ -182,17 +193,17 @@
                     <option value="2">2 Nights</option>
                 </select>
             
-                <!-- <label for="packageName" class="block">Package Name:</label>
-                <input type="text" id="packageName" name="packageName" placeholder="Enter package name" required
-                    class="w-full p-2 border rounded mb-4">
-                <input type="hidden" id="packageKey" name="packageKey" value=""> -->
+                 
             
-                <div id="packageDropdown" class="mb-4"></div>
+                <!-- <div id="packageDropdown" class="mb-4"></div> -->
             
                 <div class="mb-4">
                     <label for="Description" class="block">Description:</label>
                     <textarea id="Description" min="1" class="w-full p-2 border rounded border border-slate-700"></textarea>
                 </div>
+
+
+                <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             
                 <table id="originalTable" class="mb-4">
                     <thead>
@@ -222,6 +233,8 @@
             
                 <button type="button" id="addRowBtn"
                     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4">Add Row</button>
+
+                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             
                     <div class="w-full p-2 border rounded border border-slate-700smb-4">
                         <h1 class="text-2xl font-bold">Tour Inclusions</h1>
@@ -260,6 +273,8 @@
                         <button type="button" id="addMoree"
                             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add More</button>
                     </div>
+
+                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     
                      <div class="mb-4 mt-5">
                         <h1 class="text-2xl font-bold">TOUR EXCLUSIONS</h1>
@@ -293,6 +308,8 @@
                         <button type="button" id="addMoreexclusions"
                             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add More</button>
                     </div>
+
+                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     
                     <div class="mb-4">
                         <label for="notes" class="block">Notes:</label>
@@ -302,13 +319,17 @@
                     
                     <div id="notes-container" class="mb-4"></div>
                     <button type="button" id="add-notes" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add Notes</button>
+
+                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     
                     <div class="mb-4">
                         <label for="cancellation-policy" class="block mt-5">Cancellation Policy:</label>
                         <div id="cancellation-notes-container" class="mb-4"></div>
                         <button type="button" id="addCancellationNote"
-                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add Note</button>
+                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add Cancellation Policy</button>
                     </div>
+
+                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     
                     <div class="mb-4 mt-5">
                         <label for="amount-executive" class="block">Tour Executive :</label>
@@ -325,6 +346,8 @@
                         <input type="number" id="tour-mail" min="1" class="w-full p-2 border rounded border border-slate-700">
                     </div>
                     </div>
+
+                    
                     
                     <button type="button" id="printButton"
                         class="bg-blue-500 ml-5 mb-5 text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">Print</button>

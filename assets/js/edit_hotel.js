@@ -1,7 +1,8 @@
  // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
 import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
- 
+import { getStorage, ref as storageRef, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
+
 
 
 const firebaseConfig = {
@@ -17,6 +18,8 @@ const firebaseConfig = {
 // Initialize Firebase
 initializeApp(firebaseConfig);
 const database = getDatabase();
+ // Reference to the Firebase Storage
+ const storage = getStorage();
 
 // Reference to the formData in the database
 const formDataRef = ref(database, 'formData');
@@ -67,6 +70,12 @@ const cancellationPolicyInput = document.getElementById('cancellation-policy');
  // Reference to the room details container
  const roomDetailsContainer = document.getElementById('room-details-container');
 
+
+// Reference to the hotel photo preview element
+const hotelPhotoPreview = document.getElementById('hotel-photo-preview');
+
+
+// ...
 
 
 // ... (Previous code)
@@ -207,6 +216,69 @@ function updateDropdown(searchQuery) {
   }
  ///////////////////////////////////////////
  ///////////////////////////////////////////
+// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
+// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
+// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
+// Fetch and fill room details from the database
+// Fetch and fill room details from the database
+onValue(formDataRef, (snapshot) => {
+  const formData = snapshot.val();
+  if (formData && typeof formData === 'object') {
+    const selectedConfirmationNumber = formData[confirmationNumber];
+
+    if (selectedConfirmationNumber && selectedConfirmationNumber.roomDetails) {
+      const roomDetailsContainer = document.getElementById('room-details-container');
+
+      // Clear existing content
+      roomDetailsContainer.innerHTML = '';
+
+      // Loop through each room detail item
+      selectedConfirmationNumber.roomDetails.forEach((room, index) => {
+        const roomContainer = document.createElement('div');
+        roomContainer.id = `room-${index}`;
+        roomContainer.classList.add('mb-4');
+
+        // Create input fields for each property
+        createRoomInputField(roomContainer, 'Room Type:', room.roomType || 'N/A');
+        createRoomInputField(roomContainer, 'No. of Rooms:', room.noOfRooms || 'N/A');
+        createRoomInputField(roomContainer, 'No. of Extra Beds:', room.noOfExtraBed || 'N/A');
+        createRoomInputField(roomContainer, 'Child Without Bed:', room.childWithoutBed || 'N/A');
+        createRoomInputField(roomContainer, 'Meal Plan:', room.mealPlan || 'N/A');
+
+        // Append the room container to the room details container
+        roomDetailsContainer.appendChild(roomContainer);
+      });
+    }
+  }
+});
+// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
+// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
+// Assuming roomDetails is an array of objects
+ 
+// Initialize a variable to store the image URL
+ // Initialize a variable to store the image URL
+ 
+
+// Fetch hotel photo URL from selectedConfirmationNumber
+// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
+onValue(formDataRef, (snapshot) => {
+  const formData = snapshot.val();
+  if (formData && typeof formData === 'object') {
+    const selectedConfirmationNumber = formData[confirmationNumber];
+
+    if (selectedConfirmationNumber && selectedConfirmationNumber.hotellPhoto) {
+      imageURL = selectedConfirmationNumber.hotellPhoto;
+
+      // Log for debugging
+      console.log('selectedConfirmationNumber:', selectedConfirmationNumber);
+      console.log('imageURL:', imageURL);
+
+      // Set the src attribute of the hotel-photo-preview element
+      hotelPhotoPreview.src = imageURL;
+    }
+  }
+});
+
  ///////////////////////////////////////////
  ///////////////////////////////////////////
  ///////////////////////////////////////////
@@ -223,7 +295,8 @@ function updateDropdown(searchQuery) {
       }
     });
   }
-
+// Variable to store the imageURL
+let imageURL;
   
 
 
@@ -250,41 +323,25 @@ function createInputField(container, label, value) {
     inputElement.classList.add('w-full', 'p-2', 'border', 'rounded');
     container.appendChild(inputElement);
   }
+////////////////////////////////////////////////
+/////////////////////////////////////////////
+///////////////////////////////////////////////
+// Function to create input fields for room details
+// Function to create input fields for room details
+function createRoomInputField(container, label, value) {
+  const labelElement = document.createElement('label');
+  labelElement.textContent = label;
 
+  const inputElement = document.createElement('input');
+  inputElement.type = 'text';
+  inputElement.value = value;
+  inputElement.classList.add('w-full', 'p-2', 'rounded', 'border', 'border-slate-700');
 
+  container.appendChild(labelElement);
+  container.appendChild(inputElement);
+}
 
-
-
-
-/////////////
-   ////////////
-   /////////////////////////
-  ///////////////
-  ////////////
-  ///////////////
-   /////////////
-   ////////////
-   /////////// 
-   ////////// 
-  ////////// 
- //////////  
-
-
-
-
-// ... (Your existing code)
-
-// Add an event listener for the "Save" button
- // ... (Your existing code)
-
-// Add an event listener for the "Save" button
  
-
-// ... (Your existing code)
-
-
-// ... (Your existing code)
-
 
 function updateFirebaseData() {
     // Fetch the selected confirmation number
@@ -344,6 +401,9 @@ function updateFirebaseData() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+ 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -366,11 +426,7 @@ printButton.addEventListener('click', () => {
   // Extract values from the input fields within the "cancellation-container" div
   const cancellationContainer = document.getElementById('cancellation-container');
   const cancellationInputFields = cancellationContainer.querySelectorAll('input');
-
-  // Extract values from the input fields within the "room-details-container" div
-  // const roomDetailsContainer = document.getElementById('room-details-container');
-  // const roomDetailsInputFields = roomDetailsContainer.querySelectorAll('input');
-
+ 
   // Create arrays to store the input field values
   const termsInputFieldValues = [];
   const cancellationInputFieldValues = [];
@@ -389,21 +445,8 @@ printButton.addEventListener('click', () => {
   // Get values for "Cancellation Policy" input fields
   getInputFieldValues(cancellationInputFields, cancellationInputFieldValues);
 
-  // Get values for "Room Details" input fields
-  // roomDetailsInputFields.forEach(roomDetailField => {
-  //   const roomDetail = {
-  //     roomType: roomDetailField.querySelector('.room-type').value || 'N/A',
-  //     noOfRooms: roomDetailField.querySelector('.no-of-rooms').value || 'N/A',
-  //     noOfExtraBed: roomDetailField.querySelector('.no-of-extra-bed').value || 'N/A',
-  //     childWithoutBed: roomDetailField.querySelector('.child-without-bed').value || 'N/A',
-  //     mealPlan: roomDetailField.querySelector('.meal-plan').value || 'N/A',
-  //   };
-  //   roomDetails.push(roomDetail);
-  // });
- //////////////////////////
- ////////////////////////////
-
-
+ 
+  
 
     // Write the HTML content to the new window
     printWindow.document.write(`
@@ -433,7 +476,7 @@ font-family: 'Poppins', sans-serif;
   <div class="w-full h-auto">
     <div
       class="w-full bg-blue-500 h-24 flex items-center justify-between pl-5 bg-cover"
-      style="background-image: url(/assets/Rectangle1.png)"
+      style="background-image: url(/assets/imgs/Rectangle1.png)"
     >
       <div class="flex flex-col text-white">
         <h1 class="font-bold text-xl">Hotel Voucher</h1>
@@ -445,18 +488,14 @@ font-family: 'Poppins', sans-serif;
         class="w-auto bg-white h-12 px-2 py-3 rounded-l-full flex items-center justify-center gap-2"
       >
         <div class="flex flex-col items-end">
-        <img src="/assets/TREKK & TRAVEL LOGO.png" alt="" width="200" />
+        <img src="/assets/imgs/TREKK & TRAVEL LOGO.png" alt="" width="200" />
         </div>
       </div>
     </div>
     <div class="mt-5 w-full h-auto px-5">
       <div class="flex w-full h-40 bg-black">
-        <div class="w-1/2 h-full bg-gray-300">
-          <img
-            class="w-full h-full object-cover"
-            src=""
-            alt=""
-          />
+        <div class="w-1/2 h-full bg-gray-300"> 
+          <img class="w-full h-full object-cover" src="${imageURL}" alt="" />
         </div>
         <div
           class="w-full h-full bg-yellow-500 flex flex-col items-start justify-center gap-5 text-black px-5 py-3"
@@ -556,7 +595,12 @@ font-family: 'Poppins', sans-serif;
     <div class="mt-3 px-10">
       <div class="w-full flex justify-between gap-5 flex-wrap h-auto">
         <!-- map from here to 👇 -->
- 
+        
+       
+        <div id="room-details-container">
+          ${roomDetailsContent}
+        </div>
+         
       
 
         <!-- to here -->
@@ -610,7 +654,7 @@ font-family: 'Poppins', sans-serif;
           <div class="px-5">
             <ul class="list-disc text-sm">
             ${termsInputFieldValues.map(value => `<li>${value}</li>`).join('')}
-      }
+   
             </ul>
           </div>
         </div>
@@ -642,6 +686,8 @@ font-family: 'Poppins', sans-serif;
 
 
     `);
+
+ 
   
     // Close the document for writing
     printWindow.document.close();
@@ -656,10 +702,7 @@ font-family: 'Poppins', sans-serif;
 
 
 
-
-
-
-
+ 
 
 
 //////////////////////////////////////
@@ -691,3 +734,30 @@ toggle.onclick = function () {
 //////////////////////////////////////
  //////////////////////////////////////
 //////////////////////////////////////
+/////////////////
+////////////////
+/////////////////
+////////////////
+
+
+document.addEventListener('keydown', function(event) {
+  if (event.ctrlKey && event.key === 'd') {
+      window.open('index.html');
+  } else if (event.ctrlKey  && event.key === 'v') {
+      window.open('Hotel_voucher.html');
+  } else if (event.ctrlKey   && event.key === 'm') {
+      window.open('transport_voucher.html');
+  } else if (event.ctrlKey && event.key === 'i') {
+      window.open('Itnery.html');
+  } else if (event.ctrlKey && event.key === 'r') {
+      window.open('add_resort.html');
+  } else if (event.ctrlKey && event.key === 'c') {
+      window.open('Contacts.html');
+  } else if (event.ctrlKey && event.key === 's') {
+      window.open('settings.html');
+  }
+});
+/////////////////
+////////////////
+/////////////////
+////////////////

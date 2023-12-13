@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <!-- ======= Styles ====== -->
+
      <link rel="stylesheet" href="/assets/styles/style.css">
          <script src="https://cdn.tailwindcss.com"></script>
 
@@ -92,6 +93,7 @@
                 </li>
             </ul>
         </div>
+
         <!-- ========================= Main ==================== -->
         <div class="main">
             <div class="topbar">
@@ -111,64 +113,109 @@
             </div>
 
             <!-- ======================= Cards ================== -->
-      
-       
              
+ 
+            
+              <div class="max-w-md mx-auto ml-5 mt-5 bg-gray-200 p-8 rounded shadow-md">
+                <p class="text-lg font-bold mb-4">Try pressing the following keyboard shortcuts:</p>
+            
+                <ul class="list-none p-0">
+                  <li class="mb-2">
+                    <label class="font-bold">Dashboard</label>
+                    <span class="ml-2">Ctrl + D</span>
+                    <hr class="my-1 border border-black">
+  </li>
 
-            <!-- ================ Order Details List ================= -->
-             
-                    
-            <div class="container mx-auto p-4">
-                <h1 class="text-xl font-bold mb-4 md:ml-8 md:mt-10">Create and Manage Contacts</h1>
+                  <li class="mb-2">
+                    <label class="font-bold">Hotel Voucher</label>
+                    <span class="ml-2">Ctrl + V</span>
+                    <hr class="my-1 border border-black">
 
-            
-                <!-- Guests Form -->
-                <form id="guest-form" class="text-l font-semibold  p-4 rounded-lg shadow-md mb-4">
-                    <div class="mb-4">
-                        <label for="guest-name" class="block">Guest Name:</label>
-                        <input type="text" id="guest-name" required class="w-full md:w-96 p-2 border rounded border-slate-700">
-                    </div>
-            
-                    <div class="mb-4">
-                        <label for="contact-number" class="block">Contact Number:</label>
-                        <input type="tel" id="contact-number" required class="w-full md:w-96 p-2 border rounded border-slate-700">
-                    </div>
-            
-                    <div class="mb-4">
-                        <label for="citizen" class="block">Citizen:</label>
-                        <input type="text" id="citizen" required class="w-full md:w-96 p-2 border rounded border-slate-700">
-                    </div>
-            
-                    <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Add Guest</button>
-                </form>
-            
-                <form hidden id="voucher-form" class="bg-white p-4 rounded-lg shadow-md mb-4"></form>
-            
-                <!-- Guests Container -->
-                <div id="guests-container" class="space-y-4"></div>
-            
-                <!-- Edit Guest Form -->
-                <form id="edit-guest-form" style="display: none" class="bg-white p-4 md:w-96 rounded-lg shadow-md mb-4">
-                    <div class="mb-4">
-                        <label for="edit-guest-name" class="block">Edit Guest Name:</label>
-                        <input type="text" id="edit-guest-name" required class="w-full p-2 border rounded border-slate-700">
-                    </div>
-            
-                    <div class="mb-4">
-                        <label for="edit-contact-number" class="block">Edit Contact Number:</label>
-                        <input type="tel" id="edit-contact-number" required class="w-full p-2 border rounded border-slate-700">
-                    </div>
-            
-                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Save Changes</button>
-                </form>
-            </div>
-            
-            
+                  </li>
+                  <li class="mb-2">
+                    <label class="font-bold">Transport Voucher</label>
+                    <span class="ml-2">Ctrl + M</span>
+                    <hr class="my-1 border border-black">
+
+                  </li>
+                  <li class="mb-2">
+                    <label class="font-bold">Itinerary</label>
+                    <span class="ml-2">Ctrl + I</span>
+                    <hr class="my-1 border border-black">
+
+                  </li>
+                  <li class="mb-2">
+                    <label class="font-bold">Adding Resort</label>
+                    <span class="ml-2">Ctrl + R</span>
+                    <hr class="my-1 border border-black">
+
+                  </li>
+                  <li class="mb-2">
+                    <label class="font-bold">Adding Contacts</label>
+                    <span class="ml-2">Ctrl + C</span>
+                    <hr class="my-1 border border-black">
+
+                  </li>
+                  <li class="mb-2">
+                    <label class="font-bold">Settings</label>
+                    <span class="ml-2">Ctrl + S</span>
+                    <hr class="my-1 border border-black">
+
+                  </li>
+                  <li class="mb-2">
+                    <label class="font-bold">Print</label>
+                    <span class="ml-2">Ctrl + P</span>
+                    <hr class="my-1 border border-black">
+
+                  </li>
+                </ul>
+
+                
+              </div>
+
+          <div class="ml-5 mt-5">
+            <p class="text-lg font-bold mb-4">Delete All  </p>
+
+            <button id="deleteDataButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                Delete All Data
+              </button>
+          
+              <p class="text-red-500 mt-2">
+                Warning: This action will delete all data from database.
+              </p>
+          </div>
+
+
+          <p id="storageUsageResult" class="mt-4"></p>
+
+ 
+
+
+
+    <script type="module" src="/assets/js/settings.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- =========== Scripts =========  -->
-    <!-- <script type="module" src="/assets/js/main.js"></script> -->
-    <script type="module" src="/assets/js/add_resort.js"></script>
-
+    <script src="assets/js/main.js"></script>
 
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

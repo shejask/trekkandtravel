@@ -82,6 +82,40 @@ onValue(transportVoucherRef, (snapshot) => {
 
 //////////////////////////////////////
 //////////////////////////////////////
+// Replace 'TransportVoucher' with 'itnery' in the database reference
+const itneryRef = ref(database, 'itnery');
+
+// Get the itnery entries and update the HTML
+onValue(itneryRef, (snapshot) => {
+    const itneryData = snapshot.val();
+    const itneryListElement = document.getElementById('itneryList'); // Adjust the ID as needed
+
+    if (itneryListElement) {
+        itneryListElement.innerHTML = '';
+
+        for (const key in itneryData) {
+            const listItem = document.createElement('li');
+            const entry = itneryData[key];
+            const confirmationNumber = entry ? entry.confirmationnumber : undefined;
+
+            if (confirmationNumber !== undefined) {
+                listItem.textContent = confirmationNumber;
+                itneryListElement.appendChild(listItem);
+            } else {
+                console.log(`Confirmation number is undefined for entry with key: ${key}`);
+                console.log(`Entry for key ${key}:`, entry);
+            }
+        }
+    }
+
+    const itneryTotal = itneryData ? Object.keys(itneryData).length : 0;
+    document.getElementById('ItneryTotal').textContent = itneryTotal;
+});
+
+
+// Get the TransportVoucher entries and update the HTML
+ 
+////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 // add hovered class to selected list item
 let list = document.querySelectorAll(".navigation li");
@@ -114,3 +148,45 @@ toggle.onclick = function () {
 
 // Reference to the View Vouchers button
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////
+////////////////
+/////////////////
+////////////////
+
+
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.key === 'd') {
+        window.open('index.html');
+    } else if (event.ctrlKey  && event.key === 'v') {
+        window.open('Hotel_voucher.html');
+    } else if (event.ctrlKey   && event.key === 'm') {
+        window.open('transport_voucher.html');
+    } else if (event.ctrlKey && event.key === 'i') {
+        window.open('Itnery.html');
+    } else if (event.ctrlKey && event.key === 'r') {
+        window.open('add_resort.html');
+    } else if (event.ctrlKey && event.key === 'c') {
+        window.open('Contacts.html');
+    } else if (event.ctrlKey && event.key === 's') {
+        window.open('settings.html');
+    }
+});
+/////////////////
+////////////////
+/////////////////
+////////////////
