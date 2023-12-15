@@ -488,6 +488,24 @@ document.getElementById("add-cancellation-button").addEventListener("click", fun
 
 
 
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.key === 'd') {
+        window.open('index.html');
+    } else if (event.ctrlKey  && event.key === 'h') {
+        window.open('Hotel_voucher.html');
+    } else if (event.ctrlKey   && event.key === 'm') {
+        window.open('transport_voucher.html');
+    } else if (event.ctrlKey && event.key === 'i') {
+        window.open('Itnery.html');
+    } else if (event.ctrlKey && event.key === 'r') {
+        window.open('add_resort.html');
+    } else if (event.ctrlKey && event.key === 'o') {
+        window.open('Contacts.html');
+    } else if (event.ctrlKey && event.key === 's') {
+        window.open('settings.html');
+    }
+});
+////////
 
 
  

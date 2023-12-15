@@ -396,20 +396,61 @@ function updateFirebaseData() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+ 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
- 
+ // Function to create HTML for room details
+function generateRoomDetailsHTML(roomDetails) {
+  let roomDetailsHTML = '';
+
+  if (roomDetails && roomDetails.length > 0) {
+      roomDetails.forEach((room, index) => {
+          roomDetailsHTML += `
+              <div id="room-${index}" class="mb-4">
+                  <label>Room Type:</label>
+                  <input type="text" value="${room.roomType || 'N/A'}" class="w-full p-2 border rounded">
+                  <label>No. of Rooms:</label>
+                  <input type="text" value="${room.noOfRooms || 'N/A'}" class="w-full p-2 border rounded">
+                  <label>No. of Extra Beds:</label>
+                  <input type="text" value="${room.noOfExtraBed || 'N/A'}" class="w-full p-2 border rounded">
+                  <label>Child Without Bed:</label>
+                  <input type="text" value="${room.childWithoutBed || 'N/A'}" class="w-full p-2 border rounded">
+                  <label>Meal Plan:</label>
+                  <input type="text" value="${room.mealPlan || 'N/A'}" class="w-full p-2 border rounded">
+              </div>
+          `;
+      });
+  }
+
+  return roomDetailsHTML;
+}
+
+// Function to update the room details container
+function updateRoomDetailsContainer(selectedConfirmationNumber) {
+  const roomDetailsContainer = document.getElementById('room-details-container');
+
+  // Clear existing content
+  roomDetailsContainer.innerHTML = '';
+
+  // Generate HTML for room details
+  const roomDetailsHTML = generateRoomDetailsHTML(selectedConfirmationNumber.roomDetails);
+
+  // Append the room details HTML to the container
+  roomDetailsContainer.innerHTML = roomDetailsHTML;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const printButton = document.getElementById('print-button');
-
  
+
 // Add this code inside the event listener for the print button
 printButton.addEventListener('click', () => {
     // Open a new window
@@ -417,8 +458,7 @@ printButton.addEventListener('click', () => {
 
   
 
- //////////////////////
- ///////////////////////////
+ 
   // Extract values from the input fields within the "Terms-container" div
   const termsContainer = document.getElementById('Terms-container');
   const termsInputFields = termsContainer.querySelectorAll('input');
@@ -446,11 +486,14 @@ printButton.addEventListener('click', () => {
   getInputFieldValues(cancellationInputFields, cancellationInputFieldValues);
 
  
-  
-
+   // Create HTML content for room details
+ 
+ //////////////////////
+   // Extract room details from the database 
+ ///////////////////////////
     // Write the HTML content to the new window
     printWindow.document.write(`
-      
+    
    
   <head>
   <meta charset="UTF-8" />
@@ -459,17 +502,12 @@ printButton.addEventListener('click', () => {
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
-  <style>
-      .body{
-          font-family: 'Manrope', sans-serif;
-font-family: 'Poppins', sans-serif;
-      }
-  </style>
-  <title>Document</title>
-</head>
- 
+<style>
+.font-manrope {
+    font-family: 'Manrope', sans-serif;
+}
 
-  <body>
+</style>
   <script>
     const num = [1, 2];
   </script>
@@ -596,11 +634,7 @@ font-family: 'Poppins', sans-serif;
       <div class="w-full flex justify-between gap-5 flex-wrap h-auto">
         <!-- map from here to 👇 -->
         
-       
-        <div id="room-details-container">
-          ${roomDetailsContent}
-        </div>
-         
+        
       
 
         <!-- to here -->
@@ -691,13 +725,60 @@ font-family: 'Poppins', sans-serif;
   
     // Close the document for writing
     printWindow.document.close();
-  
+    printWindow.print();
     // Trigger the print dialog
     setTimeout(() => {
       printWindow.print();
   }, 500);
   });
   
+
+
+
+
+  function getRoomDetailsHTML(container) {
+    const roomDetails = container.querySelectorAll('.room-details-item');
+    return Array.from(roomDetails)
+      .map((roomDetail) => `<li>${roomDetail.innerText}</li>`)
+      .join('');
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -743,7 +824,7 @@ toggle.onclick = function () {
 document.addEventListener('keydown', function(event) {
   if (event.ctrlKey && event.key === 'd') {
       window.open('index.html');
-  } else if (event.ctrlKey  && event.key === 'v') {
+  } else if (event.ctrlKey  && event.key === 'h') {
       window.open('Hotel_voucher.html');
   } else if (event.ctrlKey   && event.key === 'm') {
       window.open('transport_voucher.html');
@@ -751,12 +832,13 @@ document.addEventListener('keydown', function(event) {
       window.open('Itnery.html');
   } else if (event.ctrlKey && event.key === 'r') {
       window.open('add_resort.html');
-  } else if (event.ctrlKey && event.key === 'c') {
+  } else if (event.ctrlKey && event.key === 'o') {
       window.open('Contacts.html');
   } else if (event.ctrlKey && event.key === 's') {
       window.open('settings.html');
   }
 });
+////////
 /////////////////
 ////////////////
 /////////////////

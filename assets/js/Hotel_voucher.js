@@ -608,7 +608,7 @@ font-family: 'Poppins', sans-serif;
             <h1>${bookedBy}</h1>
           </div>
           <div class="flex items-center gap-2 text-black">
-            <h1 class="">Contanct no :</h1>
+            <h1 class="">Contact no :</h1>
             <h1>${contactNo}</h1>
           </div>
           <div class="flex items-center gap-2 text-black">
@@ -697,7 +697,7 @@ font-family: 'Poppins', sans-serif;
     <div class="mt-3 px-10">
       <div class="flex justify-between">
         <div class="flex flex-col gap-1">
-          <h1 class="text-lg font-semibold">Term & conditions</h1>
+          <h1 class="text-lg font-semibold">Terms & conditions</h1>
           <div class="px-5">
             <ul class="list-disc text-sm">
             ${termsConditions.map(term => `<li>${term}</li>`).join('')}
@@ -1219,23 +1219,25 @@ async function saveFormDataToDatabase() {
 ////////////////
 
 
+
 document.addEventListener('keydown', function(event) {
-    if (event.ctrlKey && event.key === 'd') {
-        window.open('index.html');
-    } else if (event.ctrlKey  && event.key === 'v') {
-        window.open('Hotel_voucher.html');
-    } else if (event.ctrlKey   && event.key === 'm') {
-        window.open('transport_voucher.html');
-    } else if (event.ctrlKey && event.key === 'i') {
-        window.open('Itnery.html');
-    } else if (event.ctrlKey && event.key === 'r') {
-        window.open('add_resort.html');
-    } else if (event.ctrlKey && event.key === 'c') {
-        window.open('Contacts.html');
-    } else if (event.ctrlKey && event.key === 's') {
-        window.open('settings.html');
-    }
+  if (event.ctrlKey && event.key === 'd') {
+      window.open('index.html');
+  } else if (event.ctrlKey  && event.key === 'h') {
+      window.open('Hotel_voucher.html');
+  } else if (event.ctrlKey   && event.key === 'm') {
+      window.open('transport_voucher.html');
+  } else if (event.ctrlKey && event.key === 'i') {
+      window.open('Itnery.html');
+  } else if (event.ctrlKey && event.key === 'r') {
+      window.open('add_resort.html');
+  } else if (event.ctrlKey && event.key === 'o') {
+      window.open('Contacts.html');
+  } else if (event.ctrlKey && event.key === 's') {
+      window.open('settings.html');
+  }
 });
+////////
 /////////////////
 ////////////////
 /////////////////

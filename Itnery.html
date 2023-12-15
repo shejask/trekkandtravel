@@ -114,12 +114,14 @@
             <!-- ======================= Cards ================== -->
              
  
-
+      
 
      
 
             <div class="p-4">
                 <h1 class="text-2xl font-bold  mb-4">Create Itinerary</h1>
+
+                <form action="#" method="post" id="package-form"> 
             
                 <!-- Tour ID Input -->
                 <div class="mb-4">
@@ -133,18 +135,25 @@
                 <label for="travelDate" class="block">Travel Date:</label>
                 <input type="date" id="travelDate" name="travelDate" class="w-full p-2 border rounded border border-slate-700">
             
-                <div class="mb-4 pt-5">
-                    <label for="guest-name" class="block">Guest Name:</label>
-                    <div class="flex">
-                        <input type="text" id="guest-name" placeholder="Type to search" class="w-full p-2 border rounded border border-slate-700">
-                        <div id="guest-name-dropdown" class="ml-2"></div>
+                <div class=" mt-5 flex input-row">
+                    <div class="flex-1 mb-2 lg:mr-2">
+                        <label for="guestName" class="block mb-2">Guest Name:</label>
+                        <input type="text" id="guestName" name="guestName" class="w-full p-2 border rounded border border-slate-700">
+    
+                        <div id="guest-name-dropdown" class="hidden absolute mt-2 bg-white border rounded border-gray-300">
+                            <!-- Dropdown content will be dynamically populated here -->
+                        </div>
+                    </div>
+    
+                    <div class="flex-1 mb-2 lg:mr-2">
+                        <label for="guestNumber" class="block mb-2">Guest Number:</label>
+                        <input type="text" id="guestNumber" name="guestNumber" class="w-full p-2 border rounded border border-slate-700">
                     </div>
                 </div>
-            
-                <div class="mb-4 pt-2">
-                    <label for="guest-number" class="block">Guest Number:</label>
-                    <input type="text" id="guest-number" class="w-full p-2 border rounded border border-slate-700">
-                </div>
+
+
+
+
             
                 <div class="mb-4">
                     <label for="arrival-details" class="block">Arrival Details:</label>
@@ -182,24 +191,55 @@
                     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add</button>
 
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-
-                    ///////////Package Name
-                  
-                    ///////////Day Name
+ 
             
-                <label for="night" class="block">Duration (Night):</label>
+               
+
+
+
+              
+                     
+                        <!-- Package Name -->
+                        <div class="mb-4 ">
+                            <label for="package-name" class="block">Package Name:</label>
+                            <input type="text" id="package-name" name="package-name"
+                            class="w-full p-2 border rounded border border-slate-700">
+                                
+                                <div id="packagelist"></div>
+                        </div>
+            
+                      
+            
+                        <!-- Package Description -->
+                        <div class="mb-4">
+                            <label for="package-description" class="block">Description</label>
+                            <textarea id="package-description" name="package-description"
+                            class="w-full p-2 border rounded border border-slate-700"></textarea>
+                        </div>
+              
+
+
+                <label for="night" class="block">Choose Days:</label>
+                <select  id="choose-days" name="choose-days" class="w-full p-2 border rounded border border-slate-700">
+                    <option value="0">Choose Days</option>
+                    <option value="1">Day 1</option>
+                    <option value="2">Day 2</option>
+                    <option value="3">Day 3</option>
+                </select>
+
+                <label for="night" class="block mt-8">Duration (Night):</label>
                 <select id="night" name="night" class="w-full p-2 border rounded border border-slate-700">
                     <option value="1">1 Night</option>
                     <option value="2">2 Nights</option>
                 </select>
             
-                 
-            
-                <!-- <div id="packageDropdown" class="mb-4"></div> -->
-            
+                <div id="package-details-container" class="mb-4"></div>
+
+              
+      
                 <div class="mb-4">
-                    <label for="Description" class="block">Description:</label>
-                    <textarea id="Description" min="1" class="w-full p-2 border rounded border border-slate-700"></textarea>
+                    <label for="amount-details" class="block">Amount:</label>
+                    <input type="text" id="amount-details" class="w-full p-2 border rounded border border-slate-700">
                 </div>
 
 
@@ -348,11 +388,17 @@
                     </div>
 
                     
-                    
-                    <button type="button" id="printButton"
-                        class="bg-blue-500 ml-5 mb-5 text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">Print</button>
-                    <button type="button" id="submitBtn"
-                        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Submit</button>
+                 
+
+                    <button type="button" id="printButton" class="bg-blue-500 ml-5 mb-5 text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">Print</button>
+                    <button type="submit"  id="savedata"   class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Save</button>
+
+
+                    <!-- <button type="button"  id="submitBtn"   class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-green-700">Save</button> -->
+
+
+
+                    </form>
                     
             
 

@@ -591,7 +591,7 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
       <div class=" mt-5 px-5">
         <div class=" w-full h-12 bg-blue-500 text-white flex items-center justify-center">
-            <h1 class=" uppercase text-lg font-semibold">acommadation details</h1>
+            <h1 class=" uppercase text-lg font-semibold">Accommodation details</h1>
         </div>
 
 
@@ -602,8 +602,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">hotel</th>
             <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">address</th>
         </tr>
-
-       
 
 
         ${duplicatedRowsHTML}
@@ -984,11 +982,10 @@ toggle.onclick = function () {
 /////////////////
 ////////////////
 
-
 document.addEventListener('keydown', function(event) {
     if (event.ctrlKey && event.key === 'd') {
         window.open('index.html');
-    } else if (event.ctrlKey  && event.key === 'v') {
+    } else if (event.ctrlKey  && event.key === 'h') {
         window.open('Hotel_voucher.html');
     } else if (event.ctrlKey   && event.key === 'm') {
         window.open('transport_voucher.html');
@@ -996,12 +993,13 @@ document.addEventListener('keydown', function(event) {
         window.open('Itnery.html');
     } else if (event.ctrlKey && event.key === 'r') {
         window.open('add_resort.html');
-    } else if (event.ctrlKey && event.key === 'c') {
+    } else if (event.ctrlKey && event.key === 'o') {
         window.open('Contacts.html');
     } else if (event.ctrlKey && event.key === 's') {
         window.open('settings.html');
     }
 });
+////////
 /////////////////
 ////////////////
 /////////////////
