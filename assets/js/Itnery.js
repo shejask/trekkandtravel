@@ -24,7 +24,7 @@ const database = getDatabase();
 const storage = getStorage();
 const guestsRef = ref(database, 'guests');
 
-
+ 
 
 const tourHighlightsRef = databaseRef(getDatabase(), `tourHighlights`);
 
@@ -552,7 +552,7 @@ packageForm.addEventListener("submit", async function (event) {
     const  departuredetailsval   = departuredetails.value;   
     const numberofpaxval    = numberofpax.value;    
      
-     
+    console.log(travelDate.value)
  
     const packageData = {
         packageName: packageName,
@@ -692,7 +692,7 @@ function showPackageDetails() {
                     class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 mb-2">
 
                 <label for="date${i}" class="block text-sm font-medium text-gray-600">Date</label>
-                <input type="date" id="date${i}" name="date${i}"
+                <input type="date" id="date${i}"  
                     class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 mb-2"
                     value="${travelDate.toISOString().split('T')[0]}">
 
@@ -894,7 +894,12 @@ function generatePrintContent(packageData) {
         for (let i = 0; i < packageData.packageDetails.length; i++) {
             // Customize the content based on your packageData properties
             const dayNumber = packageData.packageDetails[i].dayNumber || `Day ${i + 1}`;
-            const date = packageData.packageDetails[i].date || '';
+
+            // Convert date to DD-MM-YYYY format
+            const dateISOString = packageData.packageDetails[i].date || '';
+            const dateParts = dateISOString.split('-');
+            const dateFormatted = dateParts.length === 3 ? `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}` : '';
+
             const heading = packageData.packageDetails[i].heading || '';
             const paragraph = packageData.packageDetails[i].paragraph || '';
             const inclusions = packageData.packageDetails[i].inclusions || '';
@@ -902,36 +907,34 @@ function generatePrintContent(packageData) {
 
             // Append the simplified HTML to the printContent
             printContent += `
-              
                 <div id="dayContainer" >
-           <div class="flex flex-col gap-3">
-               <div class="flex flex-col gap-2">
-                   <div class="w-full py-2 bg-orange-400 text-black px-2 flex items-center rounded-lg">
-                       <h1 class="text-xl font-semibold">  ${dayNumber}</h1>
-                       <h1 class="text-xl pl-1/2 font-semibold">${date}</h1>
-                   </div>
-                   <div class="flex items-center gap-10">
-                     
-                       <img src="${file}" class="w-2/3 h-60 rounded-2xl" alt="Image" style="max-width: 100%;">
-                        
-                       <div class="flex flex-col gap-3 w-2/3 justify-center">
-                           <h1>${heading}</h1>
-                           <h1>${paragraph}</h1>
-                       </div>
-                   </div>
-                   <div class="flex flex-col gap-1">
-                       <h1 class="text-xl font-semibold">Inclusions</h1>
-                       <h1>${inclusions}</h1>
-                   </div>
-               </div>
-           </div>
-       </div> 
+                    <div class="flex flex-col gap-3">
+                        <div class="flex flex-col gap-2">
+                            <div class="w-full py-2 bg-orange-400 text-black px-2 flex items-center rounded-lg">
+                                <h1 class="text-xl font-semibold">  ${dayNumber}</h1>
+                                <h1 class="text-xl pl-1/2 font-semibold">${dateFormatted}</h1>
+                            </div>
+                            <div class="flex items-center gap-10">
+                                <img src="${file}" class="w-2/3 h-60 rounded-2xl" alt="Image" style="max-width: 100%;">
+                                <div class="flex flex-col gap-3 w-2/3 justify-center">
+                                    <h1>${heading}</h1>
+                                    <h1>${paragraph}</h1>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <h1 class="text-xl font-semibold">Inclusions</h1>
+                                <h1>${inclusions}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
             `;
         }
     }
 
     return printContent;
 }
+
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1169,7 +1172,7 @@ const tourHighlightsContainerList = tourHighlightsContainerValues.map(highlight 
 
 
         <div>
-          <div class="flex flex-col gap-5">
+        <div class="flex flex-col gap-5">
 
  
 ${printContent}      
@@ -1272,11 +1275,11 @@ ${printContent}
           <div class="flex flex-col text-white text-xs">
             <div class="flex gap-1 items-center">
               <img src="" alt="" />
-              <h1>yourname @gmail.com,www.yourwebsite.com</h1>
+              <h1>Info@trekkandtravel.com</h1>
             </div>
             <div class="flex gap-1 items-center">
               <img src="" alt="" />
-              <h1>Street address here, city name zipcode</h1>
+              <h1>Address: Kattuppara, Bridge Junction, Chelakkad Po, Malappuram, Kerala , India- 679323</h1>
             </div>
           </div>
         </div>

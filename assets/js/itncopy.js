@@ -26,6 +26,22 @@ const guestsRef = ref(database, 'guests');
 
 
 
+
+  // Assuming you have a date variable
+  var originalDate = "2023-12-16"; // Replace this with your actual date variable
+
+  // Convert the date to DD-MM-YYYY format
+  var parts = originalDate.split('-');
+  var formattedDate = parts[2] + '-' + parts[1] + '-' + parts[0];
+
+  // Display the formatted date
+  console.log("Original Date: " + originalDate);
+  console.log("Formatted Date: " + formattedDate);
+
+
+
+  
+
 const tourHighlightsRef = databaseRef(getDatabase(), `tourHighlights`);
 
 document.getElementById('savedata').addEventListener('click', function () {
