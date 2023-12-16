@@ -170,10 +170,10 @@
                     <input type="number" id="number-of-pax" min="1" class="w-full p-2 border rounded border border-slate-700">
                 </div>
             
-                <div class="mb-4">
+                <!-- <div class="mb-4">
                     <label for="duration" class="block">Duration:</label>
                     <input type="text" id="duration" class="w-full p-2 border rounded border border-slate-700">
-                </div>
+                </div> -->
 
                 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             
@@ -230,8 +230,12 @@
                         </div>
               
 
+                        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
-                <label for="night" class="block">Choose Days:</label>
+
+                        <label for="duration" class="block font-semibold text-xl">Duration:</label>
+
+                <label for="Days" class="block">No of Days:</label>
                 <select  id="choose-days" name="choose-days" class="w-full p-2 border rounded border border-slate-700">
                     <option value="0">Choose Days</option>
                     <option value="1">Day 1</option>
@@ -269,9 +273,9 @@
 
                 </select>
 
-                <label for="night" class="block mt-8">Duration (Night):</label>
+                <label for="night" class="block mt-8">No of Nights:</label>
                 <select id="night" name="night" class="w-full p-2 border rounded border border-slate-700">
-                    <option value="0">Choosedays</option> 
+                    <option value="0">Choose Nights</option> 
                     <option value="1">1 Night</option>
                     <option value="2">2 Nights</option>
                     <option value="3">3 Nights</option>
@@ -303,6 +307,9 @@
                     <option value="29">29 Nights</option>
                     <option value="20">30 Nights</option>
                 </select>
+
+                <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
             
                 <div id="package-details-container" class="mb-4"></div>
 

@@ -527,8 +527,7 @@ const travelDateInput = document.getElementById("travelDate");
 const arrivaldetails = document.getElementById("arrival-details");
 const departuredetails = document.getElementById("departure-details");
 const numberofpax = document.getElementById("number-of-pax");
-const durationInput = document.getElementById("duration");
-
+ 
 // night
 
  
@@ -552,8 +551,7 @@ packageForm.addEventListener("submit", async function (event) {
     const arrivaldetailsval    = arrivaldetails.value;  
     const  departuredetailsval   = departuredetails.value;   
     const numberofpaxval    = numberofpax.value;    
-    const  durationInputval   = durationInput.value;  
-    
+     
      
  
     const packageData = {
@@ -565,8 +563,7 @@ packageForm.addEventListener("submit", async function (event) {
         arrivaldetailsval: arrivaldetailsval,
         departuredetailsval: departuredetailsval,
         numberofpaxval: numberofpaxval,
-        durationInputval:durationInputval,
-        
+         
 
          
         packageDetails: [] // Array to store details for each day
@@ -977,7 +974,10 @@ function printForm() {
     const amountExecutive = document.getElementById('amount-executive').value;
     const tourcontact = document.getElementById('tour-contact').value;
     const tourmail = document.getElementById('tour-mail').value;
-    const duration = document.getElementById('duration').value;
+ 
+    const numofdays = document.getElementById('choose-days').value;
+    const numofnights = document.getElementById('night').value;
+
  
     const fieldone = document.getElementById('field-one').value;
     const fieldtwo = document.getElementById('field-two').value;
@@ -1134,7 +1134,7 @@ const tourHighlightsContainerList = tourHighlightsContainerValues.map(highlight 
           </div>
           <div class="flex gap-2 items-center">
             <h1>Duration:</h1> 
-            <h1>${duration}</h1>
+            <h1>${numofdays}Days /${numofnights} Nights</h1>
           </div>
           <div class="flex gap-2 items-center">
             <h1>No of Pax:</h1>
