@@ -513,46 +513,41 @@ font-family: 'Poppins', sans-serif;
         <div class="flex flex-col items-end">
         <img src="/assets/imgs/TREKK & TRAVEL LOGO.png" alt="" width="200" />
         </div>
-      </div>
-    </div>
-    <div class="mt-5 w-full h-auto px-5">
-      <div class="flex w-full h-40 bg-black">
-        <div class="w-1/2 h-full bg-gray-300">
-          <img
-            class="w-full h-full object-cover"
-            src="${photoURL ? photoURL : hotellPhoto}"
-            alt=""
-          />
         </div>
-        <div
-          class="w-full h-full bg-yellow-500 flex flex-col items-start justify-center gap-5 text-black px-5 py-3"
-        >
-          <h1 class="font-semibold text-xl">${hotelName}</h1>
-
-          <div class="flex flex-col">
-            <div class="flex gap-1 items-center">
-              <h1>Address :</h1>
-              <h1>${hotelAddress}</h1>
-            </div>
-            <div class="flex gap-1 items-center">
-            <h1>Google map :</h1>
-            <a href=" ${googleMapLink}">  
-            <h1>  ${googleMapLink}</h1>
-            </a>
-
-         </div>
-        
-        
-        
-            <div class="flex gap-1 items-center">
-              <h1>Phone no :</h1>
-              <h1>${hotelPhone}</h1>
+        </div>
+        <div class="mt-5 w-full h-auto px-5">
+        <div class="flex w-full h-auto bg-black">
+          <div class="w-1/2 h-48 bg-gray-300">
+            <img
+              class="w-full h-full object-cover"
+              src="${photoURL ? photoURL : hotellPhoto}"
+              alt=""
+            />
+          </div>
+          <div
+            class="w-full h-auto bg-yellow-500 flex flex-col items-start justify-center gap-2 text-black px-3 py-3"
+          >
+            <h1 class="font-semibold text-xl">${hotelName}</h1>
+            
+            <div class="flex flex-col">
+              <!-- change item center to item-start -->
+              <div class="flex gap-1 items-start ">
+                <h1>Address:</h1>
+                <h1>${hotelAddress}</h1>
+              </div>
+              <div class="flex gap-1 items-start">
+                <h1>Google map:</h1>
+                <a href=" ${googleMapLink}">  
+                <h1>${googleMapLink}</h1>
+              </a>
+              </div>
+              <div class="flex gap-1 items-center">
+                <h1>Phone no:</h1>
+                <h1>${hotelPhone}</h1>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-     
-    </div>
     <div class="mt-8">
       <div class="w-full h-auto flex justify-center">
         <div
@@ -572,51 +567,51 @@ font-family: 'Poppins', sans-serif;
         </div>
       </div>
     </div>
-    <div class="mt-5 px-10">
-      <div class="w-full h-auto flex justify-between">
-        <div class="flex flex-col gap-2">
-          <h1 class="text-lg font-semibold">Guest Details</h1>
-          <div class="flex flex-col">
-            <div class="flex gap-1">
-              <h1>Booking name :</h1>
-              <h1>${guestName}</h1>
-            </div>
-            <div class="flex gap-1">
-              <h1>Contact no :</h1>
-              <h1>${guestNumber}</h1>
-            </div>
-            <div class="flex gap-1">
-              <h1>Citizen no :</h1>
-              <h1>${guestCitizen}</h1>
-            </div>
-            <div class="flex gap-1">
-              <h1>No of Adults :</h1>
-              <h1>${NoofAdult}</h1>
-            </div>
-          </div>
-        </div>
+    <div class="mt-5 px-2">
+    <div class="w-full h-auto flex justify-between">
+      <div class="flex flex-col gap-2">
+        <h1 class="text-lg font-semibold">Guest Details</h1>
         <div class="flex flex-col">
-          <div class="flex items-center gap-2 text-black">
-            <h1 class="">Issued by :</h1>
-            <h1>${issuedBy}</h1>
+          <div class="flex gap-1">
+            <h1>Booking name:</h1>
+            <h1>${guestName}</h1>
           </div>
-          <div class="flex items-center gap-2 text-black">
-            <h1 class="">Issued date :</h1>
-            <h1>${issuedDate}</h1>
+          <div class="flex gap-1">
+            <h1>Contact no:</h1>
+            <h1>${guestNumber}</h1>
           </div>
-          <div class="flex items-center gap-2 text-black">
-            <h1 class="">Booked by :</h1>
-            <h1>${bookedBy}</h1>
+          <div class="flex gap-1">
+            <h1>Citizen :</h1>
+            <h1>${guestCitizen}</h1>
           </div>
-          <div class="flex items-center gap-2 text-black">
-            <h1 class="">Contact no :</h1>
-            <h1>${contactNo}</h1>
-          </div>
-          <div class="flex items-center gap-2 text-black">
-            <h1 class="">Mail id :</h1>
-            <h1>${mailId}</h1>
+          <div class="flex gap-1">
+            <h1>No of Adults:</h1>
+            <h1>${NoofAdult}</h1>
           </div>
         </div>
+      </div>
+      <div class="flex flex-col">
+        <div class="flex items-start gap-2 text-black">
+          <h1 class="">Issued by:</h1>
+          <h1>${issuedBy}</h1>
+        </div>
+        <div class="flex items-start gap-2 text-black">
+          <h1 class="">Issued date:</h1>
+          <h1>${issuedDate}</h1>
+        </div>
+        <div class="flex items-start gap-2 text-black">
+          <h1 class="">Booked by:</h1>
+          <h1>${bookedBy}</h1>
+        </div>
+        <div class="flex items-start gap-2 text-black">
+          <h1 class="">Contanct no:</h1>
+          <h1>${contactNo}</h1>
+        </div>
+        <div class="flex items-start gap-2 text-black">
+          <h1 class="">MailId:</h1>
+          <h1>${mailId}</h1>
+        </div>
+      </div>
         
       </div>
       <hr class="border border-gray-400 mt-3" />

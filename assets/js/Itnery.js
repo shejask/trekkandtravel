@@ -689,7 +689,7 @@ function showPackageDetails() {
                 <label for="day-number${i}" class="block text-sm font-medium text-gray-600">Day Number</label>
                 <input type="text" id="day-number${i}" name="day-number${i}"
                     value="Day ${i}" 
-                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 mb-2">
+                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 mb-2" readonly>
 
                 <label for="date${i}" class="block text-sm font-medium text-gray-600">Date</label>
                 <input type="date" id="date${i}"  
@@ -919,13 +919,13 @@ function generatePrintContent(packageData) {
                     </div>
                   </div>
                   <div class="flex flex-col items-start gap-3">
-                    <div class="w-2/3 h-60 bg-black rounded-2xl">
-                      <img
-                        class="w-full h-full object-cover rounded-2xl"
-                        src="${file}"
-                        alt=""
-                      />
-                    </div>
+                  <div class="w-1/3 h-32 bg-black rounded-2xl">
+                  <img
+                    class="w-full h-full object-cover rounded-2xl"
+                    src="${file}"
+                    alt=""
+                  />
+                </div>
                     <div class="flex flex-col gap-3 w-full justify-center">
                       <h1 class="font-semibold">
                         ${heading}
