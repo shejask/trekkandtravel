@@ -671,9 +671,6 @@ function showPackageDetails() {
     packageDetailsContainer.innerHTML = '';
 
     if (selectedValue !== "0") {
-        // Get the travel date
-        var travelDate = new Date(document.getElementById("travelDate").value);
-
         for (var i = 1; i <= parseInt(selectedValue); i++) {
             var packageDetailsDiv = document.createElement("div");
             packageDetailsDiv.id = "package-details";
@@ -683,11 +680,6 @@ function showPackageDetails() {
                 return element ? element.value : "";
             };
 
-            // Set the first date to the travel date, and increment for subsequent days
-            if (i > 1) {
-                travelDate.setDate(travelDate.getDate() + 1);
-            }
-
             packageDetailsDiv.innerHTML = `
                 <label for="day-number${i}" class="block text-sm font-medium text-gray-600">Day Number</label>
                 <input type="text" id="day-number${i}" name="day-number${i}"
@@ -695,17 +687,16 @@ function showPackageDetails() {
                     class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 mb-2">
 
                 <label for="date${i}" class="block text-sm font-medium text-gray-600">Date</label>
-                <input type="date" id="date${i}" name="date${i}"
+                <input type="text" id="date${i}" name="date${i}"
                     class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 mb-2"
-                    value="${travelDate.toISOString().split('T')[0]}">
+                    value="${getElementValue(`date${i}`)}">
 
                 <label for="heading${i}" class="block text-sm font-medium text-gray-600">Heading</label>
                 <input type="text" id="heading${i}" name="heading${i}"
                     class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 mb-2"
                     value="${getElementValue(`heading${i}`)}">
 
-
-                        <label for="paragraph${i}" class="block text-sm font-medium text-gray-600">Paragraph</label>
+                <label for="paragraph${i}" class="block text-sm font-medium text-gray-600">Paragraph</label>
                 <textarea id="paragraph${i}" name="paragraph${i}"
                     class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 mb-2">${getElementValue(`paragraph${i}`)}</textarea>
 
@@ -713,14 +704,9 @@ function showPackageDetails() {
                 <textarea id="inclusions${i}" name="inclusions${i}"
                     class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 mb-2">${getElementValue(`inclusions${i}`)}</textarea>
 
-
-                <!-- Add other fields as needed -->
-
                 <label for="file${i}" class="block text-sm font-medium text-gray-600">Choose File</label>
                 <input type="file" id="file${i}" name="file${i}"
                     class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 mb-4">
-
-                    
             `;
 
             packageDetailsContainer.appendChild(packageDetailsDiv);
@@ -731,12 +717,6 @@ function showPackageDetails() {
         packageDetailsContainer.style.display = "none";
     }
 }
-
-
-
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
@@ -792,31 +772,34 @@ function fetchAndDisplayPackageDetails(packageName) {
 
                         // Customize the content based on your packageData properties
                         const dayNumber = packageData.packageDetails[i].dayNumber || `Day ${i + 1}`;
+                        const date = packageData.packageDetails[i].date || '';
                         const heading = packageData.packageDetails[i].heading || '';
                         const paragraph = packageData.packageDetails[i].paragraph || '';
+                        const inclusions = packageData.packageDetails[i].inclusions || '';
                         const file = packageData.packageDetails[i].file || '';
 
                         // Append the packageDetailsDiv to the container
                         packageDetailsDiv.innerHTML = `
                             <label class="mt-5" for="day-number-input-${i}">Day Number:</label>
-                            <input class="mt-1 mt-5 p-2 w-full border rounded border-black focus:outline-none focus:border-blue-500 mb-2" type="text" id="day-number-input-${i}" value="${dayNumber}" readonly>
+                            <input class="mt-1 mt-5 p-2   w-full border  border-black rounded-md focus:outline-none focus:border-blue-500 mb-2" type="text" id="day-number-input-${i}" value="${dayNumber}" readonly>
 
                             <label for="date-input-${i}">Date:</label>
-                            <input class="w-full p-2 border rounded border border-black" type="date" id="date-input-${i}" value="${getAutoFilledDate(i)}">
+                            <input class="w-full p-2 border rounded border border-black" type="text" id="date-input-${i}" value="${date}"  >
 
                             <label for="heading-input-${i}">Heading:</label>
-                            <input class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 border-black mb-2" type="text" id="heading-input-${i}" value="${heading}" >
+                            <input class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500 border-black  mb-2" type="text" id="heading-input-${i}" value="${heading}"  >
 
                             <label for="paragraph-input-${i}">Paragraph:</label>
-                            <textarea class="mt-1 p-2 w-full border rounded-md border-black focus:outline-none focus:border-blue-500 mb-2" id="paragraph-input-${i}">${paragraph}</textarea>
+                            <textarea class="mt-1 p-2 w-full border rounded-md border-black  focus:outline-none focus:border-blue-500 mb-2" id="paragraph-input-${i}"  >${paragraph}</textarea>
 
                             <label for="inclusions-input-${i}">Inclusions:</label>
-                            <textarea class="mt-1 p-2 w-full border rounded-md border-black focus:outline-none focus:border-blue-500 mb-2" id="inclusions-input-${i}"></textarea>
+                            <textarea class="mt-1 p-2 w-full border rounded-md border-black  focus:outline-none focus:border-blue-500 mb-2" id="inclusions-input-${i}"  >${inclusions}</textarea>
 
                             <label for="file-input-${i}">Image:</label>
                             <p id="file-input-${i}"><img src="${file}" class="w-96 h-96 border-black" alt="Image" style="max-width: 100%;"></p>
                             <!-- You can add more fields here -->
                             <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
                         `;
 
                         packageDetailsContainer.appendChild(packageDetailsDiv);
@@ -825,19 +808,6 @@ function fetchAndDisplayPackageDetails(packageName) {
             }
         });
     });
-}
-
-// Function to get the auto-filled date based on the selected day
-function getAutoFilledDate(dayIndex) {
-    const travelDate = document.getElementById('travelDate').value;
-
-    if (travelDate) {
-        const date = new Date(travelDate);
-        date.setDate(date.getDate() + dayIndex);
-        return date.toISOString().split('T')[0];
-    }
-
-    return '';
 }
 
 
