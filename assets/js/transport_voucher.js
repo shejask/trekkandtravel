@@ -424,7 +424,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const travelDate = getValueById("travelDate");
         const duration = getValueById("duration");
         const driver = getValueById("driver");
-        const vehicleNo = getValueById("vehicleno");
+        const vehicleNo = getValueById("Vehicleno");
         const guestName = getValueById("guestName");
         const guestNumber = getValueById("guestNumber");
         const TourManager = getValueById("Tour-Manager");
@@ -651,7 +651,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Close the document stream
 printWindow.document.close();
-printWindow.print();
+ 
 // Print the page
 setTimeout(() => {
     printWindow.print();

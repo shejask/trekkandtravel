@@ -536,8 +536,9 @@ font-family: 'Poppins', sans-serif;
             </div>
             <div class="flex gap-1 items-center">
             <h1>Google map :</h1>
-            <h1>${googleMapLink}</h1>
-            <a href="${googleMapLink}" target="_blank">  
+            <a href=" ${googleMapLink}">  
+            <h1>  ${googleMapLink}</h1>
+            </a>
 
          </div>
         
