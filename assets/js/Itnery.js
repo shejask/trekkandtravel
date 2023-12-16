@@ -908,25 +908,41 @@ function generatePrintContent(packageData) {
             // Append the simplified HTML to the printContent
             printContent += `
                 <div id="dayContainer" >
-                    <div class="flex flex-col gap-3">
-                        <div class="flex flex-col gap-2">
-                            <div class="w-full py-2 bg-orange-400 text-black px-2 flex items-center rounded-lg">
-                                <h1 class="text-xl font-semibold">  ${dayNumber}</h1>
-                                <h1 class="text-xl pl-1/2 font-semibold">${dateFormatted}</h1>
-                            </div>
-                            <div class="flex items-center gap-10">
-                                <img src="${file}" class="w-2/3 h-60 rounded-2xl" alt="Image" style="max-width: 100%;">
-                                <div class="flex flex-col gap-3 w-2/3 justify-center">
-                                    <h1>${heading}</h1>
-                                    <h1>${paragraph}</h1>
-                                </div>
-                            </div>
-                            <div class="flex flex-col gap-1">
-                                <h1 class="text-xl font-semibold">Inclusions</h1>
-                                <h1>${inclusions}</h1>
-                            </div>
-                        </div>
+                <div>
+                <div class="flex flex-col gap-10">
+                  <div class="flex flex-col gap-2">
+                    <div
+                      class="w-full py-2 bg-orange-400 text-black px-2 flex items-center justify-between rounded-lg"
+                    >
+                      <h1 class="text-xl font-semibold"> ${dayNumber}</h1>
+                      <h1 class=" text-lg">${dateFormatted}</h1>
                     </div>
+                  </div>
+                  <div class="flex flex-col items-start gap-3">
+                    <div class="w-2/3 h-60 bg-black rounded-2xl">
+                      <img
+                        class="w-full h-full object-cover rounded-2xl"
+                        src="${file}"
+                        alt=""
+                      />
+                    </div>
+                    <div class="flex flex-col gap-3 w-full justify-center">
+                      <h1 class="font-semibold">
+                        ${heading}
+                      </h1>
+                      <h1>
+                        ${paragraph}
+                      </h1>
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <h1 class="text-xl font-semibold">Inclusions</h1>
+                    <h1>
+                      ${inclusions}
+                    </h1>
+                  </div>
+                </div>
+              </div>
                 </div> 
             `;
         }
