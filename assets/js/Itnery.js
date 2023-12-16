@@ -1309,3 +1309,21 @@ setTimeout(() => {
 
 
  
+
+
+
+
+
+
+document.getElementById('choose-days').addEventListener('change', function () {
+    const travelDate = document.getElementById('travelDate').value;
+    const chooseDaysSelect = document.getElementById('choose-days');
+
+    if (!travelDate) {
+        alert('Please fill in the travel date before selecting the number of days.');
+        // You can customize the alert message or behavior based on your needs
+
+        // Set the value of choose-days to "0"
+        chooseDaysSelect.value = "0";
+    }
+});
