@@ -8,12 +8,12 @@ import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "http
  
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAEGTmuzOkUUGlGOgo2lq0i5nIBoCsMAx8",
-  authDomain: "trekkand-travel.firebaseapp.com",
-  projectId: "trekkand-travel",
-  storageBucket: "trekkand-travel.appspot.com",
-  messagingSenderId: "293012537124",
-  appId: "1:293012537124:web:6b84ae7235651448893db1"
+  apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
+  authDomain: "trekkandtravel-7daeb.firebaseapp.com",
+  projectId: "trekkandtravel-7daeb",
+  storageBucket: "trekkandtravel-7daeb.appspot.com",
+  messagingSenderId: "313424140423",
+  appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
 };
 
 
@@ -737,6 +737,8 @@ document.getElementById("duration").addEventListener("change", function () {
   });
 
   document.getElementById("newSaveBtn").addEventListener("click", function () {
+    alert("Wait for the image to load, then Save All");
+
     if (selectedDuration === undefined) {
       console.error("Selected duration is not defined");
       return;
@@ -938,6 +940,7 @@ function fetchImage(imageUrl, containerId) {
     imgArray.push(imageElement.src);
     imageElement.alt = "Image";
     imageContainer.appendChild(imageElement);
+    
   }
 }
 
@@ -1034,6 +1037,8 @@ const newBtn = (index) => {
       update(newEntryRef, { inclusions: inclusions });
     } else {
       console.log("Heading already exists. Not saving duplicate.");
+
+      
     }
   } catch (error) {
     console.error("Error during saveFormData:", error);
@@ -1263,7 +1268,14 @@ function printForm() {
     ///////////////////////////////////////////////
     /////////////////////////////////////////////
     /////////////////////////////////////////////// 
-   
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+    
      ///////////////////////////////////////////
     /////////////////////////////////////////////
     ///////////////////////////////////////////////////
@@ -1388,8 +1400,8 @@ function printForm() {
                          <div class="flex flex-col gap-2">
                            <div
                              class="w-full py-2 bg-orange-400 text-black px-2 flex items-center justify-between rounded-lg" >
-                             <h1 class="text-xl font-semibold">${items.head[index]}</h1>
-                             <h1 class=" text-lg"> ${items.date[index]}</h1>
+                             <h1 class="text-xl font-semibold">Day${items.duration[index]}</h1>
+                             <h1 class="text-lg"> ${formatDate(items.date[index])}</h1>
                            </div>
                          </div>
                          <div class="flex flex-col items-start gap-3">

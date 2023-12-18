@@ -5,12 +5,12 @@ import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "http
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAEGTmuzOkUUGlGOgo2lq0i5nIBoCsMAx8",
-  authDomain: "trekkand-travel.firebaseapp.com",
-  projectId: "trekkand-travel",
-  storageBucket: "trekkand-travel.appspot.com",
-  messagingSenderId: "293012537124",
-  appId: "1:293012537124:web:6b84ae7235651448893db1"
+  apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
+  authDomain: "trekkandtravel-7daeb.firebaseapp.com",
+  projectId: "trekkandtravel-7daeb",
+  storageBucket: "trekkandtravel-7daeb.appspot.com",
+  messagingSenderId: "313424140423",
+  appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
 };
 
  
