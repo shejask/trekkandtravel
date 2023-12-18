@@ -133,7 +133,7 @@
                 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             
                 <label for="travelDate" class="block">Travel Date:</label>
-                <input  type="date" id="travelDate"   class="w-full p-2 border rounded border border-slate-700">
+                <input  type="date" id="traveldate"   class="w-full p-2 border rounded border border-slate-700">
             
                 <div class=" mt-5 flex input-row">
                     <div class="flex-1 mb-2 lg:mr-2">
@@ -152,12 +152,6 @@
                 </div>
 
 
-                      <div class="mb-4">
-                    <label for="number-of-pax" class="block">Number of Pax:</label>
-                    <input type="number" id="number-of-pax" min="1" class="w-full p-2 border rounded border border-slate-700">
-                </div>
-
-
 
 
             
@@ -171,50 +165,43 @@
                     <input type="text" id="departure-details" class="w-full p-2 border rounded border border-slate-700">
                 </div>
             
-               
+                <div class="mb-4">
+                    <label for="number-of-pax" class="block">Number of Pax:</label>
+                    <input type="number" id="number-of-pax" min="1" class="w-full p-2 border rounded border border-slate-700">
+                </div>
             
-                <!-- <div class="mb-4">
-                    <label for="duration" class="block">Duration:</label>
-                    <input type="text" id="duration" class="w-full p-2 border rounded border border-slate-700">
-                </div> -->
+              <!-- ///////////////////////////////
+              ///////////////////////////
+                  TOUR HIGHLIGTS
+              ///////////////////////////////
+              /////////////////////////// -->
 
                 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-
-                        <!-- Package Name -->
-                        <div class="mb-4 ">
-                            <label for="package-name" class="block">Package Name:</label>
-                            <input type="text" id="package-name" name="package-name"
-                            class="w-full p-2 border rounded border border-slate-700">
-                                
-                                <div id="packagelist"></div>
-                        </div>
-            
-                      
-            
-                        <!-- Package Description -->
-                        <div class="mb-4">
-                            <label for="package-description" class="block">Description</label>
-                            <textarea id="package-description" name="package-description"
-                            class="w-full p-2 border rounded border border-slate-700"></textarea>
-                        </div>
-
-                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-
             
                 <div class="mb-4">
                     <label for="tour-highlights" class="block">Tour Highlights:</label>
-                    <input type="text" id="tour-highlights" placeholder="Enter tour highlights"
-                        class="w-full p-2 border rounded border border-slate-700">
-                    <div id="tour-highlights-dropdown" class="mt-2"></div>
+                    <input type="text" id="tourHighlight" name="tourHighlight" placeholder="Enter tour highlights" class="w-full p-2 border rounded border border-slate-700">
+                    <div id="tourhighlightsdropdown" class="mt-2"></div>
                 </div>
 
+
+                  <!-- Container for dynamically added tour highlight fields -->
+        <div id="tourHighlightsContainer" class="mt-4"></div>
+
+
                
-            
-                <div id="tour-highlights-container" class="mb-4"></div>
-                <button type="button" id="addhighlights"
-                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add</button>
+             
+                <button type="button" id="addTourHighlight" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add</button>
 
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+                            <!-- ///////////////////////////////
+              ///////////////////////////
+            
+              ///////////////////////////////
+              /////////////////////////// -->
+
+            
 
                     
                 <!-- Package Description -->
@@ -234,16 +221,45 @@
 
 
               
+
+
+
+
+
+
+
+
+
+
+
+
+
                      
-                     
+                        <!-- Package Name -->
+                        <div class="mb-4 ">
+                            <label for="packageName" class="block">Package Name:</label>
+                            <input type="text" id="packageName" name="packageName"
+                            class="w-full p-2 border rounded border border-slate-700" required>
+                            <div hidden  id="allpackage-name"></div>
+                        </div>
+            
+                      
+            
+                        <!-- Package Description -->
+                        <div class="mb-4">
+                            <label for="package-description" class="block">Description</label>
+                            <textarea id="description" name="description"
+                            class="w-full p-2 border rounded border border-slate-700"></textarea>
+                        </div>
+              
 
                         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
 
-                        <label for="duration" class="block font-semibold text-xl">Duration:</label>
+                 <label for="duration" class="block font-semibold text-xl">Duration:</label>
 
-                <label for="Days" class="block">No of Days:</label>
-                <select  id="choose-days" name="choose-days" class="w-full p-2 border rounded border border-slate-700">
+                <label for="duration" class="block">No of Days:</label>
+                <select id="duration" name="duration" class="w-full p-2 border rounded border border-slate-700">
                     <option value="0">Choose Days</option>
                     <option value="1">Day 1</option>
                     <option value="2">Day 2</option>
@@ -318,9 +334,9 @@
                 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
             
-                <div id="package-details-container" class="mb-4"></div>
+                <!-- <div id="package-details-container" class="mb-4"></div> -->
 
-              
+                <div id="formContainer"></div>
       
                 <div class="mb-4">
                     <label for="amount-details" class="block">Amount:</label>
@@ -362,7 +378,7 @@
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             
                     <div class="w-full p-2 border rounded border border-slate-700smb-4">
-                         <h1 class="text-2xl font-bold">TOUR INCLUSIONS</h1>
+                        <h1 class="text-2xl font-bold">TOUR  Inclusions</h1>
                     
                         <div class="mb-4">
                             <textarea id="personal-nature" rows="4"
@@ -402,7 +418,7 @@
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     
                      <div class="mb-4 mt-5">
-                      <h1 class="text-2xl font-bold">TOUR EXCLUSIONS</h1>
+                        <h1 class="text-2xl font-bold">TOUR EXCLUSIONS</h1>
                     
                         <div class="mb-4">
                             <textarea id="field-one" rows="4"
@@ -458,37 +474,53 @@
                     
                     <div class="mb-4 mt-5">
                         <label for="amount-executive" class="block">Tour Executive :</label>
-                        <input type="number" id="amount-executive" min="1" class="w-full p-2 border rounded border border-slate-700">
+                        <input type="text" id="amount-executive" min="1" class="w-full p-2 border rounded border border-slate-700">
                     </div>
                     
                     <div class="mb-4">
                         <label for="tour-contact" class="block">Contact no :</label>
-                        <input type="number" id="tour-contact" min="1" class="w-full p-2 border rounded border border-slate-700">
+                        <input type="text" id="tour-contact" min="1" class="w-full p-2 border rounded border border-slate-700">
                     </div>
                     
                     <div class="mb-4">
                         <label for="tour-mail" class="block">Mail Id :</label>
-                        <input type="number" id="tour-mail" min="1" class="w-full p-2 border rounded border border-slate-700">
+                        <input type="text" id="tour-mail" min="1" class="w-full p-2 border rounded border border-slate-700">
                     </div>
                     </div>
 
                     
-                 
+                    <!-- <button type="submit"id="newSaveBtn" class="bg-red-500 ml-5 text-white px-4 py-2 rounded hover:bg-red-700">Load Image</button>
 
-                    <button type="button" id="printButton" class="bg-blue-500 ml-5 mb-5 text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">Print</button>
-                    <button type="submit"  id="savedata"   class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Save</button>
-
+                    <button type="submit" id="savedata" class="bg-green-500 ml-5 text-white px-4 py-2 rounded hover:bg-green-700">Save</button>
+                    
+                    <button type="button" id="printButton" class="bg-blue-500 ml-5 mb-5 text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">Print</button> -->
 
                     <!-- <button type="button"  id="submitBtn"   class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-green-700">Save</button> -->
+ 
 
+                    <div class=" mt-1 flex input-row">
+                        <div class="flex-2 mb-2 ml-5   lg:mr-2">
+                             <button type="submit" id="newSaveBtn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Load Image</button>
+                             <p class="text-xs  ">Click To Load Images</p>
 
+                        </div>
+        
+                        <div class="flex-2 mb-2 lg:mr-2">
+                            <button type="submit" id="savedata" class="bg-green-500 ml-5 text-white px-4 py-2 rounded hover:bg-green-700">Save</button>
+                            <p class="text-xs ml-5">Save All</p>
+                        </div>
+
+                        <div class="flex-1 ml-5 mb-2 lg:mr-2">
+                            <button type="button"  id="printButton"   class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700">Print</button>
+                            <p class="text-xs text-red-900 hidden ">Save Before Print </p>
+                        </div>
+                    </div>
 
                     </form>
                     
             
 
-
-
+  
 
  
 
