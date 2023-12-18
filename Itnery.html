@@ -152,6 +152,12 @@
                 </div>
 
 
+                      <div class="mb-4">
+                    <label for="number-of-pax" class="block">Number of Pax:</label>
+                    <input type="number" id="number-of-pax" min="1" class="w-full p-2 border rounded border border-slate-700">
+                </div>
+
+
 
 
             
@@ -165,10 +171,7 @@
                     <input type="text" id="departure-details" class="w-full p-2 border rounded border border-slate-700">
                 </div>
             
-                <div class="mb-4">
-                    <label for="number-of-pax" class="block">Number of Pax:</label>
-                    <input type="number" id="number-of-pax" min="1" class="w-full p-2 border rounded border border-slate-700">
-                </div>
+               
             
                 <!-- <div class="mb-4">
                     <label for="duration" class="block">Duration:</label>
@@ -176,6 +179,27 @@
                 </div> -->
 
                 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+                        <!-- Package Name -->
+                        <div class="mb-4 ">
+                            <label for="package-name" class="block">Package Name:</label>
+                            <input type="text" id="package-name" name="package-name"
+                            class="w-full p-2 border rounded border border-slate-700">
+                                
+                                <div id="packagelist"></div>
+                        </div>
+            
+                      
+            
+                        <!-- Package Description -->
+                        <div class="mb-4">
+                            <label for="package-description" class="block">Description</label>
+                            <textarea id="package-description" name="package-description"
+                            class="w-full p-2 border rounded border border-slate-700"></textarea>
+                        </div>
+
+                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
             
                 <div class="mb-4">
                     <label for="tour-highlights" class="block">Tour Highlights:</label>
@@ -211,24 +235,7 @@
 
               
                      
-                        <!-- Package Name -->
-                        <div class="mb-4 ">
-                            <label for="package-name" class="block">Package Name:</label>
-                            <input type="text" id="package-name" name="package-name"
-                            class="w-full p-2 border rounded border border-slate-700">
-                                
-                                <div id="packagelist"></div>
-                        </div>
-            
-                      
-            
-                        <!-- Package Description -->
-                        <div class="mb-4">
-                            <label for="package-description" class="block">Description</label>
-                            <textarea id="package-description" name="package-description"
-                            class="w-full p-2 border rounded border border-slate-700"></textarea>
-                        </div>
-              
+                     
 
                         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
