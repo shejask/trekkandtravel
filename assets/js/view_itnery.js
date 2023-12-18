@@ -3,16 +3,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebas
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDA1ufLnKII3J72aqdPW_5ePacTWBiEgHg",
-  authDomain: "share2care-99b93.firebaseapp.com",
-  databaseURL: "https://share2care-99b93-default-rtdb.firebaseio.com",
-  projectId: "share2care-99b93",
-  storageBucket: "share2care-99b93.appspot.com",
-  messagingSenderId: "749651496086",
-  appId: "1:749651496086:web:e9cb696743d37f367486b7"
+  apiKey: "AIzaSyAEGTmuzOkUUGlGOgo2lq0i5nIBoCsMAx8",
+  authDomain: "trekkand-travel.firebaseapp.com",
+  projectId: "trekkand-travel",
+  storageBucket: "trekkand-travel.appspot.com",
+  messagingSenderId: "293012537124",
+  appId: "1:293012537124:web:6b84ae7235651448893db1"
 };
 
-// Initialize Firebase
 // Initialize Firebase
 initializeApp(firebaseConfig);
 const database = getDatabase();
@@ -20,14 +18,12 @@ const database = getDatabase();
 // Reference to the TransportVoucher node in your database
 const transportVoucherRef = ref(database, 'itnery');
 
-// Reference to the HTML input and div
+// Reference to the HTML inputs and divs
 const voucherInput = document.getElementById('VoucherNo');
+const travelDateInput = document.getElementById('travelDate');
 const voucherIdListDiv = document.getElementById('VoucherIdlist');
- 
-
- 
-
- 
+const databaseNodeId = document.getElementById('databaseNodeId');
+const confirmationNoInput = document.getElementById('confirmationNoInput');
 
 // Listen for input changes on the voucher input
 voucherInput.addEventListener('input', (event) => {
@@ -39,38 +35,45 @@ voucherInput.addEventListener('input', (event) => {
 
     // Check if the data exists
     if (transportVoucherData) {
-      // Filter voucher numbers based on the search term
-      const filteredVoucherNumbers = Object.values(transportVoucherData)
-        .filter(parent => parent.voucherNo.toLowerCase().includes(searchTerm))
-        .map(parent => parent.voucherNo);
+      // Filter tourIds based on the search term
+      const filteredTourIds = Object.values(transportVoucherData)
+        .filter(parent => parent && parent.tourId && parent.tourId.toLowerCase().includes(searchTerm))
+        .map(parent => parent.tourId);
 
-      // Display filtered voucher numbers in the HTML div
-      voucherIdListDiv.innerHTML = `${filteredVoucherNumbers.map(voucherNo => `<h6 class="cursor-pointer">${voucherNo}</h6>`).join('')}`;
+      // Display filtered tourIds in the HTML div
+      voucherIdListDiv.innerHTML = `${filteredTourIds.map(tourId => `<h6 class="cursor-pointer">${tourId}</h6>`).join('')}`;
 
       // Add click event listener to each list item
       const listItems = voucherIdListDiv.querySelectorAll('h6');
       listItems.forEach(item => {
         item.addEventListener('click', () => {
-          // Set the selected voucher number to the input field
+          // Set the selected tourId to the input field
           voucherInput.value = item.textContent;
 
           // Fetch the corresponding unique key from the database
-          const uniqueKey = Object.keys(transportVoucherData).find(key => transportVoucherData[key].voucherNo === item.textContent);
-
-         
-
+          const uniqueKey = Object.keys(transportVoucherData).find(key => transportVoucherData[key].tourId === item.textContent);
 
           // Display the unique key in the HTML h1
           databaseNodeId.textContent = uniqueKey ? `Unique Key: ${uniqueKey}` : 'Unique Key not available';
 
-          // Auto-fill ConfirmationNo from the database
+          // Auto-fill ConfirmationNo and Travel Date from the database
           if (uniqueKey) {
-             
-            
- 
+            const confirmationNo = transportVoucherData[uniqueKey].confirmationNo;
+            const travelDate = transportVoucherData[uniqueKey].travelDate;
 
+            // Auto-fill confirmationNo wherever you need it
+            if (confirmationNoInput) {
+              confirmationNoInput.value = confirmationNo;
+            } else {
+              console.error('Element with id "confirmationNoInput" not found.');
+            }
 
-
+            // Auto-fill travelDate in the date input
+            if (travelDateInput) {
+              travelDateInput.value = travelDate;
+            } else {
+              console.error('Element with id "travelDateInput" not found.');
+            }
           }
 
           // Hide the VoucherIdlist div
@@ -78,44 +81,14 @@ voucherInput.addEventListener('input', (event) => {
         });
       });
 
-      // Show the VoucherIdlist div if there are matching voucher numbers
-      voucherIdListDiv.style.display = filteredVoucherNumbers.length > 0 ? 'block' : 'none';
+      // Show the VoucherIdlist div if there are matching tourIds
+      voucherIdListDiv.style.display = filteredTourIds.length > 0 ? 'block' : 'none';
     } else {
       // Handle the case when there is no data
-      voucherIdListDiv.innerHTML = 'No voucher numbers available.';
+      voucherIdListDiv.innerHTML = 'No tourIds available.';
     }
   }, (error) => {
     // Handle errors
     console.error('Error fetching data:', error);
   });
 });
-
-
-
-
-
-
-
-
-
-let list = document.querySelectorAll(".navigation li");
-
-function activeLink() {
-  list.forEach((item) => {
-    item.classList.remove("hovered");
-  });
-  this.classList.add("hovered");
-}
-
-list.forEach((item) => item.addEventListener("mouseover", activeLink));
-
-// Menu Toggle
-let toggle = document.querySelector(".toggle");
-let navigation = document.querySelector(".navigation");
-let main = document.querySelector(".main");
-
-toggle.onclick = function () {
-  navigation.classList.toggle("active");
-  main.classList.toggle("active");
-};
- 

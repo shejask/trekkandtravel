@@ -1,4 +1,4 @@
-   
+  
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
 import { getDatabase, ref as databaseRef, push, set, get, query, onValue,update, } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
@@ -8,13 +8,12 @@ import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "http
  
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBo33vSuwc_qiRkdqNcb5rlZvOYUAH7D9Y",
-  authDomain: "coastal-idea-331205.firebaseapp.com",
-  databaseURL: "https://coastal-idea-331205-default-rtdb.firebaseio.com",
-  projectId: "coastal-idea-331205",
-  storageBucket: "coastal-idea-331205.appspot.com",
-  messagingSenderId: "452194039775",
-  appId: "1:452194039775:web:a252e9f0ba7252afd5766a"
+  apiKey: "AIzaSyAEGTmuzOkUUGlGOgo2lq0i5nIBoCsMAx8",
+  authDomain: "trekkand-travel.firebaseapp.com",
+  projectId: "trekkand-travel",
+  storageBucket: "trekkand-travel.appspot.com",
+  messagingSenderId: "293012537124",
+  appId: "1:293012537124:web:6b84ae7235651448893db1"
 };
 
 

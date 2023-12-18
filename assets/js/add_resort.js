@@ -3,16 +3,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebas
 import { getDatabase, ref, push, set, onValue, orderByChild } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
 
- const firebaseConfig = {
-    apiKey: "AIzaSyDA1ufLnKII3J72aqdPW_5ePacTWBiEgHg",
-    authDomain: "share2care-99b93.firebaseapp.com",
-    databaseURL: "https://share2care-99b93-default-rtdb.firebaseio.com",
-    projectId: "share2care-99b93",
-    storageBucket: "share2care-99b93.appspot.com",
-    messagingSenderId: "749651496086",
-    appId: "1:749651496086:web:e9cb696743d37f367486b7"
-};
-
+const firebaseConfig = {
+    apiKey: "AIzaSyAEGTmuzOkUUGlGOgo2lq0i5nIBoCsMAx8",
+    authDomain: "trekkand-travel.firebaseapp.com",
+    projectId: "trekkand-travel",
+    storageBucket: "trekkand-travel.appspot.com",
+    messagingSenderId: "293012537124",
+    appId: "1:293012537124:web:6b84ae7235651448893db1"
+  };
  
 
 // Initialize Firebase

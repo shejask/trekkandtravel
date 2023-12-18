@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Tour Highlight Search</title>
+</head>
+
+<body class="bg-gray-100 p-8">
+
+    <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+        <label for="tourHighlight" class="block text-sm font-medium text-gray-700">Tour Highlight</label>
+        <input type="text" id="tourHighlight" name="tourHighlight" class="form-input bg-green-500 block w-full sm:text-sm sm:leading-5 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo transition duration-150 ease-in-out">
+
+        <!-- Dropdown to display tour highlights -->
+        <div id="tourhighlightsdropdown" class="mt-2"></div>
+
+        <!-- Plus button to add a new tour highlight field -->
+        <button type="button" id="addTourHighlight" class="mt-4 bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">+</button>
+
+        <!-- Container for dynamically added tour highlight fields -->
+        <div id="tourHighlightsContainer" class="mt-4"></div>
+
+        <button type="button" id="savedata" class="bg-green-500 mt-4 text-white px-4 py-2 rounded hover:bg-green-700">Save</button>
+    </div>
+
+<!-- Print button -->
+<button type="button" id="printButton" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Print</button>
+
+
+    <!-- Include the tour.js script -->
+    <script type="module" src="/assets/js/tour.js"></script>
+
+</body>
+
+</html>

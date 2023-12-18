@@ -3,14 +3,13 @@ import { ref } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database
 import { getDatabase, ref as databaseRef, push, set, get,   onValue } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
  
 const firebaseConfig = {
-    apiKey: "AIzaSyDA1ufLnKII3J72aqdPW_5ePacTWBiEgHg",
-    authDomain: "share2care-99b93.firebaseapp.com",
-    databaseURL: "https://share2care-99b93-default-rtdb.firebaseio.com",
-    projectId: "share2care-99b93",
-    storageBucket: "share2care-99b93.appspot.com",
-    messagingSenderId: "749651496086",
-    appId: "1:749651496086:web:e9cb696743d37f367486b7"
-};
+    apiKey: "AIzaSyAEGTmuzOkUUGlGOgo2lq0i5nIBoCsMAx8",
+    authDomain: "trekkand-travel.firebaseapp.com",
+    projectId: "trekkand-travel",
+    storageBucket: "trekkand-travel.appspot.com",
+    messagingSenderId: "293012537124",
+    appId: "1:293012537124:web:6b84ae7235651448893db1"
+  };
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
@@ -630,11 +629,11 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="flex flex-col text-white text-xs">
           <div class="flex gap-1 items-center">
             <img src="" alt="" />
-             <h1>Info@trekkandtravel.com</h1>
-        </div>
-        <div class="flex gap-1 items-center">
-          <img src="" alt="" />
-          <h1>Address: Kattuppara, Bridge Junction, Chelakkad Po, Malappuram, Kerala , India- 679323</h1>
+            <h1>Info@trekkandtravel.com</h1>
+            </div>
+            <div class="flex gap-1 items-center">
+              <img src="" alt="" />
+              <h1>Address: Kattuppara, Bridge Junction, Chelakkad Po, Malappuram, Kerala , India- 679323</h1>
           </div>
         </div>
       </div>

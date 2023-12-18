@@ -8,7 +8,12 @@
      <!-- ======= Styles ====== -->
      <link rel="stylesheet" href="/assets/styles/style.css">
          <script src="https://cdn.tailwindcss.com"></script>
-
+        <style>
+         .body{
+             font-family: 'Manrope', sans-serif;
+   font-family: 'Poppins', sans-serif;
+         }
+     </style>
 
 </head>
 
@@ -20,10 +25,11 @@
                 <li>
                     <a href="index.html">
                         <span class="icon">
-                            <ion-icon name="logo-apple"></ion-icon>
+                            <ion-icon  hidden name="logo-apple"></ion-icon>
+                            <img class="mt-2 ml-4" width="40" src="/assets/imgs/TREKKLOGO.png" alt="">
                             <!-- <img width="20" src="/assets/imgs/TREKKLOGO.png" alt=""> -->
                         </span>
-                        <span class="title">Trekk & Travels</span>
+                        <span class="title font-semibold">Trekk & Travels</span>
                     </a>
                 </li>
 
@@ -106,7 +112,6 @@
                         <ion-icon name="search-outline"></ion-icon>
                     </label>
                 </div>
-
                 <!-- <div class="user">
                     <img src="assets/imgs/customer01.jpg" alt="">
                 </div> -->
@@ -118,9 +123,17 @@
             <div id="printableContent" class="w-full h-auto">
 
      
-    <div  class="md:flex   mt-5 md:justify-between">
+    <div  class="md:flex   mt-5 md:justify-between">                    
         <div class="md:ml-5 md:w-1/2 mx-auto">
-            <h1 class="text-2xl md:ml-5  text-center  lg:text-left	  font-bold mb-4">Create Hotel Voucher</h1>
+
+            <button hidden onclick="window.location.href='Edit_hotel_voucher.html'" class="bg-indigo-500 ml-4 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded">
+                View Vouchers
+            </button>
+            
+            <h1 class="text-3xl md:ml-4  text-center  lg:text-left	mt-5  font-bold mb-4">Create Hotel Voucher</h1>
+            
+          
+
 
             <!-- Hotel Bill Form -->
             <form id="hotel-bill-form"
@@ -129,12 +142,12 @@
                 <h2 class="font-bold">Hotel Details</h2>
                 <div class="mb-4">
                     <label for="confirmation-number"   class="block">Confirmation Number:</label >
-                    <input type="text" required id="confirmation-number"
-                        class="w-full p-2 border rounded border border-slate-700">
-                        <div hidden id="hotel-voucher-dropdown"
-                        class=" absolute z-50 left-0 mt-2 w-96 bg-white rounded-md shadow-lg">
+                    <input type="text"   id="confirmation-number"   class="w-full p-2 border rounded border border-slate-700" required>
+                        <div hidden id="hotel-voucher-dropdown"  class=" absolute z-50 left-0 mt-2 w-96 bg-white rounded-md shadow-lg">
+                             
                        <!-- The dropdown list will be dynamically populated here -->
-                   </div>
+                   </div> 
+                    
                 </div>
 
 
@@ -171,10 +184,9 @@
 
                 <div class="mb-4">
                     <label for="hotel-photo" class="block">Hotel Photo:</label>
-                    <img id="hotel-photo-preview" src="" class="w-30 h-20 border rounded bg-gray-200">
+                    <img id="hotel-photo-preview"   class="w-30 h-20 border rounded bg-gray-200">
                     <input type="file"   class="mt-4" id="photo" accept="image/*">
-                    <P hidden>Add Resort Name in Add Resort Page</P>
-                </div>
+                 </div>
 
                 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
@@ -256,13 +268,12 @@
                     <!-- Initial set of room input fields -->
                     <div class="room-details">
                         <div class="mb-4">
-                            <label for="room-type" class="block">Room Type:</label>
+                            <label for="room-type"   class="block">Room Type:</label>
                             <input type="text" class="w-full p-2 rounded border border-slate-700" id="room-type">
                         </div>
                         <div class="mb-4">
                             <label for="no-of-rooms" class="block">No. of Rooms:</label>
-                            <input type="number" class="w-full p-2 border rounded border border-slate-700"
-                                id="no-of-rooms">
+                            <input type="number" class="w-full p-2 border rounded border border-slate-700" id="no-of-rooms">
                         </div>
                         <div class="mb-4">
                             <label for="no-of-extra-bed" class="block">No. of Extra Beds:</label>
@@ -280,21 +291,17 @@
                                 id="meal-plan">
                         </div>
                     </div>
-
-                    
-                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-
-
-            
-
-
+ 
+ 
                    
                 </div>
-
+     
                    <!-- Button to add more room input fields -->
                    <button type="button" id="add-room-button"
                    class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Add Room</button>
 
+
+                   <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                              <!-- Add other fields as needed -->
                <h2 class="font-bold">Check-in</h2>
 
@@ -423,8 +430,7 @@
 
               
 
-                <button type="button" id="create-bill-button"
-                    class="bg-indigo-800 text-white py-2 px-4 rounded hover:bg-indigo-600">Print</button>
+                <button type="button" id="create-bill-button" class="bg-indigo-800 text-white py-2 px-4 rounded hover:bg-indigo-600">Print</button>
             </form>
         </div>
     </div>

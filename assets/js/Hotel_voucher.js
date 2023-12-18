@@ -1,18 +1,16 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
 import  { getDatabase, ref, push, onValue, child ,get } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
- 
-
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDA1ufLnKII3J72aqdPW_5ePacTWBiEgHg",
-  authDomain: "share2care-99b93.firebaseapp.com",
-  databaseURL: "https://share2care-99b93-default-rtdb.firebaseio.com",
-  projectId: "share2care-99b93",
-  storageBucket: "share2care-99b93.appspot.com",
-  messagingSenderId: "749651496086",
-  appId: "1:749651496086:web:e9cb696743d37f367486b7"
+  apiKey: "AIzaSyAEGTmuzOkUUGlGOgo2lq0i5nIBoCsMAx8",
+  authDomain: "trekkand-travel.firebaseapp.com",
+  projectId: "trekkand-travel",
+  storageBucket: "trekkand-travel.appspot.com",
+  messagingSenderId: "293012537124",
+  appId: "1:293012537124:web:6b84ae7235651448893db1"
 };
 
  
@@ -22,7 +20,9 @@ initializeApp(firebaseConfig);
 const database = getDatabase();
 const vouchersRef = ref(database, 'vouchers');
 const guestsRef = ref(database, 'guests'); // Add a reference to the 'guests' node
- 
+const storage = getStorage();
+
+
 
  
  
@@ -103,6 +103,8 @@ const fileInput = document.getElementById("hotel-photo");
                      document.getElementById('hotel-address').removeAttribute('readonly');
                      document.getElementById('google-map-link').removeAttribute('readonly');
                      document.getElementById('hotel-phone').removeAttribute('readonly');
+                     document.getElementById('photo').style.display = 'none';
+
  
                      // Auto-fill terms and conditions
                      updateTermsAndConditions(voucher.termsAndCondition);
@@ -114,7 +116,7 @@ const fileInput = document.getElementById("hotel-photo");
                     if (voucher.hotelPhoto) {
                         hotelPhotoPreview.src = voucher.hotelPhoto;
 
-                        fileInput.style.display = 'none';
+                     
 
 
                     } else {
@@ -485,8 +487,7 @@ var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : ''; // Get a
   <style>
       .body{
           font-family: 'Manrope', sans-serif;
-font-family: 'Poppins', sans-serif;
-      }
+       }
   </style>
   <title>Document</title>
 </head>
@@ -715,10 +716,10 @@ font-family: 'Poppins', sans-serif;
         <div class="flex gap-1 items-center">
           <img src="" alt="" />
           <h1>Info@trekkandtravel.com</h1>
-        </div>
-        <div class="flex gap-1 items-center">
-          <img src="" alt="" />
-          <h1>Address: Kattuppara, Bridge Junction, Chelakkad Po, Malappuram, Kerala , India- 679323</h1>
+          </div>
+          <div class="flex gap-1 items-center">
+            <img src="" alt="" />
+            <h1>Address: Kattuppara, Bridge Junction, Chelakkad Po, Malappuram, Kerala , India- 679323</h1>
         </div>
       </div>
     </div>
@@ -839,12 +840,21 @@ toggle.onclick = function () {
 
 // Event listener for the "Print" button
 document.getElementById("save-button").addEventListener("click", function () {
+  // Check if the confirmation number is filled
+  var confirmationNumberInput = document.getElementById("confirmation-number");
+  
+  if (confirmationNumberInput.value.trim() === "") {
+    // If the input is empty, display an alert or perform other necessary actions
+    alert("Please fill in the confirmation number before saving.");
+    return; // Stop further execution
+  }
+
   // Save the form data to the database
   saveFormDataToDatabase();
 
   // Handle the rest of your logic (e.g., opening the print page)
-  
 });
+
 
 
 // Add an event listener to fetch data when the page loads
@@ -1026,166 +1036,165 @@ fetchConfirmationNumbers();
 // Function to fetch all confirmation numbers from the database 
 
 
+ 
 
+// The function to save data to Firebaseasync function saveFormDataToDatabase() {
+  async function saveFormDataToDatabase() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// The function to save data to Firebase
-async function saveFormDataToDatabase() {
-
- // Create a reference to the database node where you want to store the data
- var formDataRef = ref(database, 'formData');
-
- push(formDataRef, {
-  
-  // ... (other form data)
-}).then(function () {
-  alert('Successfully saved');
-  console.log('Data saved successfully!');
-}).catch(function (error) {
-  console.error('Error saving data:', error);
-});
-
-
-
-
-  var confirmationnumber = document.getElementById('confirmation-number').value;
-  var hotelName = document.getElementById('hotel-name').value;
-  var hotelAddress = document.getElementById('hotel-address').value;
-  var googleMapLink = document.getElementById('google-map-link').value;
-  var hotelPhone = document.getElementById('hotel-phone').value;
-  var hotellPhoto = document.getElementById('hotel-photo-preview').src;
-  
-  var hotelPhotoInput = document.getElementById('hotel-photo');
-  // var hotelphoto = hotelPhotoInput.files[0]; // Get the selected file
+    // Create a reference to the database node where you want to store the data
+    var formDataRef = ref(database, 'formData');
    
-  var guestName = document.getElementById('guest-name').value;
-  var guestNumber = document.getElementById('guest-number').value;
-  var guestCitizen = document.getElementById('guest-citizen').value;
-
-  var NoofAdult = document.getElementById('No-of-Adults').value;
-
-  var issuedBy = document.getElementById('issued-by').value;
-  var issuedDate = document.getElementById('issued-date').value;
-  var bookedBy = document.getElementById('booked-by').value;
-  var contactNo = document.getElementById('contact-no').value;
-  var mailId = document.getElementById('mail-id').value;
-
-  var checkInDate = document.getElementById('check-in-date').value;
-  var checkInTime = document.getElementById('check-in-time').value;
-  var checkOutDate = document.getElementById('check-out-date').value;
-  var checkOutTime = document.getElementById('check-out-time').value;
-
-  var notes = document.getElementById('notes').value;
-  var specialRequest = document.getElementById('special-request').value;
-  var paymentInfo = document.getElementById('payment-info').value;
-  var arrival = document.getElementById('arrival').value;
-  var ticketNo = document.getElementById('ticket-no').value;
-  var departure = document.getElementById('departure').value;
-  var ticketNotwo = document.getElementById('ticket-no-two').value;
+    push(formDataRef, {
+     
+     // ... (other form data)
+   }).then(function () {
+     alert('Successfully saved');
+     console.log('Data saved successfully!');
+   }).catch(function (error) {
+     console.error('Error saving data:', error);
+   });
+   
+   
+   
+   
+     var confirmationnumber = document.getElementById('confirmation-number').value;
+     var hotelName = document.getElementById('hotel-name').value;
+     var hotelAddress = document.getElementById('hotel-address').value;
+     var googleMapLink = document.getElementById('google-map-link').value;
+     var hotelPhone = document.getElementById('hotel-phone').value;
+      
 
 
+     var hotellPhoto = document.getElementById('hotel-photo-preview').src;
 
-
-  const roomDetails = [];
-  document.querySelectorAll('.room-details').forEach(room => {
-      const roomType = room.querySelector('#room-type').value;
-      const noOfRooms = room.querySelector('#no-of-rooms').value;
-      const noOfExtraBed = room.querySelector('#no-of-extra-bed').value;
-      const childWithoutBed = room.querySelector('#child-without-bed').value;
-      const mealPlan = room.querySelector('#meal-plan').value;
-
-      roomDetails.push({ roomType, noOfRooms, noOfExtraBed, childWithoutBed, mealPlan });
-  });
-
-  var termsInputs = document.querySelectorAll('.terms-condition-input');
-  var termsConditions = Array.from(termsInputs).map(input => input.value);
-
-  // Extract "Cancellation Policy" values
-  var cancellationInputs = document.querySelectorAll('.cancellation-policy-input');
-  var cancellationPolicy = Array.from(cancellationInputs).map(input => input.value);
-
- // Get the selected image file
-  var hotelPhotoInputFile = document.getElementById('photo');
-  var selectedPhoto = hotelPhotoInputFile.files[0];
-  var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : '';
-
-
-
-  // ... rest of your variables
-
-  // Create a reference to the database node where you want to store the data
-  var formDataRef = ref(database, 'formData');
-
-  // Push the data to the database
-  push(formDataRef, {
-      confirmationnumber: confirmationnumber,
-      hotelName:hotelName,
-      hotelAddress:hotelAddress,
-      googleMapLink:googleMapLink,
-      hotelPhone:hotelPhone,
-      hotellPhoto:hotellPhoto,
-      hotelPhotoInput:hotelPhotoInput,
-      guestName:guestName,
-      guestNumber:guestNumber,
-      guestCitizen:guestCitizen,
-      NoofAdult:NoofAdult,
-      issuedBy:issuedBy,
-      issuedDate:issuedDate,
-      bookedBy:bookedBy,
-      contactNo:contactNo,
-      mailId:mailId, 
-      checkInDate:checkInDate,
-      checkInTime:checkInTime,
-      checkOutDate:checkOutDate,
-      checkOutTime:checkOutTime,
-      notes:notes,
-      specialRequest:specialRequest,
-      paymentInfo:paymentInfo,
-      arrival:arrival,
-      ticketNo:ticketNo,
-      departure:departure,
-      ticketNotwo:ticketNotwo,
-      termsConditions: termsConditions,
-      cancellationPolicy: cancellationPolicy, 
-      roomDetails: roomDetails,
-      photoURL:photoURL,
     
-
- 
-
-        // ... (other form data)
-    }).then(function () {
-      alert('Successfully saved');
-      console.log('Data saved successfully!');
-    }).catch(function (error) {
-      console.error('Error saving data:', error);
-    });
+     
+    //  var hotelPhotoInput = document.getElementById('hotel-photo');
+     // var hotelphoto = hotelPhotoInput.files[0]; // Get the selected file
+      
+     var guestName = document.getElementById('guest-name').value;
+     var guestNumber = document.getElementById('guest-number').value;
+     var guestCitizen = document.getElementById('guest-citizen').value;
    
-}
+     var NoofAdult = document.getElementById('No-of-Adults').value;
+   
+     var issuedBy = document.getElementById('issued-by').value;
+     var issuedDate = document.getElementById('issued-date').value;
+     var bookedBy = document.getElementById('booked-by').value;
+     var contactNo = document.getElementById('contact-no').value;
+     var mailId = document.getElementById('mail-id').value;
+   
+     var checkInDate = document.getElementById('check-in-date').value;
+     var checkInTime = document.getElementById('check-in-time').value;
+     var checkOutDate = document.getElementById('check-out-date').value;
+     var checkOutTime = document.getElementById('check-out-time').value;
+   
+     var notes = document.getElementById('notes').value;
+     var specialRequest = document.getElementById('special-request').value;
+     var paymentInfo = document.getElementById('payment-info').value;
+     var arrival = document.getElementById('arrival').value;
+     var ticketNo = document.getElementById('ticket-no').value;
+     var departure = document.getElementById('departure').value;
+     var ticketNotwo = document.getElementById('ticket-no-two').value;
+   
+   
+   
+   
+     const roomDetails = [];
+     document.querySelectorAll('.room-details').forEach(room => {
+         const roomType = room.querySelector('#room-type').value;
+         const noOfRooms = room.querySelector('#no-of-rooms').value;
+         const noOfExtraBed = room.querySelector('#no-of-extra-bed').value;
+         const childWithoutBed = room.querySelector('#child-without-bed').value;
+         const mealPlan = room.querySelector('#meal-plan').value;
+   
+         roomDetails.push({ roomType, noOfRooms, noOfExtraBed, childWithoutBed, mealPlan });
+     });
+   
+     var termsInputs = document.querySelectorAll('.terms-condition-input');
+     var termsConditions = Array.from(termsInputs).map(input => input.value);
+   
+     // Extract "Cancellation Policy" values
+     var cancellationInputs = document.querySelectorAll('.cancellation-policy-input');
+     var cancellationPolicy = Array.from(cancellationInputs).map(input => input.value);
+   
+    // Get the selected image file
+     var hotelPhotoInputFile = document.getElementById('photo');
+    //  var selectedPhoto = hotelPhotoInputFile.files[0];
+    //  var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : '';
 
+     
+
+     const file = hotelPhotoInputFile.files[0];
+      
+  // Save the download URL to the Realtime Database
+    //  const photoRef = push(ref(database, 'photos'));
+
+    // Create a reference to the storage location
+    const storageRefVar = storageRef(storage, 'hotel_photos/' );
+
+     // Upload the file to Firebase Storage
+     const snapshot = await uploadBytes(storageRefVar, file);
+
+ 
+     // Get the download URL for the file
+     const downloadURL = await getDownloadURL(snapshot.ref);
+   
+   
+ 
+   
+     // Create a reference to the database node where you want to store the data
+     var formDataRef = ref(database, 'formData');
+   
+     // Push the data to the database
+     push(formDataRef,  {
+         confirmationnumber: confirmationnumber,
+         hotelName:hotelName,
+         hotelAddress:hotelAddress,
+         googleMapLink:googleMapLink,
+         hotelPhone:hotelPhone,
+        //  hotellPhoto:hotellPhoto,
+         guestName:guestName,
+         guestNumber:guestNumber,
+         guestCitizen:guestCitizen,
+         NoofAdult:NoofAdult,
+         issuedBy:issuedBy,
+         issuedDate:issuedDate,
+         bookedBy:bookedBy,
+         contactNo:contactNo,
+         mailId:mailId, 
+         checkInDate:checkInDate,
+         checkInTime:checkInTime,
+         checkOutDate:checkOutDate,
+         checkOutTime:checkOutTime,
+         notes:notes,
+         specialRequest:specialRequest,
+         paymentInfo:paymentInfo,
+         arrival:arrival,
+         ticketNo:ticketNo,
+         departure:departure,
+         ticketNotwo:ticketNotwo,
+         termsConditions: termsConditions,
+         cancellationPolicy: cancellationPolicy, 
+         roomDetails: roomDetails,
+         hotellPhoto: downloadURL,
+   
+    
+   
+           // ... (other form data)
+       }).then(function () {
+        
+         console.log('Data saved successfully!');
+       }).catch(function (error) {
+         console.error('Error saving data:', error);
+       });
+      
+   }
 
  
 
 
+   
 
 
 
@@ -1194,25 +1203,19 @@ async function saveFormDataToDatabase() {
 
 
 
+// Function to upload photo to Firebase Storage and save URL in Realtime Database
+// The function to handle form submission
+// Function to upload photo to Firebase Storage and save URL in Realtime Database
+// Function to upload photo to Firebase Storage and save URL in Realtime Database
+// Function to upload photo to Firebase Storage and save URL in Realtime Database
+ 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/////////////////
-////////////////
-/////////////////
-////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

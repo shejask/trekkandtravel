@@ -8,22 +8,20 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-    <h1>Website Under Maintenance!</h1>
- 
-     
-<!--     
-    <label for="voucherNo" class="block mb-2">Voucher No:</label>
-    <input type="text" list="VoucherID" id="VoucherNo"    class="w-full p-2 border rounded border border-slate-700">
-    <div id="VoucherIdlist" class="mt-4 bg-gray-100"></div>
-    <h1  
-     id="databasenodeId">My node</h1> -->
+    <div class="max-w-md mx-auto p-4 bg-white shadow-md rounded-md">
+        <label for="VoucherNo" class="block mb-2">Voucher No:</label>
+        <input type="text" id="VoucherNo" class="w-full p-2 border rounded border-slate-700">
 
-     
+        <div id="VoucherIdlist" class="mt-4 bg-gray-100 hidden">
+            <!-- Dynamic content will be added here -->
+        </div>
 
+        <label for="travelDate" class="block mt-4">Travel Date:</label>
+        <input type="date" id="travelDate" class="w-full p-2 border rounded border-slate-700">
 
+        <h1 id="databaseNodeId" class="mt-2 text-gray-600">My node</h1>
+    </div>
 
-
-
-    <script type="module" src="/assets/js/view_itnery.js" ></script>
+    <script type="module" src="/assets/js/view_itnery.js"></script>
 </body>
 </html>
