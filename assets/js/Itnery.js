@@ -284,76 +284,86 @@ document.getElementById('addhighlights').addEventListener('click', function () {
 });
 
  
+
 function duplicateTourHighlights() {
-    const tourHighlightsContainer = document.getElementById('tour-highlights-container');
-    const originalTourHighlightsInput = document.getElementById('tour-highlights');
-    const originalTourHighlightsDropdown = document.getElementById('tour-highlights-dropdown');
+  const tourHighlightsContainer = document.getElementById('tour-highlights-container');
+  const originalTourHighlightsInput = document.getElementById('tour-highlights');
+  const originalTourHighlightsDropdown = document.getElementById('tour-highlights-dropdown');
 
-    // Create a new tour highlights input field
-    const newTourHighlightsInput = document.createElement('input');
-    newTourHighlightsInput.type = 'text';
-    newTourHighlightsInput.classList.add('w-full', 'p-2', 'border', 'border-black', 'rounded', 'mb-4', 'tour-highlights-input');
-    newTourHighlightsInput.placeholder = 'Enter tour highlights';
+  const uniqueId = Date.now();
 
-    // Append the new input field to the container
-    tourHighlightsContainer.appendChild(newTourHighlightsInput);
+  // Create a new tour highlights input field with a unique ID
+  const newTourHighlightsInput = document.createElement('input');
+  newTourHighlightsInput.id = `tour-highlights-${uniqueId}`;
+  newTourHighlightsInput.type = 'text';
+  newTourHighlightsInput.classList.add('w-full', 'p-2', 'border', 'border-black', 'rounded', 'mb-4', 'tour-highlights-input');
+  newTourHighlightsInput.placeholder = 'Enter tour highlights';
 
-    // Clone the original dropdown and show it for the new input field
-    const newTourHighlightsDropdown = originalTourHighlightsDropdown.cloneNode(true);
-    newTourHighlightsDropdown.classList.remove('hidden');
-    tourHighlightsContainer.appendChild(newTourHighlightsDropdown);
+  tourHighlightsContainer.appendChild(newTourHighlightsInput);
 
-    // Clear the value of the new input field
-    newTourHighlightsInput.value = '';
+  // Clone the original dropdown and show it for the new input field
+  const newTourHighlightsDropdown = originalTourHighlightsDropdown.cloneNode(true);
+  newTourHighlightsDropdown.classList.remove('hidden');
+  tourHighlightsContainer.appendChild(newTourHighlightsDropdown);
 
-    // Add an event listener to the new input field for dynamic dropdown functionality
-    newTourHighlightsInput.addEventListener('input', async function (event) {
-        const tourHighlightsInput = event.target;
-        const tourHighlightsInputValue = tourHighlightsInput.value.trim();
+  // Clear the value of the new input field
+  newTourHighlightsInput.value = '';
 
-        // Your existing code for fetching tour highlights
-        const tourHighlightsSnapshot = await get(tourHighlightsRef);
+  // Add an event listener to the new input field for dynamic dropdown functionality
+  newTourHighlightsInput.addEventListener('input', async function (event) {
+      const tourHighlightsInput = event.target;
+      const tourHighlightsInputValue = tourHighlightsInput.value.trim();
 
-        // Clear the existing dropdown content
-        const tourHighlightsDropdown = tourHighlightsInput.nextElementSibling;
-        tourHighlightsDropdown.innerHTML = '';
+      // Your existing code for fetching tour highlights
+      const tourHighlightsSnapshot = await get(tourHighlightsRef);
 
-        if (tourHighlightsSnapshot.exists()) {
-            let showDropdown = false;
+      // Clear the existing dropdown content
+      const tourHighlightsDropdown = tourHighlightsInput.nextElementSibling;
+      tourHighlightsDropdown.innerHTML = '';
 
-            tourHighlightsSnapshot.forEach((childSnapshot) => {
-                const tourHighlight = childSnapshot.val().highlights.toLowerCase();
+      if (tourHighlightsSnapshot.exists()) {
+          let showDropdown = false;
 
-                if (tourHighlight.includes(tourHighlightsInputValue.toLowerCase())) {
-                    showDropdown = true;
+          tourHighlightsSnapshot.forEach((childSnapshot) => {
+              const tourHighlight = childSnapshot.val().highlights.toLowerCase();
 
-                    const tourHighlightItem = document.createElement('div');
-                    tourHighlightItem.textContent = tourHighlight;
-                    tourHighlightItem.classList.add('cursor-pointer', 'hover:bg-gray-200', 'p-1');
+              if (tourHighlight.includes(tourHighlightsInputValue.toLowerCase())) {
+                  showDropdown = true;
 
-                    tourHighlightItem.addEventListener('click', async function () {
-                        // Fill the input field with the selected tour highlight
-                        tourHighlightsInput.value = childSnapshot.val().highlights;
+                  const tourHighlightItem = document.createElement('div');
+                  tourHighlightItem.textContent = tourHighlight;
+                  tourHighlightItem.classList.add('cursor-pointer', 'hover:bg-gray-200', 'p-1');
 
-                        // Hide the dropdown after selection
-                        hideTourHighlightsDropdown();
-                    });
+                  tourHighlightItem.addEventListener('click', async function () {
+                      // Fill the input field with the selected tour highlight
+                      tourHighlightsInput.value = childSnapshot.val().highlights;
 
-                    tourHighlightsDropdown.appendChild(tourHighlightItem);
-                }
-            });
+                      // Hide the dropdown after selection
+                      hideDropdown(newTourHighlightsDropdown);
+                  });
 
-            // Show or hide the dropdown based on matching items
-            if (showDropdown) {
-                tourHighlightsDropdown.classList.remove('hidden');
-            } else {
-                hideTourHighlightsDropdown();
-            }
-        } else {
-            hideTourHighlightsDropdown();
-        }
-    });
+                  tourHighlightsDropdown.appendChild(tourHighlightItem);
+              }
+          });
+
+          // Show or hide the dropdown based on matching items
+          if (showDropdown) {
+              tourHighlightsDropdown.classList.remove('hidden');
+          } else {
+              hideDropdown(newTourHighlightsDropdown);
+          }
+      } else {
+          hideDropdown(newTourHighlightsDropdown);
+      }
+  });
 }
+
+// Function to hide dropdown
+function hideDropdown(dropdown) {
+  dropdown.classList.add('hidden');
+}
+
+
  
  
 
