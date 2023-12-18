@@ -714,11 +714,11 @@ font-family: 'Poppins', sans-serif;
       <div class="flex flex-col text-white text-xs">
         <div class="flex gap-1 items-center">
           <img src="" alt="" />
-          <h1>yourname @gmail.com,www.trekkandtravel.com</h1>
+          <h1>Info@trekkandtravel.com</h1>
         </div>
         <div class="flex gap-1 items-center">
           <img src="" alt="" />
-          <h1>Street address here, city name zipcode</h1>
+          <h1>Address: Kattuppara, Bridge Junction, Chelakkad Po, Malappuram, Kerala , India- 679323</h1>
         </div>
       </div>
     </div>
