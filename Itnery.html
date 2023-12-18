@@ -20,10 +20,11 @@
                 <li>
                     <a href="index.html">
                         <span class="icon">
-                            <ion-icon name="logo-apple"></ion-icon>
+                            <ion-icon  hidden name="logo-apple"></ion-icon>
+                            <img class="mt-2 ml-4" width="40" src="/assets/imgs/TREKKLOGO.png" alt="">
                             <!-- <img width="20" src="/assets/imgs/TREKKLOGO.png" alt=""> -->
                         </span>
-                        <span class="title">Trekk & Travels</span>
+                        <span class="title font-semibold">Trekk & Travels</span>
                     </a>
                 </li>
 
@@ -337,6 +338,14 @@
                 <!-- <div id="package-details-container" class="mb-4"></div> -->
 
                 <div id="formContainer"></div>
+                
+                <p class="font-bold  ">Click To Load Images</p>
+                <button type="button" id="newSaveBtn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 " >new save</button>
+
+                <hr class="h-px my-8 bg-red-200 border-0 dark:bg-gray-700">
+
+
+
       
                 <div class="mb-4">
                     <label for="amount-details" class="block">Amount:</label>
@@ -498,24 +507,24 @@
                     <!-- <button type="button"  id="submitBtn"   class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-green-700">Save</button> -->
  
 
-                    <div class=" mt-1 flex input-row">
+                    <!-- <div class=" mt-1 flex input-row">
                         <div class="flex-2 mb-2 ml-5   lg:mr-2">
-                             <!-- <button type="submit" id="newSaveBtn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Load Image</button> -->
-                             <p class="text-xs  ">Click To Load Images</p>
+                              <p class="font-bold  ">Click To Load Images</p>
                              <button type="button" id="newSaveBtn" class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-900 " >new save</button>
 
-                        </div>
+                        </div> -->
         
-                        <div class="flex-2 mb-2 lg:mr-2">
+                      
                             <button type="submit" id="savedata" class="bg-green-500 ml-5 text-white px-4 py-2 rounded hover:bg-green-700">Save All</button>
-                            <!-- <p class="text-xs ml-5">Save All</p> -->
-                        </div>
+                            <p class="text-xs ml-5 text-red-500">* Confirm that The Images are Loaded</p>
+                          
+                            <button type="button"  id="printButton"   class="bg-indigo-500 text-white ml-5 mt-5 mb-5  px-4 py-2 rounded hover:bg-indigo-700">Print</button>
+                           
+                       
 
-                        <div class="flex-1 ml-5 mb-2 lg:mr-2">
-                            <button type="button"  id="printButton"   class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-700">Print</button>
-                            <p class="text-xs text-red-900 hidden ">Save Before Print </p>
-                        </div>
-                    </div>
+                       
+                            
+                    
 
                     </form>
                     
