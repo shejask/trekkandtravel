@@ -8,8 +8,6 @@
      <!-- ======= Styles ====== -->
      <link rel="stylesheet" href="/assets/styles/style.css">
          <script src="https://cdn.tailwindcss.com"></script>
-
-
 </head>
 
 <body>
@@ -248,7 +246,7 @@
             
                         <!-- Package Description -->
                         <div class="mb-4">
-                            <label for="package-description" class="block">Description</label>
+                            <label for="description" class="block">Description</label>
                             <textarea id="description" name="description"
                             class="w-full p-2 border rounded border border-slate-700"></textarea>
                         </div>
@@ -379,44 +377,46 @@
                         </tr>
                         <!-- Add more rows as needed -->
                     </tbody>
+                    
                 </table>
-            
                 <button type="button" id="addRowBtn"
-                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4">Add Row</button>
+                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4">Add Row</button>
+            
+               
 
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             
                     <div class="w-full p-2 border rounded border border-slate-700smb-4">
-                        <h1 class="text-2xl font-bold">TOUR  Inclusions</h1>
+                        <h1 class="text-2xl font-bold">TOUR INCLUSIONS</h1>
                     
                         <div class="mb-4">
                             <textarea id="personal-nature" rows="4"
-                                class="w-full p-2 border rounded border border-slate-700">Accommodation at mentioned hotels </textarea>
+                                class="w-full h-10 p-2 border rounded border border-slate-700">Accommodation at mentioned hotels </textarea>
                         </div>
                     
                         <div class="mb-4">
                             <textarea id="applicable-taxes" rows="4"
-                                class="w-full p-2 border rounded border border-slate-700">All presently applicable taxes</textarea>
+                                class="w-full p-2 h-10 border rounded border border-slate-700">All presently applicable taxes</textarea>
                         </div>
                     
                         <div class="mb-4">
                             <textarea id="transfers-sightseeing" rows="4"
-                                class="w-full p-2 border rounded border border-slate-700">Transfers / Sightseeing’s / Excursions by Air Conditioned Transportation on Private basis () as per itinerary</textarea>
+                                class="w-full p-2 h-10 border rounded border border-slate-700">Transfers / Sightseeing’s / Excursions by Air Conditioned Transportation on Private basis () as per itinerary</textarea>
                         </div>
                     
                         <div class="mb-4">
                             <textarea id="driver-allowances" rows="4"
-                                class="w-full p-2 border rounded border border-slate-700">Driver allowances, Petrol/Gas cost, Toll Tax, Parking and Vehicle Insurance</textarea>
+                                class="w-full p-2 h-10 border rounded border border-slate-700">Driver allowances, Petrol/Gas cost, Toll Tax, Parking and Vehicle Insurance</textarea>
                         </div>
                     
                         <div class="mb-4">
                             <textarea id="govt-taxes" rows="4"
-                                class="w-full p-2 border rounded border border-slate-700">All currently applicable Govt Service Taxes</textarea>
+                                class="w-full p-2 border h-10 rounded border border-slate-700">All currently applicable Govt Service Taxes</textarea>
                         </div>
                     
                         <div class="mb-4">
                             <textarea id="customer-support" rows="4"
-                                class="w-full p-2 border rounded border border-slate-700">24 x 7 customer support</textarea>
+                                class="w-full p-2 border h-10 rounded border border-slate-700">24 x 7 customer support</textarea>
                         </div>
                     
                         <div id="tour-inclusions-container" class="mb-4"></div>
@@ -430,28 +430,27 @@
                         <h1 class="text-2xl font-bold">TOUR EXCLUSIONS</h1>
                     
                         <div class="mb-4">
-                            <textarea id="field-one" rows="4"
-                                class="w-full p-2 border rounded border border-slate-700">Items of personal nature, such as, laundry, telephone calls, alcoholic beverages, minibar charges, etc.</textarea>
+                            <textarea id="field-one" rows="4" class="w-full h-10 p-2 border rounded border border-slate-700">Items of personal nature, such as, laundry, telephone calls, alcoholic beverages, minibar charges, etc.</textarea>
                         </div>
                     
                         <div class="mb-4">
                             <textarea id="field-two" rows="4"
-                                class="w-full p-2 border rounded border border-slate-700">Meals other than those specified as per itinerary</textarea>
+                                class="w-full h-10 p-2 border rounded border border-slate-700">Meals other than those specified as per itinerary</textarea>
                         </div>
                     
                         <div class="mb-4">
                             <textarea id="field-three" rows="4"
-                                class="w-full p-2 border rounded border border-slate-700">Monuments Entrance on spot payment subject to monument visits</textarea>
+                                class="w-full h-10 p-2 border rounded border border-slate-700">Monuments Entrance on spot payment subject to monument visits</textarea>
                         </div>
                     
                         <div class="mb-4">
                             <textarea id="field-four" rows="4"
-                                class="w-full p-2 border rounded border border-slate-700">Any tours not specified within the above itinerary</textarea>
+                                class="w-full h-10 p-2 border rounded border border-slate-700">Any tours not specified within the above itinerary</textarea>
                         </div>
                     
                         <div class="mb-4">
                             <textarea id="field-five" rows="4"
-                                class="w-full p-2 border rounded border border-slate-700">Tipping for Tour Guide, Driver, etc. – client’s own discretion</textarea>
+                                class="w-full h-10 p-2 border rounded border border-slate-700">Tipping for Tour Guide, Driver, etc. – client’s own discretion</textarea>
                         </div>
                     
                         <div id="tour-exclusions-container" class="mb-4"></div>
@@ -475,15 +474,14 @@
                     <div class="mb-4">
                         <label for="cancellation-policy" class="block mt-5">Cancellation Policy:</label>
                         <div id="cancellation-notes-container" class="mb-4"></div>
-                        <button type="button" id="addCancellationNote"
-                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add Cancellation Policy</button>
+                        <button type="button" id="addCancellationNote" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">+ Add Cancellation Policy</button>
                     </div>
 
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     
                     <div class="mb-4 mt-5">
-                        <label for="amount-executive" class="block">Tour Executive :</label>
-                        <input type="text" id="amount-executive" min="1" class="w-full p-2 border rounded border border-slate-700">
+                        <label for="tour-executive" class="block">Tour Executive :</label>
+                        <input type="text" id="tour-executive" min="1" class="w-full p-2 border rounded border border-slate-700">
                     </div>
                     
                     <div class="mb-4">
@@ -518,8 +516,8 @@
                             <button type="submit" id="savedata" class="bg-green-500 ml-5 text-white px-4 py-2 rounded hover:bg-green-700">Save All</button>
                             <p class="text-xs ml-5 text-red-500">* Confirm that The Images are Loaded</p>
                           
-                            <button type="button"  id="printButton"   class="bg-indigo-500 text-white ml-5 mt-5 mb-5  px-4 py-2 rounded hover:bg-indigo-700">Print</button>
-                           
+                            <button type="button"  id="printButton"   class="bg-indigo-700 text-white ml-5 mt-5 mb-5  px-4 py-2 rounded hover:bg-indigo-500">Print</button>
+ 
                        
 
                        
@@ -536,7 +534,7 @@
 
 
     <!-- =========== Scripts =========  -->
-    <script type="module" src="assets/js/Itnery.js"></script>
+    <script type="module" src="/assets/js/Itnery1.js"></script>
 
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

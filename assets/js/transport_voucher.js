@@ -3,14 +3,14 @@ import { ref } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database
 import { getDatabase, ref as databaseRef, push, set, get,   onValue } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
  
 const firebaseConfig = {
-  apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
-  authDomain: "trekkandtravel-7daeb.firebaseapp.com",
-  databaseURL: "https://trekkandtravel-7daeb-default-rtdb.firebaseio.com",
-  projectId: "trekkandtravel-7daeb",
-  storageBucket: "trekkandtravel-7daeb.appspot.com",
-  messagingSenderId: "313424140423",
-  appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
-};
+    apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
+    authDomain: "trekkandtravel-7daeb.firebaseapp.com",
+    databaseURL: "https://trekkandtravel-7daeb-default-rtdb.firebaseio.com",
+    projectId: "trekkandtravel-7daeb",
+    storageBucket: "trekkandtravel-7daeb.appspot.com",
+    messagingSenderId: "313424140423",
+    appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
+  };
 
 // Initialize Firebase
 initializeApp(firebaseConfig);

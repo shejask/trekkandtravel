@@ -11,12 +11,12 @@ import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "http
 const firebaseConfig = {
     apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
     authDomain: "trekkandtravel-7daeb.firebaseapp.com",
+    databaseURL: "https://trekkandtravel-7daeb-default-rtdb.firebaseio.com",
     projectId: "trekkandtravel-7daeb",
     storageBucket: "trekkandtravel-7daeb.appspot.com",
     messagingSenderId: "313424140423",
     appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
   };
-
 // Initialize Firebase
 initializeApp(firebaseConfig);
 const database = getDatabase();

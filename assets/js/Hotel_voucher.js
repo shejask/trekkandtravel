@@ -504,8 +504,8 @@ var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : ''; // Get a
       style="background-image: url(/assets/imgs/Rectangle1.png)"
     >
       <div class="flex flex-col text-white">
-        <h1 class="font-bold text-xl">Hotel Voucher</h1>
-        <h1 class="text-sm font-light">
+        <h1 class=" font-semibold  text-xl">Hotel Voucher</h1>
+        <h1 class="text-sm font-bold">
           confirmation No: <span>${confirmationnumber}</span>
         </h1>
       </div>
