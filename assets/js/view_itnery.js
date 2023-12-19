@@ -5,6 +5,7 @@ import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10
 const firebaseConfig = {
   apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
   authDomain: "trekkandtravel-7daeb.firebaseapp.com",
+  databaseURL: "https://trekkandtravel-7daeb-default-rtdb.firebaseio.com",
   projectId: "trekkandtravel-7daeb",
   storageBucket: "trekkandtravel-7daeb.appspot.com",
   messagingSenderId: "313424140423",
