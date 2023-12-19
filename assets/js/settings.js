@@ -4,14 +4,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebas
 
   
 const firebaseConfig = {
-    apiKey: "AIzaSyDA1ufLnKII3J72aqdPW_5ePacTWBiEgHg",
-    authDomain: "share2care-99b93.firebaseapp.com",
-    databaseURL: "https://share2care-99b93-default-rtdb.firebaseio.com",
-    projectId: "share2care-99b93",
-    storageBucket: "share2care-99b93.appspot.com",
-    messagingSenderId: "749651496086",
-    appId: "1:749651496086:web:e9cb696743d37f367486b7"
-  };
+  apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
+  authDomain: "trekkandtravel-7daeb.firebaseapp.com",
+  databaseURL: "https://trekkandtravel-7daeb-default-rtdb.firebaseio.com",
+  projectId: "trekkandtravel-7daeb",
+  storageBucket: "trekkandtravel-7daeb.appspot.com",
+  messagingSenderId: "313424140423",
+  appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
+};
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
