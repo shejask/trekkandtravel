@@ -1630,7 +1630,23 @@ function printForm() {
 
 
 
+document.getElementById("addRowBtn").addEventListener("click", function () {
+  var table = document.getElementById("originalTable").getElementsByTagName('tbody')[0];
+  var newRow = table.insertRow(table.rows.length);
+  var cells = [];
 
+  for (var i = 0; i < 7; i++) {
+    cells.push(newRow.insertCell(i));
+
+    if (i < 2) {
+      // Set the first two cells to have input type "date"
+      cells[i].innerHTML = '<input type="date" class="w-full p-2 border border-gray-300 rounded">';
+    } else {
+      // For other cells, use the default text input
+      cells[i].innerHTML = '<input type="text" class="w-full p-2 border border-gray-300 rounded">';
+    }
+  }
+});
  
 
 
