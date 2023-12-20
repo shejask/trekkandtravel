@@ -5,15 +5,14 @@ import { getDatabase, ref, query, get, onValue, orderByKey } from "https://www.g
  
 
 const firebaseConfig = {
-    apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
-    authDomain: "trekkandtravel-7daeb.firebaseapp.com",
-    databaseURL: "https://trekkandtravel-7daeb-default-rtdb.firebaseio.com",
-    projectId: "trekkandtravel-7daeb",
-    storageBucket: "trekkandtravel-7daeb.appspot.com",
-    messagingSenderId: "313424140423",
-    appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
-  };
-
+  apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
+  authDomain: "trekkandtravel-7daeb.firebaseapp.com",
+  databaseURL: "https://trekkandtravel-7daeb-default-rtdb.firebaseio.com",
+  projectId: "trekkandtravel-7daeb",
+  storageBucket: "trekkandtravel-7daeb.appspot.com",
+  messagingSenderId: "313424140423",
+  appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
+};
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
@@ -368,53 +367,63 @@ document.getElementById("printButton").addEventListener("click", function () {
     const govtTaxes = document.getElementById("govt-taxes").value;
   
 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Get values from Inclusions
+const inclusionsValues = Array.from(
+  document.querySelectorAll("#inclusionsInputsContainer input")
+)
+  .map((input) => input.value.trim())
+  .filter((value) => value !== "");
+////////////////////////////////////////////////////////////////
+// Get values from Tour Exclusions
+const tourExclusionsValues = Array.from(
+  document.querySelectorAll("#tourExclusionsInputsContainer input")
+)
+  .map((input) => input.value.trim())
+  .filter((value) => value !== "");
+/////////////////////////////////////////////////////////////////
+// Get values from Tour Highlights
+const tourHighlightsValues = Array.from(
+  document.querySelectorAll("#tourHighlightsInputsContainer input")
+)
+  .map((input) => input.value.trim())
   
-    // Get the values of the dynamically added input boxes
-    // const tourInclusionsValues = Array.from(
-    //   document.querySelectorAll("#tour-inclusions-container input")
-    // )
-    //   .map((input) => input.value)
-    //   .filter((value) => value.trim() !== "");
-  
-    // Get the values of the dynamically added textareas for exclusions
-    // const tourExclusionsValues = Array.from(
-    //   document.querySelectorAll("#tour-exclusions-container textarea")
-    // )
-    //   .map((textarea) => textarea.value.trim())
-    //   .filter((value) => value !== "");
-  
-    //Notes
-    // const notesValues = Array.from(
-    //   document.querySelectorAll("#notes-container input")
-    // )
-    //   .map((input) => input.value.trim())
-    //   .filter((value) => value !== "");
-  
-    //CAancellation Policy
-    // const cancellationNotesValues = Array.from(
-    //   document.querySelectorAll("#cancellation-notes-container input")
-    // )
-    //   .map((input) => input.value.trim())
-    //   .filter((value) => value !== "");
-  
-    // Get the values from the dynamically added rows
-    // const tableRows = Array.from(
-    //   document.querySelectorAll("#originalTable tbody tr")
-    // )
-    //   .map((row) => {
-    //     const cells = Array.from(row.cells);
-    //     return `<tr class="border border-1 border-black">${cells
-    //       .map(
-    //         (cell) =>
-    //           `<td class="border border-1 border-black text-center">${
-    //             cell.querySelector("input").value
-    //           }</td>`
-    //       )
-    //       .join("")}</tr>`;
-    //   })
-    //   .join("");
-  
-    // Create a new window for printing
+///////////////////////////////////////////////////////////////
+// Get values from Cancellation Notes
+const cancellationNotesValues = Array.from(
+  document.querySelectorAll("#cancellationContainerr input")
+)
+  .map((input) => input.value.trim())
+  .filter((value) => value !== "");
+
+  //////////////////////////////////////////////////////////
+// Get values from Notes
+const notesValues = Array.from(
+  document.querySelectorAll("#notesContainer input")
+)
+  .map((input) => input.value.trim())
+  .filter((value) => value !== "");
+
+  //////////////////////////////////////////////////////////
+  const tableDataRows = Array.from(
+    document.querySelectorAll("#tableDataInputsContainer table tr")
+);
+  /////////////////////////////////////////////////////////
+
+
     const printWindow = window.open("", "_blank");
   
     ///////////////////////////////////////////////
@@ -525,7 +534,8 @@ document.getElementById("printButton").addEventListener("click", function () {
             <h1 class="text-2xl">Tour Highlights</h1>
             <div class="">
               <ul class="list-disc px-4">
-              
+              ${tourHighlightsValues.map((highlight) => `<li>${highlight}</li>`).join("")}
+
               </ul>
             </div>
           </div>
@@ -590,22 +600,25 @@ document.getElementById("printButton").addEventListener("click", function () {
                       meal plan
                     </th>
                   </tr>
-               
+                  ${tableDataRows.map((row, index) => index !== 0 ? row.outerHTML : "").join("")}
+                
             
                 
                 </table>
               </div>
             </div>
             <div class="mt-5 px-5 flex flex-col gap-3">
-              <div class="flex flex-col gap-1">
-                <h1 class="text-xl font-semibold">Tour Inclusions</h1>
-                <h1 • ${personalNature}</h1>
-                  <h1> • ${applicableTaxes}</h1>
-                  <h1> • ${transfersSightseeing}</h1>
-                  <h1> • ${driverAllowances}</h1>
-                  <h1> • ${govtTaxes} </h1>
-                  //////////////////////////////////////////////////////////////////////Inclusion policy
-              </div>
+            <div class="flex flex-col gap-1">
+            <h1 class="text-xl font-semibold">Tour Inclusions</h1>
+            <h1 • ${personalNature}</h1>
+              <h1> • ${applicableTaxes}</h1>
+              <h1> • ${transfersSightseeing}</h1>
+              <h1> • ${driverAllowances}</h1>
+              <h1> • ${govtTaxes} </h1>
+              ${inclusionsValues.map((value) => `<h1>• ${value}</h1>`).join("\n")}
+
+          </div>
+
   
               <div class="flex flex-col gap-1">
                 <h1 class="text-xl font-semibold">Tour Exclusions</h1>
@@ -614,18 +627,20 @@ document.getElementById("printButton").addEventListener("click", function () {
                 <h1> • ${fieldthree}</h1>
                 <h1> • ${fieldfour}</h1>
                 <h1> • ${fieldfive}</h1>
-                //////////////////////////////////////////////////////////////////////Exclusion policy
-              </div>
+                ${tourExclusionsValues.map((exclusion) => `<h1> • ${exclusion}</h1>`).join("")}
+                 </div>
   
               <div class="flex flex-col gap-1">
                 <h1 class="text-xl font-semibold">Notes</h1>
                 <h1>• ${notes}</h1>
+                <h1>${notesValues.map((note) => `<h1>• ${note}</h1>`).join("")} </h1>
+
                 
               </div>
               <div class="flex flex-col gap-1">
                 <h1 class="text-xl font-semibold">Cancellation policy</h1>
-                 //////////////////////////////////////////////////////////////////////Cancellation policy
-              </div> 
+                ${cancellationNotesValues.map((note) => `<h1>• ${note}</h1>`).join("")}
+                </div> 
               <div class="flex flex-col">
               <h1>Tour Executive: ${amountExecutive}</h1>
               <h1>Contact No: ${tourcontact}</h1>
