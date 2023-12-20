@@ -683,11 +683,11 @@ var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : ''; // Get a
       <div class="flex justify-between items-center">
         <div class="flex gap-2">
           <h1 class="text-lg font-semibold">Arrival:</h1>
-          <h1><span class="underline mr-2">${arrival}</span>${ticketNo}</h1>
+          <h1><span class="underline mr-2">${arrival}</span>${ticketNotwo}</h1>
         </div>
         <div class="flex gap-2">
           <h1 class="text-lg font-semibold">Departure:</h1>
-          <h1><span class="underline  mr-2" >${departure}</span>${ticketNotwo}</h1>
+          <h1><span class="underline  mr-2" >${departure}</span>${ticketNo}</h1>
         </div>
       </div>
       <hr class="border border-gray-400 mt-3" />
