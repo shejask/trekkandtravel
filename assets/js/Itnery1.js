@@ -1456,7 +1456,7 @@ function printForm() {
                            </div>
                          </div>
                          <div class="flex flex-col items-start gap-3">
-                           <div class="w-2/3 h-60 bg-black rounded-2xl">
+                           <div class="w-1/3 h-32 bg-black rounded-2xl">
                              <img
                                class="w-full h-full object-cover rounded-2xl"
                                src="${items.img[index]}"
