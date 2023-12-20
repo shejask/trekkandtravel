@@ -124,7 +124,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         document.getElementById(inputId).value = voucher.hotelName;
 
                         // Concatenate hotelAddress with googleMapLink
-                        const combinedAddress = `${voucher.hotelAddress} - ${voucher.googleMapLink}`;
+                        const combinedAddress = `${voucher.hotelAddress} - ${voucher.hotelPhone
+                        }`;
                         addressInput.value = combinedAddress;
 
                         dropdownContainer.innerHTML = ""; // Clear dropdown after selection

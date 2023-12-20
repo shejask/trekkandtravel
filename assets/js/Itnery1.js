@@ -1920,3 +1920,11 @@ function saveItinerary(index) {
       console.error("Error saving itinerary:", error.message);
     });
 }
+
+
+
+
+
+
+///////////////////////////////////////
+
