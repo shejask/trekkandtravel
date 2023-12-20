@@ -823,7 +823,7 @@ function createFormContainer(index, currentDate) {
         </div>
 
         <label for="descriptionDetails${index}" class="block text-gray-600 text-sm font-semibold mb-2">Description:</label>
-        <textarea id="descriptionDetails${index}" name="descriptionDetails${index}" rows="4" class="w-full p-2 border border-gray-300 rounded"></textarea>
+        <textarea id="descriptionDetails${index}" name="descriptionDetails${index}" rows="4" class="w-full whitespace-normal p-2 border border-gray-300 rounded"></textarea>
 
         <label for="inclusions${index}" class="block text-gray-600 text-sm font-semibold mb-2">Inclusions:</label>
         <textarea id="inclusions${index}" name="inclusions${index}" rows="4" class="w-full p-2 border border-gray-300 rounded"></textarea>
@@ -1336,7 +1336,8 @@ function printForm() {
     .font-manrope {
         font-family: 'Manrope', sans-serif;
     }
-
+     
+    
     </style>
   </head>
   <body>
@@ -1467,12 +1468,12 @@ function printForm() {
                              <h1 class="font-semibold">
                                ${items.head[index]}
                              </h1>
-                             <h1>
-                               ${items.desc[index]}
-                             </h1>
+                             <h1 class="text-balance" style="white-space: pre-line;">
+                              ${items.desc[index]}
+                              </h1>
                            </div>
                          </div>
-                         <div class="flex flex-col gap-1">
+                         <div class="flex flex-col mb-5 gap-1">
                            <h1 class="text-xl font-semibold">inclusions</h1>
                            <h1>
                              ${items.inclutions[index]}

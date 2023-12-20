@@ -66,7 +66,7 @@
             <input type="text" id="headingg"  
             class="w-full p-2 border rounded border border-slate-700">
 
-            <label for="package-description" class="mt-5 block">Description</label>
+            <label for="anytext-description" class="mt-5 block">Description</label>
             <textarea id="anytext-description" placeholder="Enter Anything..."  name="package-description"
             class="w-full p-2 border rounded border border-slate-700"></textarea>
         </div>
@@ -89,6 +89,14 @@
 
 
         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+        
+        <div class="mb-4">
+            <label for="tour-highlights" class="block">Tour Highlights:</label>
+                   <!-- Add this element to your HTML file -->
+<div id="tourHighlightsInputsContainer"></div>
+
+         </div>
 
 
         
@@ -167,6 +175,13 @@
 
         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
+  
+
+        <div id="tableDataInputsContainer"></div>
+
+        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+
 
         <div class="mb-4">
             <label for="amount-details" class="block">Amount:</label>
@@ -207,6 +222,9 @@
                 <input id="customer-support" rows="4"
                     class="w-full p-2 border h-10 rounded border border-slate-700"> </input>
             </div>
+
+            <div id="inclusionsInputsContainer"></div>
+ 
         
            </div>
 
@@ -239,6 +257,9 @@
             <div class="mb-4">
                 <textarea id="field-five" rows="4" class="w-full h-10 p-2 border rounded border border-slate-700"> </textarea>
             </div>
+
+            <div id="tourExclusionsInputsContainer"></div>
+<div hidden id="tourExclusionsDiv"></div>
    
         </div>
  
@@ -247,7 +268,8 @@
  <div class="mb-4">
             <label for="notes" class="block">Notes:</label>
             <!-- Text field for notes -->
-            <input type="text" id="notes" class="w-full p-2 border rounded border border-slate-700" rows="4"></input>
+            <input type="text" id="notes" class="w-full mb-5 p-2 border rounded border border-slate-700" rows="4"></input>
+            <div id="notesContainer"></div>
             
         </div>
      
@@ -257,8 +279,8 @@
 
         <div class="mb-4">
         <label for="cancellation-notes" class="block">Cancellation Notes:</label>
-        <!-- Text field for cancellation notes -->
-        <textarea id="cancellation-notes" class="w-full p-2 border rounded border border-slate-700" rows="4"></textarea>
+       
+       <div id="cancellationContainerr"></div>
     </div>
 
      
@@ -281,6 +303,15 @@
             <label for="tour-mail" class="block">Mail Id :</label>
             <input type="text" id="tour-mail" min="1" class="w-full p-2 border rounded border border-slate-700">
         </div>
+
+
+
+     
+
+
+ 
+
+        <button type="button"  id="printButton"   class="bg-indigo-700 text-white ml-5 mt-5 mb-5  px-4 py-2 rounded hover:bg-indigo-500">Print</button>
 
 
 

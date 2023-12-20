@@ -1,0 +1,58 @@
+  <ul class="list-disc px-4">
+              ${getPrintableContent()}  
+              </ul>
+
+
+
+
+
+
+
+
+              ${tableRows}
+                  
+
+
+              <div class="mt-5 px-5 flex flex-col gap-3">
+                <div class="flex flex-col gap-1">
+                  <h1 class="text-xl font-semibold">Tour Inclusions</h1>
+                  <h1 • ${personalNature}</h1>
+                    <h1> • ${applicableTaxes}</h1>
+                    <h1> • ${transfersSightseeing}</h1>
+                    <h1> • ${driverAllowances}</h1>
+                    <h1> • ${govtTaxes} </h1>
+                  ${tourInclusionsValues
+                    .map((value) => `<h1> • ${value}</h1>`)
+                    .join("")}
+                </div>
+
+
+
+
+
+
+
+
+                <div class="flex flex-col gap-1">
+                  <h1 class="text-xl font-semibold">Tour Exclusions</h1>
+                  <h1> • ${fieldone}</h1>
+                  <h1> • ${fieldtwo}</h1>
+                  <h1> • ${fieldthree}</h1>
+                  <h1> • ${fieldfour}</h1>
+                  <h1> • ${fieldfive}</h1>
+                  ${tourExclusionsValues
+                    .map((value) => `<h1> • ${value}</h1>`)
+                    .join("")}
+                </div>
+
+                <h1>• ${notess}</h1>
+
+                ${notesValues.map((value) => `<p>• ${value}</p>`).join("")}
+
+
+                <div class="flex flex-col gap-1">
+                  <h1 class="text-xl font-semibold">Cancellation policy</h1>
+                  ${cancellationNotesValues
+                    .map((value) => `<h1>• ${value}</h1>`)
+                    .join("")}
+                </div> 
