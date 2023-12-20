@@ -1447,7 +1447,7 @@ function printForm() {
                          <div class="flex flex-col gap-2">
                            <div
                              class="w-full py-2 bg-orange-400 text-black px-2 flex items-center justify-between rounded-lg" >
-                             <h1 class="text-xl font-semibold">Day${
+                             <h1 class="text-xl font-semibold">Day ${
                                items.duration[index]
                              }</h1>
                              <h1 class="text-lg"> ${formatDate(
@@ -1473,7 +1473,7 @@ function printForm() {
                            </div>
                          </div>
                          <div class="flex flex-col gap-1">
-                           <h1 class="text-xl font-semibold">Inclutions</h1>
+                           <h1 class="text-xl font-semibold">inclusions</h1>
                            <h1>
                              ${items.inclutions[index]}
                            </h1>

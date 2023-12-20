@@ -376,7 +376,7 @@ function generateDuplicatedRowsHTML() {
 
             if (input) {
                 const value = input.value;
-                rowHTML += `<td class="uppercase border border-1 border-black text-center px-2 py-1">${value}</td>`;
+                rowHTML += `<td class="  border border-1 border-black text-center px-2 py-1">${value}</td>`;
             }
         }
 
@@ -427,7 +427,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const vehicleNo = getValueById("Vehicleno");
         const guestName = getValueById("guestName");
         const guestNumber = getValueById("guestNumber");
-        const TourManager = getValueById("Tour-Manager");
+        const TourManager = getValueById("TourManager");
         const Contantno = getValueById("Contant-no");
       
  // Get the table values (modify this based on how you obtain tableValues)
@@ -453,9 +453,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
  var tourTableHTML = tourTableData.map(({ day, date, tourProgram }) => `
   <tr class="border border-1 border-black rounded-md">
-    <td class="uppercase border border-1 border-black text-center px-2 py-1">${day}</td>
-    <td class="uppercase border border-1 border-black text-center px-2 py-1">${date}</td>
-    <td class="uppercase border border-1 border-black text-center px-2 py-1">${tourProgram}</td>
+    <td class="  border border-1 border-black text-center px-2 py-1">${day}</td>
+    <td class="  border border-1 border-black text-center px-2 py-1">${date}</td>
+    <td class="  border border-1 border-black text-center px-2 py-1">${tourProgram}</td>
   </tr>
 `).join('');
 
@@ -672,9 +672,9 @@ function getTourTableContent() {
 
     return tourTableData.map(tour => `
         <tr class="border border-1 border-black rounded-md">
-            <td class="uppercase border border-1 border-black text-center px-2 py-1">${tour.day}</td>
-            <td class="uppercase border border-1 border-black text-center px-2 py-1">${tour.date}</td>
-            <td class="uppercase border border-1 border-black text-center px-2 py-1">${tour.tourProgram}</td>
+            <td class="  border border-1 border-black text-center px-2 py-1">${tour.day}</td>
+            <td class="  border border-1 border-black text-center px-2 py-1">${tour.date}</td>
+            <td class="  border border-1 border-black text-center px-2 py-1">${tour.tourProgram}</td>
         </tr>
     `).join('');
 }
