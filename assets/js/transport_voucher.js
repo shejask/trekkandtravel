@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
 import { ref } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 import { getDatabase, ref as databaseRef, push, set, get,   onValue } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
  
@@ -430,6 +430,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const guestNumber = getValueById("guestNumber");
         const TourManager = getValueById("TourManager");
         const Contantno = getValueById("Contant-no");
+        const notes = getValueById("notes");
+
+
+         
       
  // Get the table values (modify this based on how you obtain tableValues)
 //  var tableValues = getTableValues();
@@ -571,11 +575,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
       </div>
       <div class="mt-2 px-5 w-full ">
-        <table class="w-full rounded-md">
+        <table class="w-full rounded-md text-sm	">
             <tr class=" border border-1 border-black rounded">
 
             
-          <tr class="border border-1 border-black rounded-md">
+          <tr class="border border-1 border-black rounded-md text-sm	">
             <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">Day</th>
             <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black"> date </th>
             <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">tour program</th>
@@ -596,7 +600,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
 
 
-        <table class="w-full mt-1">
+        <table class="w-full mt-1 text-sm	">
         <tr>
             <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">check in</th>
             <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">check out</th>
@@ -617,6 +621,10 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
       <div class=" mt-5 px-5">
         <div class=" flex flex-col">
+        <div class=" flex gap-2 items-center">
+        <h1 class=" flex flex-shrink-0">Tour Manager :</h1>
+        <h1>${notes}</h1>
+    </div>
             <div class=" flex gap-2 items-center">
                 <h1>Tour Manager :</h1>
                 <h1>${TourManager}</h1>
@@ -726,6 +734,10 @@ function getValueById(id) {
     const guestNumber = getValueById("guestNumber");
     const TourManagerr = getValueById("TourManager");
     const  Contantno  = getValueById("Contant-no");
+    const  notes  = getValueById("notes");
+
+
+     
      
  
    // Get data from the tour table
@@ -762,7 +774,7 @@ function getValueById(id) {
         Contantno,
         tourTable: tourTableData, 
         duplicatedRows: duplicatedRowsData, // Add a new field for duplicated rows
-        
+        notes: notes,
         // Add other form fields as needed
     };
 
