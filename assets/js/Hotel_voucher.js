@@ -30,22 +30,22 @@ const storage = getStorage();
 
  
 
-// Function to populate hotel names in the dropdown
-function populateHotelNames() {
-    const hotelDropdown = document.getElementById('hotel-name');
+// // Function to populate hotel names in the dropdown
+// function populateHotelNames() {
+//     const hotelDropdown = document.getElementById('hotel-name');
 
-    onValue(vouchersRef, (snapshot) => {
-        hotelDropdown.innerHTML = '<option value="" selected disabled>Select Hotel</option>';
+//     onValue(vouchersRef, (snapshot) => {
+//         hotelDropdown.innerHTML = '<option value="" selected disabled>Select Hotel</option>';
 
-        snapshot.forEach((childSnapshot) => {
-            const hotelName = childSnapshot.val().hotelName;
-            const option = document.createElement('option');
-            option.value = hotelName;
-            option.textContent = hotelName;
-            hotelDropdown.appendChild(option);
-        });
-    });
-}
+//         snapshot.forEach((childSnapshot) => {
+//             const hotelName = childSnapshot.val().hotelName;
+//             const option = document.createElement('option');
+//             option.value = hotelName;
+//             option.textContent = hotelName;
+//             hotelDropdown.appendChild(option);
+//         });
+//     });
+// }
 
 // Function to populate guest names in the dropdown
 function populateGuestNames() {
@@ -64,108 +64,187 @@ function populateGuestNames() {
     });
 }
 
+
+
+
+
+// Function to filter hotel names based on user input and update the dropdown
+// Function to filter hotel names based on user input and update the dropdown
+function filterHotelNames(searchTerm) {
+  const dropdownContainer = document.getElementById("hotel-name-dropdown");
+
+  // Hide the dropdown if the search term is empty
+  if (searchTerm.length === 0) {
+      dropdownContainer.classList.add("hidden");
+      return;
+  }
+
+  dropdownContainer.innerHTML = ""; // Clear previous data
+
+  onValue(vouchersRef, (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+          const voucher = childSnapshot.val();
+          const hotelName = voucher.hotelName;
+
+          // Check if the hotel name starts with the search term
+          if (hotelName.toLowerCase().startsWith(searchTerm.toLowerCase())) {
+              const option = document.createElement("div");
+              option.textContent = hotelName;
+              option.className = "p-2 cursor-pointer hover:bg-gray-200";
+              option.addEventListener("click", () => {
+                  document.getElementById("hotel-name").value = hotelName;
+                  dropdownContainer.classList.add("hidden");
+
+                  // Autofill other fields
+                  document.getElementById('hotel-address').value = voucher.hotelAddress;
+                  document.getElementById('google-map-link').value = voucher.googleMapLink;
+                  document.getElementById('hotel-phone').value = voucher.hotelPhone;
+                  document.getElementById('photo').style.display = 'none';
+  
+
+
+                    // Auto-fill terms and conditions
+                   updateTermsAndConditions(voucher.termsAndCondition);
+                   updateCancellationPolicy(voucher.cancellationPolicy);
+
+                   // Fetch and display the image
+                   const hotelPhotoPreview = document.getElementById('hotel-photo-preview');
+                   if (voucher.hotelPhoto) {
+                       hotelPhotoPreview.src = voucher.hotelPhoto;
+
+                    
+
+
+                   } else {
+                       // If hotelPhoto is not defined, reset the image source
+                       hotelPhotoPreview.src = '';
+
+                       fileInput.style.display = 'block';
+                   }
+                  // Update other input fields here as needed
+              });
+
+              dropdownContainer.appendChild(option);
+          }
+      });
+  });
+
+  // Show/hide the dropdown based on whether there are matching hotel names
+  dropdownContainer.classList.toggle("hidden", dropdownContainer.children.length === 0);
+}
+
+
+// Event listener for input field with autocomplete
+const hotelNameInput = document.getElementById("hotel-name");
+hotelNameInput.addEventListener("input", function () {
+  const searchTerm = this.value;
+  filterHotelNames(searchTerm);
+});
+
+// Event listener for focusing on the input field to show suggestions
+hotelNameInput.addEventListener("focus", function () {
+  const searchTerm = this.value;
+  filterHotelNames(searchTerm);
+});
+
+
 // Function to populate other input fields based on selected hotel name
-function populateHotelDropdown(searchTerm) {
-    const dropdownContainer = document.getElementById("hotel-name-dropdown");
-    dropdownContainer.innerHTML = ""; // Clear previous data
+// function populateHotelDropdown(searchTerm) {
+//     const dropdownContainer = document.getElementById("hotel-name-dropdown");
+//     dropdownContainer.innerHTML = ""; // Clear previous data
 
+ 
+//     document.getElementById('hotel-address').removeAttribute('readonly');
+// document.getElementById('google-map-link').removeAttribute('readonly');
+// document.getElementById('hotel-phone').removeAttribute('readonly');
 
-    document.getElementById('hotel-address').removeAttribute('readonly');
-document.getElementById('google-map-link').removeAttribute('readonly');
-document.getElementById('hotel-phone').removeAttribute('readonly');
-
-const fileInput = document.getElementById("hotel-photo");
+// const fileInput = document.getElementById("hotel-photo");
    
 
+//     onValue(vouchersRef, (snapshot) => {
+//         snapshot.forEach((childSnapshot) => {
+//             const voucher = childSnapshot.val();
+//             const hotelName = voucher.hotelName;
+
+//             // Check if the hotel name matches the search term
+//             if (hotelName.toLowerCase().includes(searchTerm.toLowerCase())) {
+//                 const option = document.createElement("div");
+//                 option.textContent = hotelName;
+//                 option.className = "p-2 cursor-pointer hover:bg-gray-200";
+//                 option.addEventListener("click", () => {
+//                     document.getElementById("hotel-name").value = hotelName;
+//                     dropdownContainer.classList.add("hidden");
+//                     document.getElementById('hotel-address').value = voucher.hotelAddress;
+//                     document.getElementById('google-map-link').value = voucher.googleMapLink;
+//                     document.getElementById('hotel-phone').value = voucher.hotelPhone;
 
 
-
-
-
-    onValue(vouchersRef, (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-            const voucher = childSnapshot.val();
-            const hotelName = voucher.hotelName;
-
-            // Check if the hotel name matches the search term
-            if (hotelName.toLowerCase().includes(searchTerm.toLowerCase())) {
-                const option = document.createElement("div");
-                option.textContent = hotelName;
-                option.className = "p-2 cursor-pointer hover:bg-gray-200";
-                option.addEventListener("click", () => {
-                    document.getElementById("hotel-name").value = hotelName;
-                    dropdownContainer.classList.add("hidden");
-                    document.getElementById('hotel-address').value = voucher.hotelAddress;
-                    document.getElementById('google-map-link').value = voucher.googleMapLink;
-                    document.getElementById('hotel-phone').value = voucher.hotelPhone;
-
-
-                     // Enable input fields
-                     document.getElementById('hotel-address').removeAttribute('readonly');
-                     document.getElementById('google-map-link').removeAttribute('readonly');
-                     document.getElementById('hotel-phone').removeAttribute('readonly');
-                     document.getElementById('photo').style.display = 'none';
+//                      // Enable input fields
+//                      document.getElementById('hotel-address').removeAttribute('readonly');
+//                      document.getElementById('google-map-link').removeAttribute('readonly');
+//                      document.getElementById('hotel-phone').removeAttribute('readonly');
+//                      document.getElementById('photo').style.display = 'none';
 
  
-                     // Auto-fill terms and conditions
-                     updateTermsAndConditions(voucher.termsAndCondition);
-                     updateCancellationPolicy(voucher.cancellationPolicy);
+//                      // Auto-fill terms and conditions
+//                      updateTermsAndConditions(voucher.termsAndCondition);
+//                      updateCancellationPolicy(voucher.cancellationPolicy);
 
  
-                    // Fetch and display the image
-                    const hotelPhotoPreview = document.getElementById('hotel-photo-preview');
-                    if (voucher.hotelPhoto) {
-                        hotelPhotoPreview.src = voucher.hotelPhoto;
+//                     // Fetch and display the image
+//                     const hotelPhotoPreview = document.getElementById('hotel-photo-preview');
+//                     if (voucher.hotelPhoto) {
+//                         hotelPhotoPreview.src = voucher.hotelPhoto;
 
                      
 
 
-                    } else {
-                        // If hotelPhoto is not defined, reset the image source
-                        hotelPhotoPreview.src = '';
+//                     } else {
+//                         // If hotelPhoto is not defined, reset the image source
+//                         hotelPhotoPreview.src = '';
 
-                        fileInput.style.display = 'block';
-                    }
+//                         fileInput.style.display = 'block';
+//                     }
 
-                    // Enable input fields
-                    document.getElementById('hotel-address').removeAttribute('readonly');
-                    document.getElementById('google-map-link').removeAttribute('readonly');
-                    document.getElementById('hotel-phone').removeAttribute('readonly');
-                });
+//                     // Enable input fields
+//                     document.getElementById('hotel-address').removeAttribute('readonly');
+//                     document.getElementById('google-map-link').removeAttribute('readonly');
+//                     document.getElementById('hotel-phone').removeAttribute('readonly');
+//                 });
 
-                dropdownContainer.appendChild(option);
-            }
-        });
-    });
+//                 dropdownContainer.appendChild(option);
+//             }
+//         });
+//     });
 
-    // Handle the case when no hotel name is selected
-    dropdownContainer.addEventListener("mouseleave", () => {
-        const selectedHotelName = document.getElementById("hotel-name").value;
+//     // Handle the case when no hotel name is selected
+//     dropdownContainer.addEventListener("mouseleave", () => {
+//         const selectedHotelName = document.getElementById("hotel-name").value;
 
-        if (!selectedHotelName) {
-            document.getElementById('hotel-address').value = '';
-            document.getElementById('google-map-link').value = '';
-            document.getElementById('hotel-phone').value = '';
+//         if (!selectedHotelName) {
+//             document.getElementById('hotel-address').value = '';
+//             document.getElementById('google-map-link').value = '';
+//             document.getElementById('hotel-phone').value = '';
 
 
             
 
-            // Reset the image source
-            document.getElementById('hotel-photo-preview').src = '';
-            fileInput.style.display = 'block';
-            // Disable input fields
-            document.getElementById('hotel-address').setAttribute('readonly', 'readonly');
-            document.getElementById('google-map-link').setAttribute('readonly', 'readonly');
-            document.getElementById('hotel-phone').setAttribute('readonly', 'readonly');
+//             // Reset the image source
+//             document.getElementById('hotel-photo-preview').src = '';
+//             fileInput.style.display = 'block';
+//             // Disable input fields
+//             document.getElementById('hotel-address').setAttribute('readonly', 'readonly');
+//             document.getElementById('google-map-link').setAttribute('readonly', 'readonly');
+//             document.getElementById('hotel-phone').setAttribute('readonly', 'readonly');
 
 
-             // Clear terms and conditions
-             updateTermsAndConditions([]);
-             updateCancellationPolicy([]);
-        }
+//              // Clear terms and conditions
+//              updateTermsAndConditions([]);
+//              updateCancellationPolicy([]);
+//         }
 
-    });
-}
+//     });
+// }
 
 // ... (Your existing code)
 
@@ -254,17 +333,87 @@ function updateCancellationPolicy(cancellationPolicy) {
 
 
 // Event listener for input field
-const hotelNameInput = document.getElementById("hotel-name");
-hotelNameInput.addEventListener("input", function () {
-    const searchTerm = this.value;
-    populateHotelDropdown(searchTerm);
+// const hotelNameInput = document.getElementById("hotel-name");
+// hotelNameInput.addEventListener("input", function () {
+//     const searchTerm = this.value;
+//     populateHotelDropdown(searchTerm);
 
-    // Show/hide the dropdown based on user input
-    const dropdownContainer = document.getElementById("hotel-name-dropdown");
-    dropdownContainer.classList.toggle("hidden", searchTerm === "");
-});
+//     // Show/hide the dropdown based on user input
+//     const dropdownContainer = document.getElementById("hotel-name-dropdown");
+//     dropdownContainer.classList.toggle("hidden", searchTerm === "");
+// });
 
 // Event listener for guest name input field
+// const guestNameInput = document.getElementById("guest-name");
+// guestNameInput.addEventListener("input", function () {
+//     const searchTerm = this.value;
+//     populateGuestDropdown(searchTerm);
+
+//     // Show/hide the dropdown based on user input
+//     const dropdownContainer = document.getElementById("guest-name-dropdown");
+//     dropdownContainer.classList.toggle("hidden", searchTerm === "");
+// });
+
+ 
+
+// // Function to populate guest names in the dropdown based on search term
+// function populateGuestDropdown(searchTerm) {
+//     const dropdownContainer = document.getElementById("guest-name-dropdown");
+//     dropdownContainer.innerHTML = ""; // Clear previous data
+
+//     onValue(guestsRef, (snapshot) => {
+//         snapshot.forEach((childSnapshot) => {
+//             const guestKey = childSnapshot.key;
+//             const guest = childSnapshot.val();
+
+//             // Adjust this part based on your data structure
+//             const guestName = guest.guestName; // Update to the actual property name
+//             const guestNumber = guest.contactNumber; // Update to the actual property name
+//             const guestCitizen = guest.citizen;
+
+
+
+             
+
+
+//             // Check if the guest name matches the search term
+//             if (guestName.toLowerCase().includes(searchTerm.toLowerCase())) {
+//                 const option = document.createElement("div");
+//                 option.textContent = guestName;
+//                 option.className = "p-2 cursor-pointer hover:bg-gray-200";
+//                 option.addEventListener("click", () => {
+//                     document.getElementById("guest-name").value = guestName;
+//                     dropdownContainer.classList.add("hidden");
+
+//                     // Set guest number based on selected guest name
+//                     document.getElementById("guest-number").value = guestNumber;
+
+
+//                     document.getElementById("guest-citizen").value = guestCitizen;
+//                 });
+
+//                 dropdownContainer.appendChild(option);
+//             }
+//         });
+//     });
+
+//     // Handle the case when no guest name is selected
+//     dropdownContainer.addEventListener("mouseleave", () => {
+//         const selectedGuestName = document.getElementById("guest-name").value;
+
+//         if (!selectedGuestName) {
+//             // Reset the guest number
+//             document.getElementById("guest-number").value = '';
+//             document.getElementById("guest-citizen").value = '';
+//         }
+//     });
+// }
+
+ 
+// Call the functions to populate hotel and guest names
+// populateHotelNames();
+// populateGuestNames();
+
 const guestNameInput = document.getElementById("guest-name");
 guestNameInput.addEventListener("input", function () {
     const searchTerm = this.value;
@@ -274,8 +423,6 @@ guestNameInput.addEventListener("input", function () {
     const dropdownContainer = document.getElementById("guest-name-dropdown");
     dropdownContainer.classList.toggle("hidden", searchTerm === "");
 });
-
- 
 
 // Function to populate guest names in the dropdown based on search term
 function populateGuestDropdown(searchTerm) {
@@ -292,13 +439,8 @@ function populateGuestDropdown(searchTerm) {
             const guestNumber = guest.contactNumber; // Update to the actual property name
             const guestCitizen = guest.citizen;
 
-
-
-             
-
-
-            // Check if the guest name matches the search term
-            if (guestName.toLowerCase().includes(searchTerm.toLowerCase())) {
+            // Check if the guest name starts with the search term
+            if (guestName.toLowerCase().startsWith(searchTerm.toLowerCase())) {
                 const option = document.createElement("div");
                 option.textContent = guestName;
                 option.className = "p-2 cursor-pointer hover:bg-gray-200";
@@ -308,7 +450,6 @@ function populateGuestDropdown(searchTerm) {
 
                     // Set guest number based on selected guest name
                     document.getElementById("guest-number").value = guestNumber;
-
 
                     document.getElementById("guest-citizen").value = guestCitizen;
                 });
@@ -330,10 +471,6 @@ function populateGuestDropdown(searchTerm) {
     });
 }
 
- 
-// Call the functions to populate hotel and guest names
-populateHotelNames();
-populateGuestNames();
 
 
 
@@ -1240,5 +1377,123 @@ document.addEventListener('keydown', function(event) {
 ////////
 /////////////////
 ////////////////
-/////////////////
-////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ // Hotel_voucher.js
+// Hotel_voucher.js
+
+// Ensure that the DOM content is fully loaded before executing  
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  function handleEnter(event, nextFieldId) {
+      if (event.key === 'Enter') {
+          event.preventDefault();
+          document.getElementById(nextFieldId).focus();
+      }
+  }
+
+  // Add event listeners for keydown events on input fields
+  document.getElementById('confirmation-number').addEventListener('keydown', function (event) {
+      handleEnter(event, 'hotel-name');
+  });
+
+  document.getElementById('No-of-Adults').addEventListener('keydown', function (event) {
+      handleEnter(event, 'issued-by');
+  });
+
+
+  document.getElementById('issued-by').addEventListener('keydown', function (event) {
+    handleEnter(event, 'issued-date');
+});
+
+document.getElementById('issued-date').addEventListener('keydown', function (event) {
+  handleEnter(event, 'booked-by');
+});
+
+
+document.getElementById('booked-by').addEventListener('keydown', function (event) {
+  handleEnter(event, 'contact-no');
+});
+
+
+document.getElementById('contact-no').addEventListener('keydown', function (event) {
+  handleEnter(event, 'mail-id');
+});
+
+
+document.getElementById('mail-id').addEventListener('keydown', function (event) {
+  handleEnter(event, 'room-type');
+});
+
+
+document.getElementById('room-type').addEventListener('keydown', function (event) {
+  handleEnter(event, 'no-of-rooms');
+});
+
+
+
+document.getElementById('no-of-rooms').addEventListener('keydown', function (event) {
+  handleEnter(event, 'no-of-extra-bed');
+});
+
+document.getElementById('no-of-extra-bed').addEventListener('keydown', function (event) {
+  handleEnter(event, 'child-without-bed');
+});
+
+document.getElementById('child-without-bed').addEventListener('keydown', function (event) {
+  handleEnter(event, 'meal-plan');
+});
+
+document.getElementById('meal-plan').addEventListener('keydown', function (event) {
+  handleEnter(event, 'check-in-date');
+});
+
+document.getElementById('check-in-date').addEventListener('keydown', function (event) {
+  handleEnter(event, 'check-in-time');
+});
+
+document.getElementById('check-in-time').addEventListener('keydown', function (event) {
+  handleEnter(event, 'check-out-date');
+});
+
+document.getElementById('check-out-date').addEventListener('keydown', function (event) {
+  handleEnter(event, 'check-out-time');
+});
+
+document.getElementById('check-out-time').addEventListener('keydown', function (event) {
+  handleEnter(event, 'notes');
+});
+
+document.getElementById('notes').addEventListener('keydown', function (event) {
+  handleEnter(event, 'special-request');
+});
+
+document.getElementById('special-request').addEventListener('keydown', function (event) {
+  handleEnter(event, 'payment-info');
+});
+
+document.getElementById('payment-info').addEventListener('keydown', function (event) {
+  handleEnter(event, 'arrival');
+});
+
+document.getElementById('arrival').addEventListener('keydown', function (event) {
+  handleEnter(event, 'ticket-no-two');
+});
+
+document.getElementById('ticket-no-two').addEventListener('keydown', function (event) {
+  handleEnter(event, 'departure');
+});
+
+document.getElementById('departure').addEventListener('keydown', function (event) {
+  handleEnter(event, 'ticket-no');
+});
+
+document.getElementById('departure').addEventListener('keydown', function (event) {
+  handleEnter(event, 'ticket-no');
+});
+
+
+ 
+});
