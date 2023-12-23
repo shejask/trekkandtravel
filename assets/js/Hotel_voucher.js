@@ -1,928 +1,946 @@
- import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-import { ref } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
-import { getDatabase, ref as databaseRef, push, set, get,   onValue } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
- 
+// Import Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import  { getDatabase, ref, push, onValue, child ,get } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
+
+
 const firebaseConfig = {
-    apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
-    authDomain: "trekkandtravel-7daeb.firebaseapp.com",
-    databaseURL: "https://trekkandtravel-7daeb-default-rtdb.firebaseio.com",
-    projectId: "trekkandtravel-7daeb",
-    storageBucket: "trekkandtravel-7daeb.appspot.com",
-    messagingSenderId: "313424140423",
-    appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
-  };
+  apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
+  authDomain: "trekkandtravel-7daeb.firebaseapp.com",
+  databaseURL: "https://trekkandtravel-7daeb-default-rtdb.firebaseio.com",
+  projectId: "trekkandtravel-7daeb",
+  storageBucket: "trekkandtravel-7daeb.appspot.com",
+  messagingSenderId: "313424140423",
+  appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
+};
+
+ 
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
 const database = getDatabase();
 const vouchersRef = ref(database, 'vouchers');
-const guestsRef = ref(database, 'guests');
-const formsRef = ref(database, 'TransportVoucher'); // Declare and initialize formsRef
-
- 
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Add event listener for hotel input
-    var hotelInput = document.getElementById("hotel");
-    var dropdownContainer = document.getElementById("hotel-name-dropdown");
-    var addressInput = document.getElementById("hotelladdresss"); // Assuming this is the ID of your hotel address input
-    
-    if (hotelInput && dropdownContainer && addressInput) {
-        hotelInput.addEventListener("input", function () {
-            populateHotelDropdown("hotel", "hotel-name-dropdown", "hotelladdresss");
-        });
-    } else {
-        console.error("Hotel input, dropdown container, or address input not found");
-    }
-
-    // Add event listener for duplicating input fields
-    var duplicateButton = document.getElementById("duplicate-btn");
-    
-    if (duplicateButton) {
-        duplicateButton.addEventListener("click", function () {
-            duplicateInputFields();
-        });
-    } else {
-        console.error("Duplicate button not found");
-    }
-
-    
-    function duplicateInputFields() {
-        // Get the container
-        var container = document.getElementById('inputContainer');
-    
-        if (!container) {
-            console.error("Container not found");
-            return;
-        }
-    
-        // Clone the original input row
-        var originalInputRow = container.querySelector('.input-row');
-        if (!originalInputRow) {
-            console.error("Original input row not found");
-            return;
-        }
-    
-        var newDiv = originalInputRow.cloneNode(true);
-    
-        // Update IDs to make them unique
-        var suffix = Date.now(); // Add a timestamp suffix for uniqueness
-        newDiv.querySelectorAll('[id]').forEach((element) => {
-            element.id = element.id + '-' + suffix;
-        });
-    
-        // Clear the value in the duplicated hotel input
-        var duplicatedHotelInput = newDiv.querySelector('input[name="hotel"]');
-        if (duplicatedHotelInput) {
-            duplicatedHotelInput.value = "";
-        }
-    
-        // Append the new div to the container
-        container.appendChild(newDiv);
-    
-        // Add event listener for the duplicated input field
-        var duplicatedInput = newDiv.querySelector('input[name="hotel"]');
-        if (duplicatedInput) {
-            duplicatedInput.addEventListener("input", function () {
-                populateHotelDropdown(duplicatedInput.id, 'hotel-name-dropdown-' + suffix, 'hotelladdresss-' + suffix);
-            });
-        } else {
-            console.error("Duplicated input not found");
-        }
-    }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    function populateHotelDropdown(inputId, dropdownId, addressInputId) {
-        // Get the value from the input field
-        const hotelInput = document.getElementById(inputId).value.toLowerCase();
-
-        // Get the dropdown container and address input field
-        const dropdownContainer = document.getElementById(dropdownId);
-        const addressInput = document.getElementById(addressInputId);
-
-        // Clear the previous dropdown content and address input field
-        dropdownContainer.innerHTML = "";
-        addressInput.value = "";
-
-        // Query the database for all hotel names and addresses
-        onValue(vouchersRef, (snapshot) => {
-            const data = snapshot.val();
-
-            if (data) {
-                const matchingHotels = Object.values(data).filter(
-                    (voucher) => voucher.hotelName.toLowerCase().includes(hotelInput)
-                );
-
-                matchingHotels.forEach((voucher) => {
-                    // Create a new option element
-                    const option = document.createElement("div");
-                    option.textContent = voucher.hotelName;
-                    option.className = "dropdown-item";
-
-                    // Add click event to select the hotel name and fill the address
-                    option.addEventListener("click", function () {
-                        document.getElementById(inputId).value = voucher.hotelName;
-
-                        // Concatenate hotelAddress with googleMapLink
-                        const combinedAddress = `${voucher.hotelAddress} - ${voucher.hotelPhone
-                        }`;
-                        addressInput.value = combinedAddress;
-
-                        dropdownContainer.innerHTML = ""; // Clear dropdown after selection
-                    });
-
-                    // Append the option to the dropdown
-                    dropdownContainer.appendChild(option);
-                });
-
-                // Display the dropdown container
-                dropdownContainer.classList.remove("hidden");
-            }
-        });
-    }
-});
-
-
-
-
+const guestsRef = ref(database, 'guests'); // Add a reference to the 'guests' node
+const storage = getStorage();
 
 
 
  
-
-document.addEventListener("DOMContentLoaded", function () {
-    // ... (your existing code) ...
-
-    function populateGuestNumber(inputId, dropdownId, numberInputId) {
-        // Get the value from the input field
-        const guestNameInput = document.getElementById(inputId).value.toLowerCase();
-
-        // Get the dropdown container
-        const dropdownContainer = document.getElementById(dropdownId);
-
-        // Hide the dropdown if the input value is empty
-        if (guestNameInput.length === 0) {
-            dropdownContainer.classList.add("hidden");
-            return;
-        }
-
-        // Clear the previous dropdown content
-        dropdownContainer.innerHTML = "";
-
-        // Query the database for all guest names and numbers
-        onValue(guestsRef, (snapshot) => {
-            const data = snapshot.val();
-
-            if (data) {
-                const guestDetails = Object.values(data);
-
-                guestDetails.forEach((guest) => {
-                    // Check if the guest name starts with the input
-                    if (guest.guestName.toLowerCase().startsWith(guestNameInput)) {
-                        // Create a new option element
-                        const option = document.createElement("div");
-                        option.textContent = guest.guestName;
-                        option.className = "dropdown-item";
-
-                        // Add click event to select the guest name and fill guest number
-                        option.addEventListener("click", function () {
-                            document.getElementById(inputId).value = guest.guestName;
-                            document.getElementById(numberInputId).value = guest.contactNumber;
-                            dropdownContainer.innerHTML = ""; // Clear dropdown after selection
-                        });
-
-                        // Append the option to the dropdown
-                        dropdownContainer.appendChild(option);
-                    }
-                });
-
-                // Display the dropdown container
-                dropdownContainer.classList.remove("hidden");
-            }
-        });
-    }
-
-    document.getElementById("guestName").addEventListener("input", function () {
-        populateGuestNumber("guestName", "guest-name-dropdown", "guestNumber");
-    });
-
-    // ... (your existing code) ...
-});
-
-
-
- 
-//////////////////////////////////////////////////////////////////////////////////////////
- ////////////////////////////////////////////////////////////////////////////////////////
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Get references to the input fields
-    const travelDateInput = document.getElementById("travelDate");
-    const autoFillDateInput = document.querySelector('#autoFillDate input[type="date"]');
-    const dayInput = document.querySelector('#tourTable tbody tr td input[type="text"]');
-
-    // Set initial value from travelDate to autoFillDate
-    autoFillDateInput.value = travelDateInput.value;
-
-    // Add an event listener to the travelDate input
-    travelDateInput.addEventListener("input", function () {
-        // Update autoFillDate when travelDate changes
-        autoFillDateInput.value = travelDateInput.value;
-
-        // Get the selected date from autoFillDateInput
-        const selectedDate = new Date(autoFillDateInput.value);
-
-        // Check if the selectedDate is valid
-        if (!isNaN(selectedDate.getTime())) {
-            // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-            const dayOfWeek = selectedDate.getDay();
-
-            // Define an array of days
-            const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-            // Populate the dayInput with the corresponding day of the week
-            dayInput.value = daysOfWeek[dayOfWeek];
-        } else {
-            // Clear the dayInput if the selected date is invalid
-            dayInput.value = "";
-        }
-    });
-
-    // ... (your existing code) ...
-});
-
- 
-//////////////////////////////////////////////////////////////////////////////////////////
- ////////////////////////////////////////////////////////////////////////////////////////
-document.addEventListener("DOMContentLoaded", function () {
-    const addRowButton = document.getElementById("add-row-btn");
-
-    if (addRowButton) {
-        let rowCounter = 1; // Counter to track the number of added rows
-
-        addRowButton.addEventListener("click", function () {
-            addNewRow(rowCounter);
-            rowCounter++;
-        });
-    } else {
-        console.error("Add row button not found");
-    }
-
-    function addNewRow(counter) {
-        // Get a reference to the table body
-        const tableBody = document.getElementById("tourTable").getElementsByTagName("tbody")[0];
-
-        // Create a new row
-        const newRow = tableBody.insertRow(tableBody.rows.length);
-
-        // Create cells for the new row
-        const dayCell = newRow.insertCell(0);
-        const autoFillDateCell = newRow.insertCell(1);
-        const programCell = newRow.insertCell(2);
-
-        // Add input elements to the cells
-        dayCell.innerHTML = `<input type="text" placeholder="Enter day" class="w-full p-2 border rounded border-slate-700">`;
-        autoFillDateCell.innerHTML = `<td class="p-2"><input type="date" class="w-full p-2 border rounded border-slate-700"></td>`;
-        programCell.innerHTML = `<input type="text" placeholder="Enter tour program" class="w-full p-2 border rounded border-slate-700">`;
-
-        // Auto-fill the date value in the duplicated row
-        const originalAutoFillDateInput = document.querySelector('#autoFillDate input[type="date"]');
-        const duplicatedAutoFillDateInput = newRow.querySelector('td input[type="date"]');
-        const duplicatedDayInput = newRow.querySelector('td input[type="text"]');
-
-        if (originalAutoFillDateInput && duplicatedAutoFillDateInput && duplicatedDayInput) {
-            const originalDate = new Date(originalAutoFillDateInput.value);
-            if (!isNaN(originalDate.getTime())) {
-                // Add counter number of days to the original date
-                const newDate = new Date(originalDate);
-                newDate.setDate(newDate.getDate() + counter);
-
-                // Format the date as "YYYY-MM-DD" for input type="date"
-                const formattedDate = newDate.toISOString().split('T')[0];
-                duplicatedAutoFillDateInput.value = formattedDate;
-
-                // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-                const dayOfWeek = newDate.getDay();
-
-                // Define an array of days
-                const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-                // Populate the day input with the corresponding day of the week
-                duplicatedDayInput.value = daysOfWeek[dayOfWeek];
-            }
-        }
-    }
-});
  
 
-// function getTableValues() {
-//     var tableValues = [];
+ 
 
-//     // Get the content of the table
-//     var inputContainer = document.getElementById("inputContainer");
-//     var tableRows = inputContainer.querySelectorAll('.input-row');
+// // Function to populate hotel names in the dropdown
+// function populateHotelNames() {
+//     const hotelDropdown = document.getElementById('hotel-name');
 
-//     // Extract values from each row
-//     tableRows.forEach(function (row) {
-//         var cells = row.querySelectorAll('input, select, textarea');
-//         var rowValues = [];
+//     onValue(vouchersRef, (snapshot) => {
+//         hotelDropdown.innerHTML = '<option value="" selected disabled>Select Hotel</option>';
 
-//         cells.forEach(function (cell) {
-//             rowValues.push(cell.value);
+//         snapshot.forEach((childSnapshot) => {
+//             const hotelName = childSnapshot.val().hotelName;
+//             const option = document.createElement('option');
+//             option.value = hotelName;
+//             option.textContent = hotelName;
+//             hotelDropdown.appendChild(option);
 //         });
+//     });
+// }
 
-//         tableValues.push(rowValues);
+// Function to populate guest names in the dropdown
+function populateGuestNames() {
+    const guestDropdown = document.getElementById('guest-name');
+
+    onValue(guestsRef, (snapshot) => {
+        guestDropdown.innerHTML = '<option value="" selected disabled>Select Guest</option>';
+
+        snapshot.forEach((childSnapshot) => {
+            const guestName = childSnapshot.val().guestName;
+            const option = document.createElement('option');
+            option.value = guestName;
+            option.textContent = guestName;
+            guestDropdown.appendChild(option);
+        });
+    });
+}
+
+
+
+
+
+// Function to filter hotel names based on user input and update the dropdown
+// Function to filter hotel names based on user input and update the dropdown
+function filterHotelNames(searchTerm) {
+  const dropdownContainer = document.getElementById("hotel-name-dropdown");
+
+  // Hide the dropdown if the search term is empty
+  if (searchTerm.length === 0) {
+      dropdownContainer.classList.add("hidden");
+      return;
+  }
+
+  dropdownContainer.innerHTML = ""; // Clear previous data
+
+  onValue(vouchersRef, (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+          const voucher = childSnapshot.val();
+          const hotelName = voucher.hotelName;
+
+          // Check if the hotel name starts with the search term
+          if (hotelName.toLowerCase().startsWith(searchTerm.toLowerCase())) {
+              const option = document.createElement("div");
+              option.textContent = hotelName;
+              option.className = "p-2 cursor-pointer hover:bg-gray-200";
+              option.addEventListener("click", () => {
+                  document.getElementById("hotel-name").value = hotelName;
+                  dropdownContainer.classList.add("hidden");
+
+                  // Autofill other fields
+                  document.getElementById('hotel-address').value = voucher.hotelAddress;
+                  document.getElementById('google-map-link').value = voucher.googleMapLink;
+                  document.getElementById('hotel-phone').value = voucher.hotelPhone;
+                  document.getElementById('photo').style.display = 'none';
+  
+
+
+                    // Auto-fill terms and conditions
+                   updateTermsAndConditions(voucher.termsAndCondition);
+                   updateCancellationPolicy(voucher.cancellationPolicy);
+
+                   // Fetch and display the image
+                   const hotelPhotoPreview = document.getElementById('hotel-photo-preview');
+                   if (voucher.hotelPhoto) {
+                       hotelPhotoPreview.src = voucher.hotelPhoto;
+
+                    
+
+
+                   } else {
+                       // If hotelPhoto is not defined, reset the image source
+                       hotelPhotoPreview.src = '';
+
+                       fileInput.style.display = 'block';
+                   }
+                  // Update other input fields here as needed
+              });
+
+              dropdownContainer.appendChild(option);
+          }
+      });
+  });
+
+  // Show/hide the dropdown based on whether there are matching hotel names
+  dropdownContainer.classList.toggle("hidden", dropdownContainer.children.length === 0);
+}
+
+
+// Event listener for input field with autocomplete
+const hotelNameInput = document.getElementById("hotel-name");
+hotelNameInput.addEventListener("input", function () {
+  const searchTerm = this.value;
+  filterHotelNames(searchTerm);
+});
+
+// Event listener for focusing on the input field to show suggestions
+hotelNameInput.addEventListener("focus", function () {
+  const searchTerm = this.value;
+  filterHotelNames(searchTerm);
+});
+
+
+// Function to populate other input fields based on selected hotel name
+// function populateHotelDropdown(searchTerm) {
+//     const dropdownContainer = document.getElementById("hotel-name-dropdown");
+//     dropdownContainer.innerHTML = ""; // Clear previous data
+
+ 
+//     document.getElementById('hotel-address').removeAttribute('readonly');
+// document.getElementById('google-map-link').removeAttribute('readonly');
+// document.getElementById('hotel-phone').removeAttribute('readonly');
+
+// const fileInput = document.getElementById("hotel-photo");
+   
+
+//     onValue(vouchersRef, (snapshot) => {
+//         snapshot.forEach((childSnapshot) => {
+//             const voucher = childSnapshot.val();
+//             const hotelName = voucher.hotelName;
+
+//             // Check if the hotel name matches the search term
+//             if (hotelName.toLowerCase().includes(searchTerm.toLowerCase())) {
+//                 const option = document.createElement("div");
+//                 option.textContent = hotelName;
+//                 option.className = "p-2 cursor-pointer hover:bg-gray-200";
+//                 option.addEventListener("click", () => {
+//                     document.getElementById("hotel-name").value = hotelName;
+//                     dropdownContainer.classList.add("hidden");
+//                     document.getElementById('hotel-address').value = voucher.hotelAddress;
+//                     document.getElementById('google-map-link').value = voucher.googleMapLink;
+//                     document.getElementById('hotel-phone').value = voucher.hotelPhone;
+
+
+//                      // Enable input fields
+//                      document.getElementById('hotel-address').removeAttribute('readonly');
+//                      document.getElementById('google-map-link').removeAttribute('readonly');
+//                      document.getElementById('hotel-phone').removeAttribute('readonly');
+//                      document.getElementById('photo').style.display = 'none';
+
+ 
+//                      // Auto-fill terms and conditions
+//                      updateTermsAndConditions(voucher.termsAndCondition);
+//                      updateCancellationPolicy(voucher.cancellationPolicy);
+
+ 
+//                     // Fetch and display the image
+//                     const hotelPhotoPreview = document.getElementById('hotel-photo-preview');
+//                     if (voucher.hotelPhoto) {
+//                         hotelPhotoPreview.src = voucher.hotelPhoto;
+
+                     
+
+
+//                     } else {
+//                         // If hotelPhoto is not defined, reset the image source
+//                         hotelPhotoPreview.src = '';
+
+//                         fileInput.style.display = 'block';
+//                     }
+
+//                     // Enable input fields
+//                     document.getElementById('hotel-address').removeAttribute('readonly');
+//                     document.getElementById('google-map-link').removeAttribute('readonly');
+//                     document.getElementById('hotel-phone').removeAttribute('readonly');
+//                 });
+
+//                 dropdownContainer.appendChild(option);
+//             }
+//         });
 //     });
 
-//     return tableValues;
-// }
- 
+//     // Handle the case when no hotel name is selected
+//     dropdownContainer.addEventListener("mouseleave", () => {
+//         const selectedHotelName = document.getElementById("hotel-name").value;
 
- 
- 
-// Function to get the value of an input element by ID
-function getInputValueById(id) {
-    const inputElement = document.getElementById(id);
-    return inputElement ? inputElement.value : '';
-}
-//////////////////////////////////////////////////////////////////////////////////////////
- ////////////////////////////////////////////////////////////////////////////////////////
+//         if (!selectedHotelName) {
+//             document.getElementById('hotel-address').value = '';
+//             document.getElementById('google-map-link').value = '';
+//             document.getElementById('hotel-phone').value = '';
 
- // Function to generate HTML markup for duplicated rows
-// Function to generate HTML markup for duplicated rows
-// Function to generate HTML markup for duplicated rows
- // Function to generate HTML markup for duplicated rows
-// Function to generate HTML markup for duplicated rows
-function generateDuplicatedRowsHTML() {
-    const container = document.getElementById("inputContainer");
-    const duplicatedRowsHTML = [];
-
-    // Iterate through duplicated rows, starting from the second row (index 1)
-    const duplicatedRows = container.querySelectorAll('.input-row:not(:first-child)'); // Skip the original row
-    duplicatedRows.forEach((duplicatedRow) => {
-        const cells = duplicatedRow.getElementsByTagName("td");
-        let rowHTML = "<tr>";
-
-        for (let j = 0; j < cells.length; j++) {
-            const input = cells[j].querySelector("input");
-
-            if (input) {
-                const value = input.value;
-                rowHTML += `<td class="  border border-1 border-black text-center px-2 py-1">${value}</td>`;
-            }
-        }
-
-        rowHTML += "</tr>";
-        duplicatedRowsHTML.push(rowHTML);
-    });
-
-    return duplicatedRowsHTML.join(""); // Join HTML strings into a single string
-}
-
-
-// ... (other functions remain unchanged)
-
- 
-
-
-//Print //Print //Print //Print //Print //Print //Print //Print //Print //Print//Print //Print//Print //Print//Print //Print
-//Print //Print//Print //Print//Print //Print//Print //Print//Print //Print//Print //Print//Print //Print//Print //Print//Print 
-  
-document.addEventListener("DOMContentLoaded", function () {
-    // ... (your existing code) ...
-
-    // Add event listener for the Print button
-    var printButton = document.getElementById("print-btn");
-
-    if (printButton) {
-        printButton.addEventListener("click", function () {
-            printTransportVoucher();
-        });
-    } else {
-        console.error("Print button not found");
-    }
-
-    // Function to print Transport Voucher
-    function printTransportVoucher() {
-        // Retrieve form data
-        const voucherNo = getValueById("voucherNo");
-        const confirmationNo = getValueById("ConfirmationNo");
-        const transport = getValueById("transport");
-        const numberOfVehicles = getValueById("numVehicles");
-        const numberOfPax = getValueById("numPax");
-        const confirmedBy = getValueById("confirmedBy");
-        const arrival = getValueById("arrival");
-        const departure = getValueById("departure");
-        const travelDate = getValueById("travelDate");
-        const duration = getValueById("duration");
-        const driver = getValueById("driver");
-        const vehicleNo = getValueById("Vehicleno");
-        const guestName = getValueById("guestName");
-        const guestNumber = getValueById("guestNumber");
-        const TourManager = getValueById("TourManager");
-        const Contantno = getValueById("Contant-no");
-        const notes = getValueById("notes");
-
-
-         
-      
- // Get the table values (modify this based on how you obtain tableValues)
-//  var tableValues = getTableValues();
- 
-        const tourTableData = getTourTableData();
-        const duplicatedRowsHTML = generateDuplicatedRowsHTML();
-
-       
-     
-        
-   
-    var printWindow = window.open('', '_blank');
-
-
- 
-
-     // Map the input values for the table row
- // Map the input values for the table row
- 
-
-
-
- var tourTableHTML = tourTableData.map(({ day, date, tourProgram }) => `
-  <tr class="border border-1 border-black rounded-md">
-    <td class="  border border-1 border-black text-center px-2 py-1">${day}</td>
-    <td class="  border border-1 border-black text-center px-2 py-1">${date}</td>
-    <td class="  border border-1 border-black text-center px-2 py-1">${tourProgram}</td>
-  </tr>
-`).join('');
-
- 
-
-
-
-    printWindow.document.write(` 
-
-  
-    <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap">
-
-    <title>Document</title>
-    <style>
-    .font-manrope {
-        font-family: 'Manrope', sans-serif;
-    }
-
-    </style>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-
-
-    <body class="font-manrope">
-    <div class="w-full h-screen">
-      <div
-        class="w-full bg-blue-500 h-24 flex items-center justify-between pl-5 bg-cover"
-        style="background-image: url(/assets/imgs/Rectangle1.png)"
-      >
-        <div class="flex flex-col text-white">
-          <h1 class="font-bold text-xl">Transport Voucher</h1>
-          <h1 class="text-sm font-light">
-            confirmation No: <span> ${confirmationNo}</span>
-          </h1>
-        </div>
-        <div
-          class="w-auto bg-white h-12 px-2 py-3 rounded-l-full flex items-center justify-center gap-2"
-        >
-          <div class="flex flex-col items-end">
-          <img src="/assets/imgs/TREKK & TRAVEL LOGO.png" alt="" width="200" />
-          </div>
-        </div>
-      </div>
-      <div class="mt-5 px-5">
-        <div class=" flex justify-between  h-auto">
-        <div class=" flex flex-col gap-4">
-            <div class=" border border-1 border-black px-2 py-1 flex gap-2 items-center rounded-lg w-auto">
-                <h1 class=" text-xl font-semibold">Arrival :</h1>
-                <h1>${arrival}</h1>
-            </div>
-            <div class=" border border-1 border-black px-2 py-1 flex gap-2 items-center rounded-lg w-auto">
-                <h1 class=" text-xl font-semibold">Departure :</h1>
-                <h1> ${departure}</h1>
-            </div>
-            <div class="  ">
-            <h1>Driver :<span> ${driver}</span> </h1>
-            <h1>Vehicle no: <span> ${vehicleNo}</span></h1>
-        </div>
-        
-        </div>
-        <div class=" flex flex-col">
-            <div class=" flex items-center gap-2 ">
-                <h1>Voucher No :</h1>
-                <h1>${voucherNo}</h1>
-            </div>
-            <div class=" flex items-center gap-2 ">
-                <h1>Transport :</h1>
-                <h1>${transport}</h1>
-            </div>
-            <div class=" flex items-center gap-2 ">
-                <h1>No of vehicles :</h1>
-                <h1>${numberOfVehicles}</h1>
-            </div>
-            <div class=" flex items-center gap-2 ">
-                <h1>No of Pax :</h1>
-                <h1>${numberOfPax}</h1>
-            </div>
-            <div class=" flex items-center gap-2 ">
-                <h1>Confirmed by :</h1>
-                <h1>${confirmedBy}</h1>
-            </div>
-        </div>
-       
-        </div>
-        <hr class=" w-full mt-3 border-1 border-gray-400">
-        <div class=" flex items-center justify-between mt-3">
-            <div class=" flex flex-col">
-                <div class=" flex items-center gap-2">
-                    <h1>Guest Name :</h1>
-                    <h1>${guestName}</h1>
-                </div>
-                <div class=" flex items-center gap-2">
-                    <h1>Contact No :</h1>
-                    <h1>${guestNumber}</h1>
-                </div>
-            </div>
-            <div class=" flex flex-col ">
-                <div class=" flex items-center gap-2">
-                    <h1>Travel Date :</h1>
-                    <h1>${travelDate}</h1>
-                </div>
-                <div class=" flex items-center gap-2">
-                    <h1>Duration :</h1>
-                    <h1>${duration}</h1>
-                </div>
-            </div>
-        </div>
-        <hr class=" w-full mt-3 border-1 border-black">
-
-      </div>
-      <div class="mt-2 px-5 w-full ">
-        <table class="w-full rounded-md text-sm	">
-            <tr class=" border border-1 border-black rounded">
 
             
-          <tr class="border border-1 border-black rounded-md text-sm	">
-            <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">Day</th>
-            <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black"> date </th>
-            <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">tour program</th>
-          </tr>
-          ${tourTableHTML}
-           
-      
-         
-         
+
+//             // Reset the image source
+//             document.getElementById('hotel-photo-preview').src = '';
+//             fileInput.style.display = 'block';
+//             // Disable input fields
+//             document.getElementById('hotel-address').setAttribute('readonly', 'readonly');
+//             document.getElementById('google-map-link').setAttribute('readonly', 'readonly');
+//             document.getElementById('hotel-phone').setAttribute('readonly', 'readonly');
+
+
+//              // Clear terms and conditions
+//              updateTermsAndConditions([]);
+//              updateCancellationPolicy([]);
+//         }
+
+//     });
+// }
+
+// ... (Your existing code)
+
+// Function to update terms and conditions
+// ... (Your existing code)
+
+// Function to update terms and conditions
+function updateTermsAndConditions(termsAndConditions) {
+  const termsContainer = document.getElementById('terms-container');
+
+  // Clear existing terms and conditions
+  termsContainer.innerHTML = '';
+
+  // Add input fields based on the fetched terms and conditions
+  termsAndConditions.forEach((term, index) => {
+      const inputField = createInputField(term);
+      termsContainer.appendChild(inputField);
+  });
+
+  // Add a button to add more terms and conditions
+  const addButton = document.createElement('button');
+  addButton.type = 'button';
+  // addButton.id = 'add-terms-button';
+  // addButton.classList.add('bg-green-500', 'text-white', 'py-2', 'px-4', 'rounded', 'hover:bg-green-600');
+  // addButton.textContent = 'Add';
+  addButton.addEventListener('click', () => {
+      const newInputField = createInputField('');
+      termsContainer.appendChild(newInputField);
+  });
+  termsContainer.appendChild(addButton);
+
+  // ... (Your existing code)
+
+  // Function to create an input field for terms and conditions
+  function createInputField(value) {
+      const inputField = document.createElement('input');
+      inputField.type = 'text';
+      inputField.placeholder = 'Enter terms & condition';
+      inputField.value = value;
+      inputField.classList.add('w-full', 'p-2', 'border', 'rounded', 'border-slate-700', 'mb-2', 'terms-condition-input');
+      return inputField;
+  }
+}
+/////////////////////////////////////////////
+function updateCancellationPolicy(cancellationPolicy) {
+  const cancellationPolicyContainer = document.getElementById('cancellation-policy-container');
+
+  // Clear existing cancellation policies
+  cancellationPolicyContainer.innerHTML = '';
+
+  // Add input fields based on the fetched cancellation policies
+  cancellationPolicy.forEach((policy, index) => {
+      const inputField = createInputField(policy);
+      cancellationPolicyContainer.appendChild(inputField);
+  });
+
+  // Add a button to add more cancellation policies
+  const addButton = document.createElement('button');
+  addButton.type = 'button';
+  addButton.id = 'add-cancellation-button';
+  // addButton.classList.add('bg-green-500', 'text-white', 'py-2', 'px-4', 'rounded', 'hover:bg-green-600');
+  // addButton.textContent = 'Add';
+  addButton.addEventListener('click', () => {
+      const newInputField = createInputField('');
+      cancellationPolicyContainer.appendChild(newInputField);
+  });
+  cancellationPolicyContainer.appendChild(addButton);
+
+  // Function to create an input field for cancellation policies
+  function createInputField(value) {
+      const inputField = document.createElement('input');
+      inputField.type = 'text';
+      inputField.placeholder = 'Enter cancellation policy';
+      inputField.value = value;
+      inputField.classList.add('w-full', 'p-2', 'border', 'rounded', 'border-slate-700', 'mb-2', 'cancellation-policy-input');
+      return inputField;
+  }
+}
+
+
+////////////////////////////////////
+ 
+
+
+
+
+
+// Event listener for input field
+// const hotelNameInput = document.getElementById("hotel-name");
+// hotelNameInput.addEventListener("input", function () {
+//     const searchTerm = this.value;
+//     populateHotelDropdown(searchTerm);
+
+//     // Show/hide the dropdown based on user input
+//     const dropdownContainer = document.getElementById("hotel-name-dropdown");
+//     dropdownContainer.classList.toggle("hidden", searchTerm === "");
+// });
+
+// Event listener for guest name input field
+// const guestNameInput = document.getElementById("guest-name");
+// guestNameInput.addEventListener("input", function () {
+//     const searchTerm = this.value;
+//     populateGuestDropdown(searchTerm);
+
+//     // Show/hide the dropdown based on user input
+//     const dropdownContainer = document.getElementById("guest-name-dropdown");
+//     dropdownContainer.classList.toggle("hidden", searchTerm === "");
+// });
+ 
+
+// // Function to populate guest names in the dropdown based on search term
+// function populateGuestDropdown(searchTerm) {
+//     const dropdownContainer = document.getElementById("guest-name-dropdown");
+//     dropdownContainer.innerHTML = ""; // Clear previous data
+
+//     onValue(guestsRef, (snapshot) => {
+//         snapshot.forEach((childSnapshot) => {
+//             const guestKey = childSnapshot.key;
+//             const guest = childSnapshot.val();
+
+//             // Adjust this part based on your data structure
+//             const guestName = guest.guestName; // Update to the actual property name
+//             const guestNumber = guest.contactNumber; // Update to the actual property name
+//             const guestCitizen = guest.citizen;
+
+
+
+             
+
+
+//             // Check if the guest name matches the search term
+//             if (guestName.toLowerCase().includes(searchTerm.toLowerCase())) {
+//                 const option = document.createElement("div");
+//                 option.textContent = guestName;
+//                 option.className = "p-2 cursor-pointer hover:bg-gray-200";
+//                 option.addEventListener("click", () => {
+//                     document.getElementById("guest-name").value = guestName;
+//                     dropdownContainer.classList.add("hidden");
+
+//                     // Set guest number based on selected guest name
+//                     document.getElementById("guest-number").value = guestNumber;
+
+
+//                     document.getElementById("guest-citizen").value = guestCitizen;
+//                 });
+
+//                 dropdownContainer.appendChild(option);
+//             }
+//         });
+//     });
+
+//     // Handle the case when no guest name is selected
+//     dropdownContainer.addEventListener("mouseleave", () => {
+//         const selectedGuestName = document.getElementById("guest-name").value;
+
+//         if (!selectedGuestName) {
+//             // Reset the guest number
+//             document.getElementById("guest-number").value = '';
+//             document.getElementById("guest-citizen").value = '';
+//         }
+//     });
+// }
+
+ 
+// Call the functions to populate hotel and guest names
+// populateHotelNames();
+// populateGuestNames();
+
+const guestNameInput = document.getElementById("guest-name");
+guestNameInput.addEventListener("input", function () {
+    const searchTerm = this.value;
+    populateGuestDropdown(searchTerm);
+
+    // Show/hide the dropdown based on user input
+    const dropdownContainer = document.getElementById("guest-name-dropdown");
+    dropdownContainer.classList.toggle("hidden", searchTerm === "");
+});
+
+// Function to populate guest names in the dropdown based on search term
+function populateGuestDropdown(searchTerm) {
+    const dropdownContainer = document.getElementById("guest-name-dropdown");
+    dropdownContainer.innerHTML = ""; // Clear previous data
+
+    onValue(guestsRef, (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+            const guestKey = childSnapshot.key;
+            const guest = childSnapshot.val();
+
+            // Adjust this part based on your data structure
+            const guestName = guest.guestName; // Update to the actual property name
+            const guestNumber = guest.contactNumber; // Update to the actual property name
+            const guestCitizen = guest.citizen;
+
+            // Check if the guest name starts with the search term
+            if (guestName.toLowerCase().startsWith(searchTerm.toLowerCase())) {
+                const option = document.createElement("div");
+                option.textContent = guestName;
+                option.className = "p-2 cursor-pointer hover:bg-gray-200";
+                option.addEventListener("click", () => {
+                    document.getElementById("guest-name").value = guestName;
+                    dropdownContainer.classList.add("hidden");
+
+                    // Set guest number based on selected guest name
+                    document.getElementById("guest-number").value = guestNumber;
+
+                    document.getElementById("guest-citizen").value = guestCitizen;
+                });
+
+                dropdownContainer.appendChild(option);
+            }
+        });
+    });
+
+    // Handle the case when no guest name is selected
+    dropdownContainer.addEventListener("mouseleave", () => {
+        const selectedGuestName = document.getElementById("guest-name").value;
+
+        if (!selectedGuestName) {
+            // Reset the guest number
+            document.getElementById("guest-number").value = '';
+            document.getElementById("guest-citizen").value = '';
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+document.getElementById("add-room-button").addEventListener("click", function () {
+  // Clone the room details div
+  const roomDetailsContainer = document.getElementById("room-details-container");
+  const clonedRoomDetails = roomDetailsContainer.querySelector(".room-details").cloneNode(true);
+
+  // Clear input values in the cloned div
+  clonedRoomDetails.querySelectorAll('input').forEach(input => input.value = '');
+
+  // Append the cloned div to the container
+  roomDetailsContainer.appendChild(clonedRoomDetails);
+});
+
+// Modify the openPrintPage function to include room details
+
+
+
+
+
+
+function handleFormSubmission() {
+ 
+    // Additional fields
+    const cancellationPolicy = [];
+    document.querySelectorAll('.cancellation-policy-input').forEach(input => {
+        cancellationPolicy.push(input.value);
+    });
+
+ 
+    // Add your logic to submit the cancellation policy data to Firebase or perform other actions
+    console.log("Cancellation Policy:", cancellationPolicy);
+
+    // Open the print page
+    openPrintPage();
+}
+
+// ... (Existing code)
+
+
+// Function to open the print page
+  function openPrintPage() {
+  // Extract form values
+  var confirmationnumber = document.getElementById('confirmation-number').value;
+
+  var hotelName = document.getElementById('hotel-name').value;
+  var hotelAddress = document.getElementById('hotel-address').value;
+  var googleMapLink = document.getElementById('google-map-link').value;
+  var hotelPhone = document.getElementById('hotel-phone').value;
+  var hotellPhoto = document.getElementById('hotel-photo-preview').src;
+  
+   
+
+  
+  var hotelPhotoInput = document.getElementById('hotel-photo');
+  // var hotelphoto = hotelPhotoInput.files[0]; // Get the selecte
+   
+  var guestName = document.getElementById('guest-name').value;
+  var guestNumber = document.getElementById('guest-number').value;
+  var guestCitizen = document.getElementById('guest-citizen').value;
+
+  var NoofAdult = document.getElementById('No-of-Adults').value;
+
+
+  var issuedBy = document.getElementById('issued-by').value;
+  var issuedDate = document.getElementById('issued-date').value;
+  var bookedBy = document.getElementById('booked-by').value;
+  var contactNo = document.getElementById('contact-no').value;
+  var mailId = document.getElementById('mail-id').value;
+
+  var checkInDate = document.getElementById('check-in-date').value;
+  var checkInTime = document.getElementById('check-in-time').value;
+  var checkOutDate = document.getElementById('check-out-date').value;
+  var checkOutTime = document.getElementById('check-out-time').value;
+
+  var notes = document.getElementById('notes').value;
+  var specialRequest = document.getElementById('special-request').value;
+  var paymentInfo = document.getElementById('payment-info').value;
+  var arrival = document.getElementById('arrival').value;
+  var ticketNo = document.getElementById('ticket-no').value;
+  var departure = document.getElementById('departure').value;
+  var ticketNotwo = document.getElementById('ticket-no-two').value;
+
+ 
+  const roomDetails = [];
+  document.querySelectorAll('.room-details').forEach(room => {
+      const roomType = room.querySelector('#room-type').value;
+      const noOfRooms = room.querySelector('#no-of-rooms').value;
+      const noOfExtraBed = room.querySelector('#no-of-extra-bed').value;
+      const childWithoutBed = room.querySelector('#child-without-bed').value;
+      const mealPlan = room.querySelector('#meal-plan').value;
+
+      roomDetails.push({ roomType, noOfRooms, noOfExtraBed, childWithoutBed, mealPlan });
+  });
+  
+
+
+
+
+
+  var termsInputs = document.querySelectorAll('.terms-condition-input');
+  var termsConditions = Array.from(termsInputs).map(input => input.value);
+
+
+  // Extract "Cancellation Policy" values
+  var cancellationInputs = document.querySelectorAll('.cancellation-policy-input');
+  var cancellationPolicy = Array.from(cancellationInputs).map(input => input.value);
+
+
+
+  
+
+// Get the selected image file
+var hotelPhotoInput = document.getElementById('photo');
+var selectedPhoto = hotelPhotoInput.files[0];
+var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : ''; // Get a temporary URL for the selected photo
+
+// ... (other form values)
+
+// Open the print window
+
+    // Open the print window
+  const printWindow = window.open('', '_blank');
+
+  // Write the printable content
+  printWindow.document.write(`
+ 
+   
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <style>
+      .body{
+          font-family: 'Manrope', sans-serif;
+       }
+  </style>
+  <title>Document</title>
+</head>
+ 
+
+  <body>
+  <script>
+    const num = [1, 2];
+  </script>
+  <div class="w-full h-auto">
+    <div
+      class="w-full bg-blue-500 h-24 flex items-center justify-between pl-5 bg-cover"
+      style="background-image: url(/assets/imgs/Rectangle1.png)"
+    >
+      <div class="flex flex-col text-white">
+        <h1 class=" font-semibold  text-xl">Hotel Voucher</h1>
+        <h1 class="text-sm font-bold">
+          confirmation No: <span>${confirmationnumber}</span>
+        </h1>
       </div>
-      
-       
-        </table>
-      </div>
-      <div class=" mt-5 px-5">
-        <div class=" w-full h-12 bg-blue-500 text-white flex items-center justify-center">
-            <h1 class=" uppercase text-lg font-semibold">Accommodation details</h1>
+      <div
+        class="w-auto bg-white h-12 px-2 py-3 rounded-l-full flex items-center justify-center gap-2"
+      >
+        <div class="flex flex-col items-end">
+        <img src="/assets/imgs/TREKK & TRAVEL LOGO.png" alt="" width="200" />
         </div>
-
-
-        <table class="w-full mt-1 text-sm	">
-        <tr>
-            <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">check in</th>
-            <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">check out</th>
-            <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">hotel</th>
-            <th class="uppercase text-lg font-semibold bg-yellow-400 text-black border border-1 border-black">address</th>
-        </tr>
-
-
-        ${duplicatedRowsHTML}
-
-        
-       
-    </table>
-      
-
-
-
-      </div>
-      <div class=" mt-5 px-5">
-        <div class=" flex flex-col">
-        <div class=" flex gap-2 items-center">
-        <h1 class=" flex flex-shrink-0">Tour Manager :</h1>
-        <h1>${notes}</h1>
-    </div>
-            <div class=" flex gap-2 items-center">
-                <h1>Tour Manager :</h1>
-                <h1>${TourManager}</h1>
-            </div>
-            <div class=" flex gap-2 items-center">
-                <h1>Contact No :</h1>
-                <h1>${Contantno}</h1>
-            </div>
         </div>
-      </div>
-      <div class="mt-10 w-full h-12 bg-blue-500 px-5 flex items-center">
-        <div class="flex flex-col text-white text-xs">
-          <div class="flex gap-1 items-center">
-            <img src="" alt="" />
-            <h1>Info@trekkandtravel.com</h1>
+        </div>
+        <div class="mt-5 w-full h-auto px-5">
+        <div class="flex w-full h-auto bg-black">
+          <div class="w-1/2 h-48 bg-gray-300">
+            <img
+              class="w-full h-full object-cover"
+              src="${photoURL ? photoURL : hotellPhoto}"
+              alt=""
+            />
+          </div>
+          <div
+            class="w-full h-auto bg-yellow-500 flex flex-col items-start justify-center gap-2 text-black px-3 py-3"
+          >
+            <h1 class="font-semibold text-xl">${hotelName}</h1>
+            
+            <div class="flex flex-col">
+              <!-- change item center to item-start -->
+              <div class="flex gap-1 items-start ">
+                <h1>Address:</h1>
+                <h1>${hotelAddress}</h1>
+              </div>
+              <div class="flex gap-1 items-start">
+                <h1>Google map:</h1>
+                <a href=" ${googleMapLink}">  
+                <h1>${googleMapLink}</h1>
+              </a>
+              </div>
+              <div class="flex gap-1 items-center">
+                <h1>Phone no:</h1>
+                <h1>${hotelPhone}</h1>
+              </div>
             </div>
-            <div class="flex gap-1 items-center">
-              <img src="" alt="" />
-              <h1>Address: Kattuppara, Bridge Junction, Chelakkad Po, Malappuram, Kerala , India- 679323</h1>
+          </div>
+        </div>
+    <div class="mt-8">
+      <div class="w-full h-auto flex justify-center">
+        <div
+          class="w-2/3 h-auto py-2 rounded-2xl border-2 border-black flex items-center justify-between px-3"
+        >
+          <div class="flex flex-col justify-center items-center">
+            <h1 class="font-semibold text-xl">Check in</h1>
+            <h1>${checkInDate}</h1>
+            <h1>${checkInTime}</h1>
+          </div>
+          <hr class="border-2 border-blue-400 w-1/4" />
+          <div class="flex flex-col justify-center items-center">
+            <h1 class="font-semibold text-xl">Check out</h1>
+            <h1>${checkOutDate}</h1>
+            <h1>${checkOutTime}</h1>
           </div>
         </div>
       </div>
     </div>
-  </body>
+    <div class="mt-5 px-2">
+    <div class="w-full h-auto flex justify-between">
+      <div class="flex flex-col gap-2">
+        <h1 class="text-lg font-semibold">Guest Details</h1>
+        <div class="flex flex-col">
+          <div class="flex gap-1">
+            <h1>Booking name:</h1>
+            <h1>${guestName}</h1>
+          </div>
+          <div class="flex gap-1">
+            <h1>Contact no:</h1>
+            <h1>${guestNumber}</h1>
+          </div>
+          <div class="flex gap-1">
+            <h1>Citizen :</h1>
+            <h1>${guestCitizen}</h1>
+          </div>
+          <div class="flex gap-1">
+            <h1>No of Adults:</h1>
+            <h1>${NoofAdult}</h1>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <div class="flex items-start gap-2 text-black">
+          <h1 class="">Issued by:</h1>
+          <h1>${issuedBy}</h1>
+        </div>
+        <div class="flex items-start gap-2 text-black">
+          <h1 class="">Issued date:</h1>
+          <h1>${issuedDate}</h1>
+        </div>
+        <div class="flex items-start gap-2 text-black">
+          <h1 class="">Booked by:</h1>
+          <h1>${bookedBy}</h1>
+        </div>
+        <div class="flex items-start gap-2 text-black">
+          <h1 class="">Contanct no:</h1>
+          <h1>${contactNo}</h1>
+        </div>
+        <div class="flex items-start gap-2 text-black">
+          <h1 class="">MailId:</h1>
+          <h1>${mailId}</h1>
+        </div>
+      </div>
+        
+      </div>
+      <hr class="border border-gray-400 mt-3" />
+            </div>
+    <div class="mt-3 px-10">
+      <div class="w-full flex justify-between gap-5 flex-wrap h-auto">
+        <!-- map from here to 👇 -->
+
+        ${roomDetails.map(room => `
+        <div class="flex flex-shrink-0 flex-col gap-2">
+          <div class="flex gap-1">
+            <h1 class="text-lg font-semibold">Room type :</h1>
+            <h1 class="text-lg font-semibold">${room.roomType}</h1>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex gap-1">
+              <h1>No of Rooms :</h1>
+              <h1>${room.noOfRooms}</h1>
+            </div>
+            <div class="flex gap-1">
+              <h1>No of Extra Bed :</h1>
+              <h1>${room.noOfExtraBed}</h1>
+            </div>
+            <div class="flex gap-1">
+              <h1>Child without bed :</h1>
+              <h1> ${room.childWithoutBed}</h1>
+            </div>
+            <div class="flex gap-1">
+              <h1>Meal plan :</h1>
+              <h1>${room.mealPlan}</h1>
+            </div>
+          </div>
+        </div>
+        `).join('')}
+        <!-- to here -->
+        </div>
+      </div>
+      <hr class="border border-gray-400 mt-1" />
+    </div>
+    <div class="mt-5 px-10">
+      <div class="w-full flex justify-between h-auto gap-10">
+        <div class="flex flex-col gap-1">
+          <h1 class="text-lg font-semibold">Notes:</h1>
+          <h1>
+          ${notes}
+          </h1>
+        </div>
+        <div class="flex flex-col gap-1">
+          <h1 class="text-lg font-semibold">Special Request:</h1>
+          <h1>
+          ${specialRequest}
+          </h1>
+        </div>
+      </div>
+      <hr class="border border-gray-400 mt-3" />
+    </div>
+    <div class="mt-5 px-10">
+      <div class="flex flex-col gap-1">
+        <h1 class="text-lg font-semibold">Payment Information</h1>
+        <h1>
+        ${paymentInfo}
+        </h1>
+      </div>
+      <hr class="border border-gray-400 mt-3" />
+    </div>
+    <div class="mt-3 px-10">
+      <div class="flex justify-between items-center">
+        <div class="flex gap-2">
+          <h1 class="text-lg font-semibold">Arrival:</h1>
+          <h1><span class="underline mr-2">${arrival}</span>${ticketNotwo}</h1>
+        </div>
+        <div class="flex gap-2">
+          <h1 class="text-lg font-semibold">Departure:</h1>
+          <h1><span class="underline  mr-2" >${departure}</span>${ticketNo}</h1>
+        </div>
+      </div>
+      <hr class="border border-gray-400 mt-3" />
+            </div>
+    <div class="mt-3 px-10">
+      <div class="flex justify-between">
+        <div class="flex flex-col gap-1">
+          <h1 class="text-lg font-semibold">Terms & conditions</h1>
+          <div class="px-5">
+            <ul class="list-disc text-sm">
+            ${termsConditions.map(term => `<li>${term}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+        <div class="flex flex-col gap-1">
+          <h1 class="text-lg font-semibold">Cancellation Policy</h1>
+          <div class="px-5">
+            <ul class="list-disc text-sm">
+            ${cancellationPolicy.map(policy => `<li>${policy}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3 w-full h-12 bg-blue-500 px-5 flex items-center">
+      <div class="flex flex-col text-white text-xs">
+        <div class="flex gap-1 items-center">
+          <img src="" alt="" />
+          <h1>Info@trekkandtravel.com</h1>
+          </div>
+          <div class="flex gap-1 items-center">
+            <img src="" alt="" />
+            <h1>Address: Kattuppara, Bridge Junction, Chelakkad Po, Malappuram, Kerala , India- 679323</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+   
+
+
  
+          
+
+  `);
+
+
   
-</div>
 
- 
- 
-`);
+  // Close the document stream
+  printWindow.document.close();
 
-
-// Close the document stream
-printWindow.document.close();
- 
-// Print the page
-setTimeout(() => {
+  // Print the page
+  setTimeout(() => {
     printWindow.print();
 }, 500);
 }
-
-
-
  
 
-function getTourTableContent() {
-    // You can adapt this function based on your actual data structure
-    const tourTableData = /* Fetch your tour table data from the database or elsewhere */ [];
-
-    return tourTableData.map(tour => `
-        <tr class="border border-1 border-black rounded-md">
-            <td class="  border border-1 border-black text-center px-2 py-1">${tour.day}</td>
-            <td class="  border border-1 border-black text-center px-2 py-1">${tour.date}</td>
-            <td class="  border border-1 border-black text-center px-2 py-1">${tour.tourProgram}</td>
-        </tr>
-    `).join('');
-}
-
-    
-    // Function to get the value of an element by ID
-    
-});
- 
-document.getElementById('save').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent the default form submission
-    saveFormData(); // Call your function to save form data
+// Add event listener for the "Create Bill" button
+document.getElementById("create-bill-button").addEventListener("click", function () {
+    handleFormSubmission();
 });
 
 
-function getValueById(id) {
-    const inputElement = document.getElementById(id);
-    return inputElement ? inputElement.value : '';
-}
- 
 
-// Function to save form data to Firebase
-  function saveFormData() { 
-  
-    // // Retrieve form data
-    const voucherNo = getValueById("voucherNo");
-    const confirmationNo = getValueById("ConfirmationNo");
-    const transport = getValueById("transport");
-    const numberOfVehicles = getValueById("numVehicles");
-    const numberOfPax = getValueById("numPax");
-    const confirmedBy = getValueById("confirmedBy");
-    const arrival = getValueById("arrival");
-    const departure = getValueById("departure");
-    const travelDate = getValueById("travelDate");
-    const duration = getValueById("duration");
-    const driver = getValueById("driver");
-    const vehicleNo = getValueById("Vehicleno");
-    const guestName = getValueById("guestName");
-    const guestNumber = getValueById("guestNumber");
-    const TourManagerr = getValueById("TourManager");
-    const  Contantno  = getValueById("Contant-no");
-    const  notes  = getValueById("notes");
+
+
+
+document.getElementById("add-terms-button").addEventListener("click", function () {
+    const termsContainer = document.getElementById("terms-container");
+
+    // Create a new input field
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Enter terms & condition";
+    input.className = "w-full p-2 border rounded border border-slate-700 mb-2 terms-condition-input";
+
+    // Append the new input field to the container
+    termsContainer.appendChild(input);
+});
+
 
  
-   // Get data from the tour table
-   const tourTableData = getTourTableData();
- // Get data from the duplicated rows
-  const duplicatedRowsData = getDuplicatedRowsData();
-        // Generate a new Tour ID with increment
+
+// ... (your existing code) ...
+
+// Event listener for the "Add Cancellation Policy" button
+document.getElementById("add-cancellation-button").addEventListener("click", function () {
+    const cancellationContainer = document.getElementById("cancellation-policy-container");
+
+    // Create a new input field
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Enter cancellation policy";
+    input.className = "w-full p-2 border rounded border border-slate-700 mb-2 cancellation-policy-input";
+
+    // Append the new input field to the container
+    cancellationContainer.appendChild(input);
+});
+
  
-    // Save the form data to the Firebase database
-    const formData = {
-        voucherNo,
-        confirmationNo,
-        transport,
-        numberOfVehicles,
-        numberOfPax,
-        confirmedBy,
-        arrival,
-        departure,
-        travelDate,
-        duration,
-        driver,
-        vehicleNo,
-        guestName,
-        guestNumber,
-        TourManagerr,
-        Contantno,
-        tourTable: tourTableData, 
-        duplicatedRows: duplicatedRowsData, // Add a new field for duplicated rows
-        notes: notes,
-        // Add other form fields as needed
-    };
 
-    // Assuming you have a 'forms' node in your database to store form data
-     
 
-    // Update the voucherNo field
+
  
-    push(formsRef, formData)
-        .then(() => {
-            // Alert for successful save
-            alert("Form data savedd successfully!");
-        })
-        .catch((error) => {
-            // Handle errors if the save operation fails
-            console.error("Error saving form data:", error);
-            alert("Error saving form data. Please try again.");
-        });
-    // Push the form data to the 'forms' node
-    
-}
  
-// Function to get data from the tour program table
-// function getTourProgramTableData() {
-//     const tourProgramTable = document.getElementById("tourProgramTable");
-//     const rows = tourProgramTable.querySelectorAll('.input-row');
-//     const tourProgramTableData = [];
-
-//     // Iterate through rows and extract data
-//     rows.forEach((row) => {
-//         const cells = row.getElementsByTagName("td");
-
-//         // Create an object to store data for each row
-//         const rowData = {};
-
-//         // Iterate through cells in the current row
-//         for (let j = 0; j < cells.length; j++) {
-//             const input = cells[j].querySelector("input");
-
-//             if (input) {
-//                 const fieldName = input.getAttribute("name");
-//                 const value = input.value;
-
-//                 // Add the field and value to the rowData object
-//                 rowData[fieldName] = value;
-//             }
-//         }
-
-//         // Push data of the current row to the array
-//         tourProgramTableData.push(rowData);
-//     });
-
-//     return tourProgramTableData;
+// function toggleInputFields() {
+//     const inputContainer = document.getElementById('inputContainer');
+//     inputContainer.style.display = inputContainer.style.display === 'none' ? 'block' : 'none';
 // }
 
-
-
-   // Function to get data from the tour table/////////////////////////////////////////////////////////////////
-   function getTourTableData() {
-    const tourTable = document.getElementById("tourTable");
-    const rows = tourTable.getElementsByTagName("tr");
-    const tourTableData = [];
-
-    // Iterate through rows and extract data
-    for (let i = 1; i < rows.length; i++) { // Start from 1 to skip header row
-        const cells = rows[i].getElementsByTagName("td");
-        const day = cells[0].querySelector("input").value;
-        const date = cells[1].querySelector("input[type='date']").value;
-        const tourProgram = cells[2].querySelector("input").value;
-
-        // Push data to the array
-        tourTableData.push({ day, date, tourProgram });
-    }
-
-    return tourTableData;
-}
-
- ////////////////////////////////////////////////////////////////////////
-// Function to get data from the duplicated rows
-function getDuplicatedRowsData() {
-    const container = document.getElementById("inputContainer");
-    const duplicatedRowsData = [];
-
-    // Iterate through duplicated rows and extract data
-    const duplicatedRows = container.querySelectorAll('.input-row:not(:first-child)'); // Skip the original row
-    duplicatedRows.forEach((duplicatedRow) => {
-        const cells = duplicatedRow.getElementsByTagName("td");
-        const rowData = {};
-
-        for (let j = 0; j < cells.length; j++) {
-            const input = cells[j].querySelector("input");
-
-            if (input) {
-                const fieldName = input.getAttribute("name");
-                const value = input.value;
-
-                rowData[fieldName] = value;
-            }
-        }
-
-        duplicatedRowsData.push(rowData);
-    });
-
-    return duplicatedRowsData;
-}
- ////////////////////////////////////////////////////////////////////////////////////////
- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////VOUCHER ID GENERATION ///////////////////
-////////////////////////////////////////////
-const submitButton = document.getElementById("save");
-const voucherIdInput = document.getElementById("voucherNo");
-
-submitButton.addEventListener("click", async function (event) {
-  event.preventDefault();
-
-  // Retrieve the current voucher ID from the database
-  const transportVoucherIdRef = ref(database, "transportvoucherId");
-  const transportVoucherIdSnapshot = await get(transportVoucherIdRef);
-  const transportVoucherId = transportVoucherIdSnapshot.val() || 0;
-
-  // Increment the voucher ID
-  const newVoucherId = transportVoucherId + 1;
-
-  // Update the database with the new voucher ID
-  await set(transportVoucherIdRef, newVoucherId);
-
-  // Display the updated voucher ID in the input field
-  voucherIdInput.value = `IB-TRKKTRVL  ${newVoucherId.toString().padStart(3, '0')}`;
-});
- 
-
- 
-window.onload = async function () {
-    // Retrieve the current voucher ID from the database
-    const transportVoucherIdRef = ref(database, "transportvoucherId");
-    const transportVoucherIdSnapshot = await get(transportVoucherIdRef);
-    const transportVoucherId = transportVoucherIdSnapshot.val() || 0;
-  
-    // Display the current voucher ID in the input field
-    voucherIdInput.value = `IB-TRKKTRVL ${transportVoucherId.toString().padStart(3, '0')}`;
-  };
-  
- ////////////////////////////////////////////////////////////////////////////////////////
- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////
-////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
- ////////////////////////////////////////////////////////////////////////////////////////
- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////
-////////////////////////////////////////////
-
-
-
-
-
-
- //////////////////////////////////////
+// // Attach the toggle function to the button click event
+// document.getElementById('showButton').addEventListener('click', toggleInputFields);
+//////////////////////////////////////
 //////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 // add hovered class to selected list item
@@ -952,127 +970,558 @@ toggle.onclick = function () {
  //////////////////////////////////////
 //////////////////////////////////////
 
+ // Assume you have initialized your Firebase app
+// const firebaseConfig = { ... };
+// const firebaseApp = firebase.initializeApp(firebaseConfig);
+// const database = firebase.database();
+
+// Event listener for the "Print" button
+document.getElementById("save-button").addEventListener("click", function () {
+  // Check if the confirmation number is filled
+  var confirmationNumberInput = document.getElementById("confirmation-number");
+  
+  if (confirmationNumberInput.value.trim() === "") {
+    // If the input is empty, display an alert or perform other necessary actions
+    alert("Please fill in the confirmation number before saving.");
+    return; // Stop further execution
+  }
+
+  // Save the form data to the database
+  saveFormDataToDatabase();
+
+  // Handle the rest of your logic (e.g., opening the print page)
+});
+
+
+
+// Add an event listener to fetch data when the page loads
+document.addEventListener("DOMContentLoaded", function () {
+  fetchConfirmationNumbers();
+});
+
+// Function to fetch confirmation numbers from the database
+// Function to fetch confirmation numbers from the database
+// Function to fetch all confirmation numbers from the database
+// Function to fetch all confirmation numbers from the database
+// Function to fetch all confirmation numbers from the database
+function fetchConfirmationNumbers() {
+  const formDataRef = ref(database, 'formData');
+
+  // Get a snapshot of the formData node
+  get(formDataRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      // Extract confirmation numbers from the child nodes
+      const confirmationNumbers = Object.keys(snapshot.val());
+
+      // Update the dropdown with confirmation numbers
+      updateConfirmationDropdown(confirmationNumbers);
+    } else {
+      console.log('No data found in the formData node.');
+    }
+  }).catch((error) => {
+    console.error('Error fetching confirmation numbers:', error);
+  });
+}
+
+// Function to update the dropdown with confirmation numbers
+function updateConfirmationDropdown(confirmationNumbers) {
+  const dropdown = document.getElementById('hotel-voucher-dropdown');
+  dropdown.innerHTML = ''; // Clear the dropdown
+
+  // Populate the dropdown with confirmation numbers
+  confirmationNumbers.forEach((confirmationNumber) => {
+    const option = document.createElement('div');
+    option.classList.add('dropdown-item');
+    option.textContent = confirmationNumber;
+    option.addEventListener('click', () => selectConfirmationNumber(confirmationNumber));
+    dropdown.appendChild(option);
+  });
+}
+
+// Function to handle the selection of a confirmation number
+function selectConfirmationNumber(confirmationNumber) {
+  document.getElementById('confirmation-number').value = confirmationNumber;
+
+  // Fetch and populate other form fields based on the selected confirmation number
+  fetchAndPopulateFormData(confirmationNumber);
+
+  // Hide the dropdown
+  hideConfirmationDropdown();
+}
+
+// Function to fetch and populate form data based on the selected confirmation number
+function fetchAndPopulateFormData(confirmationNumber) {
+  const formDataRef = ref(database, 'formData/' + confirmationNumber);
+
+  get(formDataRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const formData = snapshot.val();
+      populateFormFields(formData);
+    } else {
+      console.log('Form data not found for the selected confirmation number.');
+      clearFormFields();
+    }
+  }).catch((error) => {
+    console.error('Error fetching form data:', error);
+  });
+}
+
+// Function to hide the confirmation dropdown
+function hideConfirmationDropdown() {
+  const dropdown = document.getElementById('hotel-voucher-dropdown');
+  // dropdown.classList.add('hidden');
+}
+
+// Function to populate form fields with the fetched data
+// Function to populate form fields with the fetched data
+function populateFormFields(formData) {
+
+  console.log(formData);
+
+  // Update your form fields based on the formData object
+  document.getElementById('confirmation-number').value = formData.confirmationnumber;
+  document.getElementById('hotel-name').value = formData.hotelName;
+  document.getElementById('hotel-address').value = formData.hotelAddress;
+  document.getElementById('google-map-link').value = formData.googleMapLink;
+  document.getElementById('hotel-phone').value = formData.hotelPhone;
+  document.getElementById('guest-name').value = formData.guestName;
+  document.getElementById('guest-number').value = formData.guestNumber;
+  document.getElementById('guest-citizen').value = formData.guestCitizen;
+  document.getElementById('No-of-Adults').value = formData.NoofAdult;
+  document.getElementById('issued-by').value = formData.issuedBy;
+  document.getElementById('issued-date').value = formData.issuedDate;
+  document.getElementById('booked-by').value = formData.bookedBy;
+  document.getElementById('contact-no').value = formData.contactNo;
+  document.getElementById('mail-id').value = formData.mailId;
+  document.getElementById('check-in-date').value = formData.checkInDate;
+  document.getElementById('check-in-time').value = formData.checkInTime;
+  document.getElementById('check-out-date').value = formData.checkOutDate;
+  document.getElementById('check-out-time').value = formData.checkOutTime;
+  document.getElementById('notes').value = formData.notes;
+  document.getElementById('special-request').value = formData.specialRequest;
+  document.getElementById('payment-info').value = formData.paymentInfo;
+  document.getElementById('arrival').value = formData.arrival;
+  document.getElementById('ticket-no').value = formData.ticketNo;
+  document.getElementById('departure').value = formData.departure;
+  document.getElementById('ticket-no-two').value = formData.ticketNotwo;
+
+  // Populate room details
+  formData.roomDetails.forEach((room, index) => {
+    document.getElementById(`room-type-${index}`).value = room.roomType;
+    document.getElementById(`no-of-rooms-${index}`).value = room.noOfRooms;
+    document.getElementById(`no-of-extra-bed-${index}`).value = room.noOfExtraBed;
+    document.getElementById(`child-without-bed-${index}`).value = room.childWithoutBed;
+    document.getElementById(`meal-plan-${index}`).value = room.mealPlan;
+  });
+
+  // Populate terms and conditions
+  const termsContainer = document.getElementById('terms-container');
+  termsContainer.innerHTML = '';
+  formData.termsConditions.forEach(term => {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'Enter terms & condition';
+    input.className = 'w-full p-2 border rounded border-slate-700 mb-2 terms-condition-input';
+    input.value = term;
+    termsContainer.appendChild(input);
+  });
+
+  // Populate cancellation policy
+  const cancellationContainer = document.getElementById('cancellation-policy-container');
+  cancellationContainer.innerHTML = '';
+  formData.cancellationPolicy.forEach(policy => {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'Enter cancellation policy';
+    input.className = 'w-full p-2 border rounded border-slate-700 mb-2 cancellation-policy-input';
+    input.value = policy;
+    cancellationContainer.appendChild(input);
+  });
+}
+
+// Function to clear form fields
+function clearFormFields() {
+  // Clear all form fields
+  // For example:
+  document.getElementById('hotel-name').value = '';
+  document.getElementById('hotel-address').value = '';
+  // ... (clear other fields)
+}
+
+// Add event listener for the "confirmation-number" input
+document.getElementById('confirmation-number').addEventListener('input', function () {
+  const confirmationNumberInput = document.getElementById('confirmation-number');
+  const dropdown = document.getElementById('hotel-voucher-dropdown');
+
+  // If the input is not empty, show the dropdown and fetch confirmation numbers
+  if (confirmationNumberInput.value.trim() !== '') {
+    dropdown.classList.remove('hidden');
+    fetchConfirmationNumbers();
+  } else {
+    // If the input is empty, hide the dropdown
+    dropdown.classList.add('hidden');
+  }
+});
+
+// ... (rest of your code)
+
+// Call fetchConfirmationNumbers at the appropriate place to initialize the dropdown
+fetchConfirmationNumbers();
+
+
+// Function to fetch and populate form data based on the selected confirmation number
+// Function to fetch all confirmation numbers from the database 
+
+
+ 
+
+// The function to save data to Firebaseasync function saveFormDataToDatabase() {
+  async function saveFormDataToDatabase() {
+
+    // Create a reference to the database node where you want to store the data
+    var formDataRef = ref(database, 'formData');
+   
+    push(formDataRef, {
+     
+     // ... (other form data)
+   }).then(function () {
+     alert('Successfully saved');
+     console.log('Data saved successfully!');
+   }).catch(function (error) {
+     console.error('Error saving data:', error);
+   });
+   
+   
+   
+   
+     var confirmationnumber = document.getElementById('confirmation-number').value;
+     var hotelName = document.getElementById('hotel-name').value;
+     var hotelAddress = document.getElementById('hotel-address').value;
+     var googleMapLink = document.getElementById('google-map-link').value;
+     var hotelPhone = document.getElementById('hotel-phone').value;
+      
+
+
+     var hotellPhoto = document.getElementById('hotel-photo-preview').src;
+
+    
+     
+    //  var hotelPhotoInput = document.getElementById('hotel-photo');
+     // var hotelphoto = hotelPhotoInput.files[0]; // Get the selected file
+      
+     var guestName = document.getElementById('guest-name').value;
+     var guestNumber = document.getElementById('guest-number').value;
+     var guestCitizen = document.getElementById('guest-citizen').value;
+   
+     var NoofAdult = document.getElementById('No-of-Adults').value;
+   
+     var issuedBy = document.getElementById('issued-by').value;
+     var issuedDate = document.getElementById('issued-date').value;
+     var bookedBy = document.getElementById('booked-by').value;
+     var contactNo = document.getElementById('contact-no').value;
+     var mailId = document.getElementById('mail-id').value;
+   
+     var checkInDate = document.getElementById('check-in-date').value;
+     var checkInTime = document.getElementById('check-in-time').value;
+     var checkOutDate = document.getElementById('check-out-date').value;
+     var checkOutTime = document.getElementById('check-out-time').value;
+   
+     var notes = document.getElementById('notes').value;
+     var specialRequest = document.getElementById('special-request').value;
+     var paymentInfo = document.getElementById('payment-info').value;
+     var arrival = document.getElementById('arrival').value;
+     var ticketNo = document.getElementById('ticket-no').value;
+     var departure = document.getElementById('departure').value;
+     var ticketNotwo = document.getElementById('ticket-no-two').value;
+   
+   
+   
+   
+     const roomDetails = [];
+     document.querySelectorAll('.room-details').forEach(room => {
+         const roomType = room.querySelector('#room-type').value;
+         const noOfRooms = room.querySelector('#no-of-rooms').value;
+         const noOfExtraBed = room.querySelector('#no-of-extra-bed').value;
+         const childWithoutBed = room.querySelector('#child-without-bed').value;
+         const mealPlan = room.querySelector('#meal-plan').value;
+   
+         roomDetails.push({ roomType, noOfRooms, noOfExtraBed, childWithoutBed, mealPlan });
+     });
+   
+     var termsInputs = document.querySelectorAll('.terms-condition-input');
+     var termsConditions = Array.from(termsInputs).map(input => input.value);
+   
+     // Extract "Cancellation Policy" values
+     var cancellationInputs = document.querySelectorAll('.cancellation-policy-input');
+     var cancellationPolicy = Array.from(cancellationInputs).map(input => input.value);
+   
+    // Get the selected image file
+     var hotelPhotoInputFile = document.getElementById('photo');
+    //  var selectedPhoto = hotelPhotoInputFile.files[0];
+    //  var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : '';
+
+     
+
+     const file = hotelPhotoInputFile.files[0];
+      
+  // Save the download URL to the Realtime Database
+    //  const photoRef = push(ref(database, 'photos'));
+
+    // Create a reference to the storage location
+    const storageRefVar = storageRef(storage, 'hotel_photos/' );
+
+     // Upload the file to Firebase Storage
+     const snapshot = await uploadBytes(storageRefVar, file);
+
+ 
+     // Get the download URL for the file
+     const downloadURL = await getDownloadURL(snapshot.ref);
+   
+   
+ 
+   
+     // Create a reference to the database node where you want to store the data
+     var formDataRef = ref(database, 'formData');
+   
+     // Push the data to the database
+     push(formDataRef,  {
+         confirmationnumber: confirmationnumber,
+         hotelName:hotelName,
+         hotelAddress:hotelAddress,
+         googleMapLink:googleMapLink,
+         hotelPhone:hotelPhone,
+        //  hotellPhoto:hotellPhoto,
+         guestName:guestName,
+         guestNumber:guestNumber,
+         guestCitizen:guestCitizen,
+         NoofAdult:NoofAdult,
+         issuedBy:issuedBy,
+         issuedDate:issuedDate,
+         bookedBy:bookedBy,
+         contactNo:contactNo,
+         mailId:mailId, 
+         checkInDate:checkInDate,
+         checkInTime:checkInTime,
+         checkOutDate:checkOutDate,
+         checkOutTime:checkOutTime,
+         notes:notes,
+         specialRequest:specialRequest,
+         paymentInfo:paymentInfo,
+         arrival:arrival,
+         ticketNo:ticketNo,
+         departure:departure,
+         ticketNotwo:ticketNotwo,
+         termsConditions: termsConditions,
+         cancellationPolicy: cancellationPolicy, 
+         roomDetails: roomDetails,
+         hotellPhoto: downloadURL,
+   
+    
+   
+           // ... (other form data)
+       }).then(function () {
+        
+         console.log('Data saved successfully!');
+       }).catch(function (error) {
+         console.error('Error saving data:', error);
+       });
+      
+   }
+
+ 
+
+
+   
 
 
 
 
 
-/////////////////
-////////////////
-/////////////////
-////////////////
+
+
+
+// Function to upload photo to Firebase Storage and save URL in Realtime Database
+// The function to handle form submission
+// Function to upload photo to Firebase Storage and save URL in Realtime Database
+// Function to upload photo to Firebase Storage and save URL in Realtime Database
+// Function to upload photo to Firebase Storage and save URL in Realtime Database
+ 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 document.addEventListener('keydown', function(event) {
-    if (event.ctrlKey && event.key === 'd') {
-        window.open('index.html');
-    } else if (event.ctrlKey  && event.key === 'h') {
-        window.open('Hotel_voucher.html');
-    } else if (event.ctrlKey   && event.key === 'm') {
-        window.open('transport_voucher.html');
-    } else if (event.ctrlKey && event.key === 'i') {
-        window.open('Itnery.html');
-    } else if (event.ctrlKey && event.key === 'r') {
-        window.open('add_resort.html');
-    } else if (event.ctrlKey && event.key === 'o') {
-        window.open('Contacts.html');
-    } else if (event.ctrlKey && event.key === 's') {
-        window.open('settings.html');
-    }
+  if (event.ctrlKey && event.key === 'd') {
+      window.open('index.html');
+  } else if (event.ctrlKey  && event.key === 'h') {
+      window.open('Hotel_voucher.html');
+  } else if (event.ctrlKey   && event.key === 'm') {
+      window.open('transport_voucher.html');
+  } else if (event.ctrlKey && event.key === 'i') {
+      window.open('Itnery.html');
+  } else if (event.ctrlKey && event.key === 'r') {
+      window.open('add_resort.html');
+  } else if (event.ctrlKey && event.key === 'o') {
+      window.open('Contacts.html');
+  } else if (event.ctrlKey && event.key === 's') {
+      window.open('settings.html');
+  }
 });
 ////////
 /////////////////
 ////////////////
-/////////////////
-////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ // Hotel_voucher.js
+// Hotel_voucher.js
+
+// Ensure that the DOM content is fully loaded before executing  
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    function handleEnter(event, nextFieldId) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById(nextFieldId).focus();
-        }
-    }
-  
-    // Add event listeners for keydown events on input fields
-    document.getElementById('ConfirmationNo').addEventListener('keydown', function (event) {
-        handleEnter(event, 'transport');
-    });
-  
-    document.getElementById('transport').addEventListener('keydown', function (event) {
-        handleEnter(event, 'numVehicles');
-    });
-  
+  function handleEnter(event, nextFieldId) {
+      if (event.key === 'Enter') {
+          event.preventDefault();
+          document.getElementById(nextFieldId).focus();
+      }
+  }
 
-    document.getElementById('numVehicles').addEventListener('keydown', function (event) {
-        handleEnter(event, 'numPax');
-    });
-  
-    document.getElementById('numPax').addEventListener('keydown', function (event) {
-        handleEnter(event, 'confirmedBy');
-    });
-  
-    document.getElementById('confirmedBy').addEventListener('keydown', function (event) {
-        handleEnter(event, 'arrival');
-    });
-
-    document.getElementById('arrival').addEventListener('keydown', function (event) {
-        handleEnter(event, 'departure');
-    });
-    
-
-    document.getElementById('departure').addEventListener('keydown', function (event) {
-        handleEnter(event, 'travelDate');
-    });
- 
-    document.getElementById('travelDate').addEventListener('keydown', function (event) {
-        handleEnter(event, 'duration');
-    });
- 
-    document.getElementById('duration').addEventListener('keydown', function (event) {
-        handleEnter(event, 'driver');
-    });
-     
-
-    document.getElementById('driver').addEventListener('keydown', function (event) {
-        handleEnter(event, 'Vehicleno');
-    });
-
-    document.getElementById('Vehicleno').addEventListener('keydown', function (event) {
-        handleEnter(event, 'guestName');
-    });
-
-    document.getElementById('guestName').addEventListener('keydown', function (event) {
-        handleEnter(event, 'guestNumber');
-    });
-    document.getElementById('guestNumber').addEventListener('keydown', function (event) {
-        handleEnter(event, 'checkIn');
-    });
-
-    document.getElementById('checkIn').addEventListener('keydown', function (event) {
-        handleEnter(event, 'checkOut');
-    });
-
-
-    document.getElementById('checkOut').addEventListener('keydown', function (event) {
-        handleEnter(event, 'hotel');
-    });
-
-
-
-    document.getElementById('hotel').addEventListener('keydown', function (event) {
-        handleEnter(event, 'hotelladdresss');
-    });
-
-
-
-    document.getElementById('notes').addEventListener('keydown', function (event) {
-        handleEnter(event, 'TourManager');
-    });
-
-
-    document.getElementById('TourManager').addEventListener('keydown', function (event) {
-        handleEnter(event, 'Contant-no');
-    });
-
+  // Add event listeners for keydown events on input fields
+  document.getElementById('confirmation-number').addEventListener('keydown', function (event) {
+      handleEnter(event, 'hotel-name');
   });
+
+  document.getElementById('No-of-Adults').addEventListener('keydown', function (event) {
+      handleEnter(event, 'issued-by');
+  });
+
+
+  document.getElementById('issued-by').addEventListener('keydown', function (event) {
+    handleEnter(event, 'issued-date');
+});
+
+document.getElementById('issued-date').addEventListener('keydown', function (event) {
+  handleEnter(event, 'booked-by');
+});
+
+
+document.getElementById('booked-by').addEventListener('keydown', function (event) {
+  handleEnter(event, 'contact-no');
+});
+
+
+document.getElementById('contact-no').addEventListener('keydown', function (event) {
+  handleEnter(event, 'mail-id');
+});
+
+
+document.getElementById('mail-id').addEventListener('keydown', function (event) {
+  handleEnter(event, 'room-type');
+});
+
+
+document.getElementById('room-type').addEventListener('keydown', function (event) {
+  handleEnter(event, 'no-of-rooms');
+});
+
+
+
+document.getElementById('no-of-rooms').addEventListener('keydown', function (event) {
+  handleEnter(event, 'no-of-extra-bed');
+});
+
+document.getElementById('no-of-extra-bed').addEventListener('keydown', function (event) {
+  handleEnter(event, 'child-without-bed');
+});
+
+document.getElementById('child-without-bed').addEventListener('keydown', function (event) {
+  handleEnter(event, 'meal-plan');
+});
+
+document.getElementById('meal-plan').addEventListener('keydown', function (event) {
+  handleEnter(event, 'check-in-date');
+});
+
+document.getElementById('check-in-date').addEventListener('keydown', function (event) {
+  handleEnter(event, 'check-in-time');
+});
+
+document.getElementById('check-in-time').addEventListener('keydown', function (event) {
+  handleEnter(event, 'check-out-date');
+});
+
+document.getElementById('check-out-date').addEventListener('keydown', function (event) {
+  handleEnter(event, 'check-out-time');
+});
+
+document.getElementById('check-out-time').addEventListener('keydown', function (event) {
+  handleEnter(event, 'notes');
+});
+
+document.getElementById('notes').addEventListener('keydown', function (event) {
+  handleEnter(event, 'special-request');
+});
+
+document.getElementById('special-request').addEventListener('keydown', function (event) {
+  handleEnter(event, 'payment-info');
+});
+
+document.getElementById('payment-info').addEventListener('keydown', function (event) {
+  handleEnter(event, 'arrival');
+});
+
+document.getElementById('arrival').addEventListener('keydown', function (event) {
+  handleEnter(event, 'ticket-no-two');
+});
+
+document.getElementById('ticket-no-two').addEventListener('keydown', function (event) {
+  handleEnter(event, 'departure');
+});
+
+document.getElementById('departure').addEventListener('keydown', function (event) {
+  handleEnter(event, 'ticket-no');
+});
+
+document.getElementById('departure').addEventListener('keydown', function (event) {
+  handleEnter(event, 'ticket-no');
+});
+/////////////////////////////////////////////////////////////////////////////////////////
+
+document.getElementById('hotel-name').addEventListener('keydown', function (event) {
+  handleEnter(event, 'hotel-address');
+});
+
+document.getElementById('hotel-address').addEventListener('keydown', function (event) {
+  handleEnter(event, 'google-map-link');
+});
+
+
+document.getElementById('google-map-link').addEventListener('keydown', function (event) {
+  handleEnter(event, 'hotel-phone');
+});
+
+
+document.getElementById('google-map-link').addEventListener('keydown', function (event) {
+  handleEnter(event, 'hotel-phone');
+});
+
+document.getElementById('guest-name').addEventListener('keydown', function (event) {
+  handleEnter(event, 'guest-number');
+});
+
+document.getElementById('guest-number').addEventListener('keydown', function (event) {
+  handleEnter(event, 'guest-citizen');
+});
+
+document.getElementById('guest-citizen').addEventListener('keydown', function (event) {
+  handleEnter(event, 'No-of-Adults');
+});
+
+});
