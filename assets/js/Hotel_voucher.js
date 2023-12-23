@@ -1,4 +1,4 @@
-// Import Firebase modules
+ // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
 import  { getDatabase, ref, push, onValue, child ,get } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
@@ -353,7 +353,6 @@ function updateCancellationPolicy(cancellationPolicy) {
 //     const dropdownContainer = document.getElementById("guest-name-dropdown");
 //     dropdownContainer.classList.toggle("hidden", searchTerm === "");
 // });
-
  
 
 // // Function to populate guest names in the dropdown based on search term
@@ -1493,7 +1492,36 @@ document.getElementById('departure').addEventListener('keydown', function (event
 document.getElementById('departure').addEventListener('keydown', function (event) {
   handleEnter(event, 'ticket-no');
 });
+/////////////////////////////////////////////////////////////////////////////////////////
+
+document.getElementById('hotel-name').addEventListener('keydown', function (event) {
+  handleEnter(event, 'hotel-address');
+});
+
+document.getElementById('hotel-address').addEventListener('keydown', function (event) {
+  handleEnter(event, 'google-map-link');
+});
 
 
- 
+document.getElementById('google-map-link').addEventListener('keydown', function (event) {
+  handleEnter(event, 'hotel-phone');
+});
+
+
+document.getElementById('google-map-link').addEventListener('keydown', function (event) {
+  handleEnter(event, 'hotel-phone');
+});
+
+document.getElementById('guest-name').addEventListener('keydown', function (event) {
+  handleEnter(event, 'guest-number');
+});
+
+document.getElementById('guest-number').addEventListener('keydown', function (event) {
+  handleEnter(event, 'guest-citizen');
+});
+
+document.getElementById('guest-citizen').addEventListener('keydown', function (event) {
+  handleEnter(event, 'No-of-Adults');
+});
+
 });
