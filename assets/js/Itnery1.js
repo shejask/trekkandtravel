@@ -1537,7 +1537,7 @@ function printForm() {
                     no of rooms
                   </th>
                   <th class="uppercase border border-1 border-black px-5">
-                    no of rooms
+                    No of ex bed/ Matters
                   </th>
                   <th class="uppercase border border-1 border-black px-5">
                     meal plan
