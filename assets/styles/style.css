@@ -515,3 +515,9 @@ label{
 #wallpaper{
   border-radius: 0px 42px 42px  0px;
 }
+
+
+#currentDate {
+  font-size: 18px;
+  margin-top: 20px;
+}

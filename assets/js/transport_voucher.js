@@ -19,14 +19,12 @@ const vouchersRef = ref(database, 'vouchers');
 const guestsRef = ref(database, 'guests');
 const formsRef = ref(database, 'TransportVoucher'); // Declare and initialize formsRef
 
- 
-
 document.addEventListener("DOMContentLoaded", function () {
     // Add event listener for hotel input
     var hotelInput = document.getElementById("hotel");
     var dropdownContainer = document.getElementById("hotel-name-dropdown");
     var addressInput = document.getElementById("hotelladdresss"); // Assuming this is the ID of your hotel address input
-    
+
     if (hotelInput && dropdownContainer && addressInput) {
         hotelInput.addEventListener("input", function () {
             populateHotelDropdown("hotel", "hotel-name-dropdown", "hotelladdresss");
@@ -37,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Add event listener for duplicating input fields
     var duplicateButton = document.getElementById("duplicate-btn");
-    
+
     if (duplicateButton) {
         duplicateButton.addEventListener("click", function () {
             duplicateInputFields();
@@ -46,40 +44,39 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Duplicate button not found");
     }
 
-    
     function duplicateInputFields() {
         // Get the container
         var container = document.getElementById('inputContainer');
-    
+
         if (!container) {
             console.error("Container not found");
             return;
         }
-    
+
         // Clone the original input row
         var originalInputRow = container.querySelector('.input-row');
         if (!originalInputRow) {
             console.error("Original input row not found");
             return;
         }
-    
+
         var newDiv = originalInputRow.cloneNode(true);
-    
+
         // Update IDs to make them unique
         var suffix = Date.now(); // Add a timestamp suffix for uniqueness
         newDiv.querySelectorAll('[id]').forEach((element) => {
             element.id = element.id + '-' + suffix;
         });
-    
+
         // Clear the value in the duplicated hotel input
         var duplicatedHotelInput = newDiv.querySelector('input[name="hotel"]');
         if (duplicatedHotelInput) {
             duplicatedHotelInput.value = "";
         }
-    
+
         // Append the new div to the container
         container.appendChild(newDiv);
-    
+
         // Add event listener for the duplicated input field
         var duplicatedInput = newDiv.querySelector('input[name="hotel"]');
         if (duplicatedInput) {
@@ -90,63 +87,62 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Duplicated input not found");
         }
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Function to populate hotel dropdown
     function populateHotelDropdown(inputId, dropdownId, addressInputId) {
         // Get the value from the input field
         const hotelInput = document.getElementById(inputId).value.toLowerCase();
-
+    
         // Get the dropdown container and address input field
         const dropdownContainer = document.getElementById(dropdownId);
         const addressInput = document.getElementById(addressInputId);
-
+    
         // Clear the previous dropdown content and address input field
         dropdownContainer.innerHTML = "";
         addressInput.value = "";
-
+    
         // Query the database for all hotel names and addresses
         onValue(vouchersRef, (snapshot) => {
             const data = snapshot.val();
-
+    
             if (data) {
                 const matchingHotels = Object.values(data).filter(
-                    (voucher) => voucher.hotelName.toLowerCase().includes(hotelInput)
+                    (voucher) => voucher.hotelName.toLowerCase().startsWith(hotelInput)
                 );
-
+    
                 matchingHotels.forEach((voucher) => {
                     // Create a new option element
                     const option = document.createElement("div");
                     option.textContent = voucher.hotelName;
                     option.className = "dropdown-item";
-
+    
                     // Add click event to select the hotel name and fill the address
                     option.addEventListener("click", function () {
                         document.getElementById(inputId).value = voucher.hotelName;
-
+    
                         // Concatenate hotelAddress with googleMapLink
-                        const combinedAddress = `${voucher.hotelAddress} - ${voucher.hotelPhone
-                        }`;
+                        const combinedAddress = `${voucher.hotelAddress} - ${voucher.hotelPhone}`;
                         addressInput.value = combinedAddress;
-
+    
                         dropdownContainer.innerHTML = ""; // Clear dropdown after selection
                     });
-
+    
                     // Append the option to the dropdown
                     dropdownContainer.appendChild(option);
+    
+                    // Add a horizontal rule after each option
+                    const hr = document.createElement("hr");
+                    dropdownContainer.appendChild(hr);
                 });
-
+    
                 // Display the dropdown container
                 dropdownContainer.classList.remove("hidden");
             }
         });
     }
+    
 });
-
-
-
-
-
-
+ 
 
  
 
@@ -211,9 +207,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
- 
+////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
- ////////////////////////////////////////////////////////////////////////////////////////
+ 
 
 document.addEventListener("DOMContentLoaded", function () {
     // Get references to the input fields

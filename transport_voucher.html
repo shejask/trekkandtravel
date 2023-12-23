@@ -183,89 +183,7 @@
                         </div>
                     </div>
         
-                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-        
-                    <div id="inputContainer">
-                        <h2 class="text-2xl font-semibold pb-5">Hotel Details</h2>
-        
-                        <table hidden id="tourProgramTable" class="w-full border-collapse">
-                            <tr class="flex input-row">
-                                <td class="flex-1 mb-2 lg:mr-2">
-                                    <label for="checkIn" class="block mb-2">Check-In:</label>
-                                    <input type="date" id="checkIn" name="checkIn" class="check-in w-full p-2 border rounded border border-slate-700">
-                                </td>
-        
-                                <td class="flex-1 mb-2 lg:mr-2">
-                                    <label for="checkOut" class="block mb-2">Check-Out:</label>
-                                    <input type="date" id="checkOut" name="checkOut" class="check-out w-full p-2 border rounded border border-slate-700">
-                                </td>
-        
-                                <td class="flex-1 mb-2 lg:mr-2">
-                                    <label for="hotel" class="block mb-2">Hotel:</label>
-                                    <input type="text" id="hotel" name="hotel" placeholder="Enter hotel" class="w-full p-2 border rounded border border-slate-700">
-                                    <div id="hotel-name-dropdown" class="hidden">
-                                        The dropdown list will be dynamically populated here
-                                    </div>
-                                </td>
-        
-                                <td class="flex-1 mb-2 lg:mr-2">
-                                    <label for="hotelladdresss" class="block mb-2">Hotel Address:</label>
-                                    <input type="text" id="hotelladdresss" name="hotelAddress" placeholder="Enter address" class="w-full p-2 border rounded border border-slate-700">
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-        
-                    <button type="button" id="duplicate-btn" class="bg-blue-500 mt-2 text-white p-2 rounded">+ add</button>
-        
-                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-        
-                    <table id="tourTable" class="w-full table-auto">
-                        <thead>
-                            <tr>
-                                <th class="p-2">Day</th>
-                                <th class="p-2">Date</th>
-                                <th class="p-2">Tour Program</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="p-2">
-                                    <input type="text" placeholder="Enter day" class="w-full p-2 border rounded border border-slate-700">
-                                </td>
-        
-                                <td class="p-2" id="autoFillDate">
-                                    <input type="date" class="w-full p-2 border rounded border border-slate-700">
-                                </td>
-        
-                                <td class="p-2">
-                                    <input type="text" placeholder="Enter tour program" class="w-full p-2 border rounded border border-slate-700">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
- 
-        
-                    <button type="button" id="add-row-btn" class="bg-blue-500 text-white p-2 rounded">+ add</button>
-        
-                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-
                     
-                    <label for="TourManager" class="block mb-2">Notes :</label>
-                      <textarea class="w-full h-20 p-2 border rounded border border-slate-700" name="" id="notes" cols="30" rows="10"></textarea>
-                   
-        
-                    <label for="TourManager" class="block mt-5 mb-2">Tour Manager :</label>
-                    <input type="text" id="TourManager" name="travelDate" class="w-full p-2 border rounded border border-slate-700">
-        
-                    <label for="Contant-no" class="block mb-2">Contact no:</label>
-                    <input type="text" id="Contant-no" name="duration" class="w-full p-2 border rounded border border-slate-700">
-        
-                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-        
-                    <button type="submit" id="save" class="bg-green-500 w-20 text-white p-2 rounded">Save</button>
-                    <button type="button" id="print-btn" class="bg-indigo-500 mb-5 w-20 text-white p-2 rounded">Print</button>
-                    <p hidden>Warning: Save it</p>
         
                 </form>
         
@@ -273,7 +191,89 @@
 
 
             
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+        
+            <div id="inputContainer">
+                <h2 class="text-2xl font-semibold pb-5">Hotel Details</h2>
 
+                <table hidden id="tourProgramTable" class="w-full border-collapse">
+                    <tr class="flex input-row">
+                        <td class="flex-1 mb-2 lg:mr-2">
+                            <label for="checkIn" class="block mb-2">Check-In:</label>
+                            <input type="date" id="checkIn" name="checkIn" class="check-in w-full p-2 border rounded border border-slate-700">
+                        </td>
+
+                        <td class="flex-1 mb-2 lg:mr-2">
+                            <label for="checkOut" class="block mb-2">Check-Out:</label>
+                            <input type="date" id="checkOut" name="checkOut" class="check-out w-full p-2 border rounded border border-slate-700">
+                        </td>
+<br>
+                        <td class="flex-1 mb-2 lg:mr-2">
+                            <label for="hotel" class="block mb-2">Hotel:</label>
+                            <input type="text" id="hotel" name="hotel" placeholder="Enter hotel" class="w-full p-2 border rounded border border-slate-700">
+                            <div id="hotel-name-dropdown" class="hidden">
+                                The dropdown list will be dynamically populated here
+                            </div>
+                        </td>
+
+                        <td class="flex-1 mb-2 lg:mr-2">
+                            <label for="hotelladdresss" class="block mb-2">Hotel Address:</label>
+                            <input type="text" id="hotelladdresss" name="hotelAddress" placeholder="Enter address" class="w-full p-2 border rounded border border-slate-700">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <button type="button" id="duplicate-btn" class="bg-blue-500 mt-2 text-white p-2 rounded">+ add</button>
+
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+            <table id="tourTable" class="w-full table-auto">
+                <thead>
+                    <tr>
+                        <th class="p-2">Day</th>
+                        <th class="p-2">Date</th>
+                        <th class="p-2">Tour Program</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-2">
+                            <input type="text" placeholder="Enter day" class="w-full p-2 border rounded border border-slate-700">
+                        </td>
+
+                        <td class="p-2" id="autoFillDate">
+                            <input type="date" class="w-full p-2 border rounded border border-slate-700">
+                        </td>
+
+                        <td class="p-2">
+                            <input type="text" placeholder="Enter tour program" class="w-full p-2 border rounded border border-slate-700">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <button type="button" id="add-row-btn" class="bg-blue-500 text-white p-2 rounded">+ add</button>
+
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+            
+            <label for="TourManager" class="block mb-2">Notes :</label>
+              <textarea class="w-full h-20 p-2 border rounded border border-slate-700" name="" id="notes" cols="30" rows="10"></textarea>
+           
+
+            <label for="TourManager" class="block mt-5 mb-2">Tour Manager :</label>
+            <input type="text" id="TourManager" name="travelDate" class="w-full p-2 border rounded border border-slate-700">
+
+            <label for="Contant-no" class="block mb-2">Contact no:</label>
+            <input type="text" id="Contant-no" name="duration" class="w-full p-2 border rounded border border-slate-700">
+
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+            <button type="submit" id="save" class="bg-green-500 w-20 text-white p-2 rounded">Save</button>
+            <button type="button" id="print-btn" class="bg-indigo-500 mb-5 w-20 text-white p-2 rounded">Print</button>
+            <p hidden>Warning: Save it</p>
 
 
 

@@ -142,7 +142,7 @@
                 <h2 class="font-bold">Hotel Details</h2>
                 <div class="mb-4">
                     <label for="confirmation-number"   class="block">Confirmation Number:</label >
-                    <input type="text"   id="confirmation-number"   class="w-full p-2 border rounded border border-slate-700" required>
+                    <input type="text"   id="confirmation-number"    class="w-full p-2 border rounded border border-slate-700" required>
                         <div hidden id="hotel-voucher-dropdown"  class=" absolute z-50 left-0 mt-2 w-96 bg-white rounded-md shadow-lg">
                              
                        <!-- The dropdown list will be dynamically populated here -->
@@ -154,10 +154,8 @@
                 <div class="mb-4">
                     <label for="hotel-name" class="block">Hotel Name:</label>
                     <div class="relative inline-block w-full text-left">
-                        <input type="text" id="hotel-name"
-                            class="w-full p-2 border rounded border border-slate-700" placeholder="Type to search">
-                        <div id="hotel-name-dropdown"
-                            class="hidden absolute z-50 left-0 mt-2 w-full bg-white rounded-md shadow-lg">
+                        <input type="text" id="hotel-name"  class="w-full p-2 border rounded border border-slate-700" placeholder="Type to search">
+                        <div id="hotel-name-dropdown" class="hidden absolute z-50 left-0 mt-2 w-full bg-white rounded-md shadow-lg">
                             <!-- The dropdown list will be dynamically populated here -->
                         </div>
                     </div>
@@ -398,7 +396,7 @@
                     <label for="terms-container" class="block">Terms & Condition:</label>
                     <div id="terms-container" class="mb-2">
                         <!-- The initial input field -->
-                        <input type="text" placeholder="Enter terms & condition"
+                        <input type="text"   placeholder="Enter terms & condition"
                             class="w-full p-2 border rounded border border-slate-700 mb-2 terms-condition-input">
                     </div>
                     <button type="button" id="add-terms-button"
@@ -412,8 +410,7 @@
                     <label for="cancellation-policy" class="block">Cancellation Policy:</label>
                     <div id="cancellation-policy-container">
                         <!-- Existing cancellation policy input field -->
-                        <input type="text"
-                            class="w-full p-2 border rounded border border-slate-700 mb-2 cancellation-policy-input"
+                        <input type="text"   class="w-full p-2 border rounded border border-slate-700 mb-2 cancellation-policy-input"
                             placeholder="Enter cancellation policy">
                     </div>
                     <button type="button" id="add-cancellation-button"

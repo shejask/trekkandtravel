@@ -1206,8 +1206,8 @@ fetchConfirmationNumbers();
 
     
      
-    //  var hotelPhotoInput = document.getElementById('hotel-photo');
-     // var hotelphoto = hotelPhotoInput.files[0]; // Get the selected file
+     var hotelPhotoInput = document.getElementById('hotel-photo');
+    //  var hotelphoto = hotelPhotoInput.files[0]; // Get the selected file
       
      var guestName = document.getElementById('guest-name').value;
      var guestNumber = document.getElementById('guest-number').value;
@@ -1256,26 +1256,26 @@ fetchConfirmationNumbers();
      var cancellationPolicy = Array.from(cancellationInputs).map(input => input.value);
    
     // Get the selected image file
-     var hotelPhotoInputFile = document.getElementById('photo');
+    //  var hotelPhotoInputFile = document.getElementById('photo');
     //  var selectedPhoto = hotelPhotoInputFile.files[0];
     //  var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : '';
 
      
 
-     const file = hotelPhotoInputFile.files[0];
+    //  const file = hotelPhotoInputFile.files[0];
       
   // Save the download URL to the Realtime Database
     //  const photoRef = push(ref(database, 'photos'));
 
-    // Create a reference to the storage location
-    const storageRefVar = storageRef(storage, 'hotel_photos/' );
+    // // Create a reference to the storage location
+    // const storageRefVar = storageRef(storage, 'hotel_photos/' );
 
      // Upload the file to Firebase Storage
-     const snapshot = await uploadBytes(storageRefVar, file);
+    //  const snapshot = await uploadBytes(storageRefVar, file);
 
  
      // Get the download URL for the file
-     const downloadURL = await getDownloadURL(snapshot.ref);
+    //  const downloadURL = await getDownloadURL(snapshot.ref);
    
    
  
@@ -1290,7 +1290,7 @@ fetchConfirmationNumbers();
          hotelAddress:hotelAddress,
          googleMapLink:googleMapLink,
          hotelPhone:hotelPhone,
-        //  hotellPhoto:hotellPhoto,
+         hotellPhoto:hotellPhoto,
          guestName:guestName,
          guestNumber:guestNumber,
          guestCitizen:guestCitizen,
@@ -1314,7 +1314,7 @@ fetchConfirmationNumbers();
          termsConditions: termsConditions,
          cancellationPolicy: cancellationPolicy, 
          roomDetails: roomDetails,
-         hotellPhoto: downloadURL,
+        //  hotellPhoto: downloadURL,
    
     
    

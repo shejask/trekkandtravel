@@ -634,8 +634,7 @@ printButton.addEventListener('click', () => {
       <div class="w-full flex justify-between gap-5 flex-wrap h-auto">
         <!-- map from here to 👇 -->
         
-        ${roomDetailsHTML}
-
+ 
         <!-- to here -->
         </div>
       </div>

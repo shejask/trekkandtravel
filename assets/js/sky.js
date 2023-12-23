@@ -239,7 +239,7 @@ var can = Canvallax({
     setTimeout(function () {
       document.getElementById('loadingScreen').style.opacity = 0;
       setTimeout(function () {
-        window.location.href = '/index.html';
+        window.location.href = '/Software.html';
       }, 1000); // Wait for the fade-out animation to complete
     }, 3000); // 3 seconds delay
   });
@@ -250,3 +250,30 @@ var can = Canvallax({
     document.getElementById('movingImage').style.display = 'none';
     document.getElementById('replacementImage').style.display = 'block';
   }
+
+  /////////////////////////////////////////////////
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // Array of wallpaper URLs
+    const wallpaperURLs = [
+      "/assets/imgs/bgw1.jpg",
+      "/assets/imgs/bgw2.jpg",
+      "/assets/imgs/bgw3.jpg",
+      // Add more URLs as needed
+    ];
+  
+    function setRandomWallpaper() {
+      const randomIndex = Math.floor(Math.random() * wallpaperURLs.length);
+      const wallpaperUrl = wallpaperURLs[randomIndex];
+      
+      const wallpaperContainer = document.getElementById("wallpaperContainer");
+      wallpaperContainer.style.backgroundImage = `url('${wallpaperUrl}')`;
+    }
+  
+    // Set initial wallpaper
+    setRandomWallpaper();
+  
+    // Change wallpaper every hour
+    setInterval(setRandomWallpaper, 1000 * 60 * 60); // 1 hour in milliseconds
+  });
+  

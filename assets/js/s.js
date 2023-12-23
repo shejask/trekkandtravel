@@ -104,127 +104,113 @@ async function generateAndIncrementTourId() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Function to fetch existing data from the database
-//to fetch existing data from the database
 async function getExistingData() {
-    try {
-        const existingDataRef = ref(database, "tourHighlights");
-        const existingDataSnapshot = await get(existingDataRef);
-        return existingDataSnapshot || [];
-    } catch (error) {
-        console.error("Error fetching existing data:", error);
-        return [];
-    }
+  try {
+    const existingDataRef = ref(database, "tourHighlights");
+    const existingDataSnapshot = await get(existingDataRef);
+    return existingDataSnapshot || [];
+  } catch (error) {
+    console.error("Error fetching existing data:", error);
+    return [];
+  }
 }
 
-// Function to render tour highlights in the dropdown
 // Function to render tour highlights in the dropdown
 function renderTourHighlights(highlights, dropdownId, inputFieldId) {
-    // Clear previous content
-    const tourHighlightsDropdown = document.getElementById(dropdownId);
-    tourHighlightsDropdown.innerHTML = "";
+  // Clear previous content
+  const tourHighlightsDropdown = document.getElementById(dropdownId);
+  tourHighlightsDropdown.innerHTML = "";
 
-    // Get the search term
-    const searchTerm = document.getElementById(inputFieldId).value.trim().toLowerCase();
+  // Render each highlight in the dropdown
+  highlights.forEach((highlight) => {
+    const highlightItem = document.createElement("div");
 
-    // Render each highlight in the dropdown that starts with the search term
-    highlights.forEach((highlight) => {
-        // Check if the necessary properties are defined before accessing them
-        if (highlight && highlight.tourHighlight) {
-            const highlightStartsWithSearchTerm = highlight.tourHighlight.toLowerCase().startsWith(searchTerm);
-            if (highlightStartsWithSearchTerm) {
-                const highlightItem = document.createElement("div");
-                highlightItem.textContent = highlight.tourHighlight;
-                highlightItem.classList.add("cursor-pointer", "hover:bg-gray-200", "p-2");
-                highlightItem.addEventListener("click", () => {
-                    // Set the selected highlight in the input field
-                    const inputField = document.getElementById(inputFieldId);
-                    if (inputField) {
-                        inputField.value = highlight.tourHighlight;
-                        // Clear the dropdown after selecting
-                        tourHighlightsDropdown.innerHTML = "";
-
-                        // Autofill other fields
-                        // Add your code here to update other fields based on the selected tour highlight
-                    }
-                });
-
-                tourHighlightsDropdown.appendChild(highlightItem);
-            }
+    // Check if the necessary properties are defined before accessing them
+    if (highlight && highlight.tourHighlight) {
+      highlightItem.textContent = highlight.tourHighlight;
+      highlightItem.classList.add("cursor-pointer", "hover:bg-gray-200", "p-2");
+      highlightItem.addEventListener("click", () => {
+        // Set the selected highlight in the input field
+        const inputField = document.getElementById(inputFieldId);
+        if (inputField) {
+          inputField.value = highlight.tourHighlight;
+          // Clear the dropdown after selecting
+          tourHighlightsDropdown.innerHTML = "";
         }
-    });
+      });
 
-    // Show/hide the dropdown based on whether there are matching tour highlights
-    tourHighlightsDropdown.classList.toggle("hidden", tourHighlightsDropdown.children.length === 0);
+      tourHighlightsDropdown.appendChild(highlightItem);
+    }
+  });
 }
-
 
 // Function to add a new tour highlight field
 function addNewTourHighlightField() {
-    const newTourHighlightField = document.createElement("div");
-    const timestamp = Date.now();
-    newTourHighlightField.classList.add(
-        "w-full",
-        "p-2",
-        "border",
-        "border-black",
-        "rounded",
-        "mb-4",
-        "tour-highlights-input"
-    );
+  const newTourHighlightField = document.createElement("div");
+  const timestamp = Date.now();
+  newTourHighlightField.classList.add(
+    "w-full",
+    "p-2",
+    "border",
+    "border-black",
+    "rounded",
+    "mb-4",
+    "tour-highlights-input"
+  );
 
-    const newTourHighlightInput = document.createElement("input");
-    newTourHighlightInput.id = `input_${timestamp}`;
-    newTourHighlightInput.type = "text";
-    newTourHighlightInput.classList.add(
-        "form-input",
-        "w-full",
-        "sm:text-sm",
-        "sm:leading-5",
-        "focus:outline-none",
-        "focus:border-indigo-300",
-        "focus:shadow-outline-indigo",
-        "transition",
-        "duration-150",
-        "ease-in-out"
-    );
-    newTourHighlightInput.placeholder = "New Tour Highlight";
+  const newTourHighlightInput = document.createElement("input");
+  newTourHighlightInput.id = `input_${timestamp}`;
+  newTourHighlightInput.type = "text"; // Set the input type to text
+  newTourHighlightInput.classList.add(
+    "form-input",
+    "w-full",
+    "sm:text-sm",
+    "sm:leading-5",
+    "focus:outline-none",
+    "focus:border-indigo-300",
+    "focus:shadow-outline-indigo",
+    "transition",
+    "duration-150",
+    "ease-in-out"
+  );
+  newTourHighlightInput.placeholder = "New Tour Highlight";
 
-    const newTourHighlightDropdown = document.createElement("div");
-    const newDropdownId = `newTourHighlightsDropdown_${timestamp}`;
-    newTourHighlightDropdown.classList.add("mt-2");
-    newTourHighlightDropdown.id = newDropdownId;
+  const newTourHighlightDropdown = document.createElement("div");
+  const newDropdownId = `newTourHighlightsDropdown_${timestamp}`;
+  newTourHighlightDropdown.classList.add("mt-2");
+  newTourHighlightDropdown.id = newDropdownId;
 
-    newTourHighlightField.appendChild(newTourHighlightInput);
-    newTourHighlightField.appendChild(newTourHighlightDropdown);
-    tourHighlightsContainer.appendChild(newTourHighlightField);
+  newTourHighlightField.appendChild(newTourHighlightInput);
+  newTourHighlightField.appendChild(newTourHighlightDropdown);
+  tourHighlightsContainer.appendChild(newTourHighlightField);
 
-    // Add event listener for input changes to update the dropdown
-    newTourHighlightInput.addEventListener("input", async () => {
-        const searchTerm = newTourHighlightInput.value.trim().toLowerCase();
+  // Add event listener for input changes to update the dropdown
+  newTourHighlightInput.addEventListener("input", async () => {
+    const searchTerm = newTourHighlightInput.value.trim().toLowerCase();
 
-        // Fetch existing data
-        const existingDataSnapshot = await getExistingData();
+    // Fetch existing data
+    const existingDataSnapshot = await getExistingData();
 
-        // Filter the highlights based on the search term
-        const filteredHighlights = [];
-        existingDataSnapshot.forEach((childSnapshot) => {
-            const highlight = childSnapshot.val();
-            if (
-                highlight &&
-                highlight.tourHighlight &&
-                highlight.tourHighlight.toLowerCase().includes(searchTerm)
-            ) {
-                filteredHighlights.push(highlight);
-            }
-        });
-
-        // Render the filtered highlights in the dropdown
-        renderTourHighlights(
-            filteredHighlights,
-            newDropdownId,
-            `input_${timestamp}`
-        );
+    // Filter the highlights based on the search term
+    const filteredHighlights = [];
+    existingDataSnapshot.forEach((childSnapshot) => {
+      const highlight = childSnapshot.val();
+      if (
+        highlight &&
+        highlight.tourHighlight &&
+        highlight.tourHighlight.toLowerCase().includes(searchTerm)
+      ) {
+        filteredHighlights.push(highlight);
+      }
     });
+
+    // Render the filtered highlights in the dropdown
+    renderTourHighlights(
+      filteredHighlights,
+      newDropdownId,
+      `input_${timestamp}`
+    );
+  });
 }
 
 // Your Firebase configuration and initialization code here
@@ -233,126 +219,121 @@ function addNewTourHighlightField() {
 const savedataButton = document.getElementById("savedata");
 const tourHighlightInput = document.getElementById("tourHighlight");
 const tourHighlightsContainer = document.getElementById(
-    "tourHighlightsContainer"
+  "tourHighlightsContainer"
 );
 const addTourHighlightButton = document.getElementById("addTourHighlight");
 
 // Add event listener to the "Save" button
 savedataButton.addEventListener("click", async () => {
-    try {
-        // Save data to Firebase Realtime Database
-        const tourHighlightValue = tourHighlightInput.value.trim();
+  try {
+    // Save data to Firebase Realtime Database
+    const tourHighlightValue = tourHighlightInput.value.trim();
 
-        if (tourHighlightValue !== "") {
-            // Check if the tourHighlight already exists
-            const existingDataSnapshot = await getExistingData();
+    if (tourHighlightValue !== "") {
+      // Check if the tourHighlight already exists
+      const existingDataSnapshot = await getExistingData();
 
-            let isTourHighlightExists = false;
-            existingDataSnapshot.forEach((childSnapshot) => {
-                const existingHighlight = childSnapshot.val();
+      let isTourHighlightExists = false;
+      existingDataSnapshot.forEach((childSnapshot) => {
+        const existingHighlight = childSnapshot.val();
 
-                if (existingHighlight && existingHighlight.tourHighlight) {
-                    const existingHighlightLowerCase =
-                        existingHighlight.tourHighlight.toLowerCase();
-                    if (
-                        existingHighlightLowerCase ===
-                        tourHighlightValue.toLowerCase()
-                    ) {
-                        isTourHighlightExists = true;
-                    }
-                }
-            });
-
-            if (!isTourHighlightExists) {
-                // If the tourHighlight doesn't exist, save it
-                const databaseRef = push(ref(database, "tourHighlights"));
-                set(databaseRef, { tourHighlight: tourHighlightValue });
-                tourHighlightInput.value = ""; // Clear the input field after saving
-
-                // Focus on the input field to maintain cursor position
-                tourHighlightInput.focus();
-            } else {
-            }
-        } else {
-            // alert('Please enter a tour highlight before saving.');
+        if (existingHighlight && existingHighlight.tourHighlight) {
+          const existingHighlightLowerCase =
+            existingHighlight.tourHighlight.toLowerCase();
+          if (existingHighlightLowerCase === tourHighlightValue.toLowerCase()) {
+            isTourHighlightExists = true;
+          }
         }
+      });
 
-        // Check for new tour highlights in dynamically added fields
-        const newTourHighlightInputs = document.querySelectorAll(
-            ".tour-highlights-input input"
-        );
-        newTourHighlightInputs.forEach(async (input) => {
-            const newTourHighlightValue = input.value.trim();
+      if (!isTourHighlightExists) {
+        // If the tourHighlight doesn't exist, save it
+        const databaseRef = push(ref(database, "tourHighlights"));
+        set(databaseRef, { tourHighlight: tourHighlightValue });
+        tourHighlightInput.value = ""; // Clear the input field after saving
 
-            if (newTourHighlightValue !== "") {
-                // Check if the new tour highlight already exists
-                const existingDataSnapshot = await getExistingData();
-
-                let isNewTourHighlightExists = false;
-                existingDataSnapshot.forEach((childSnapshot) => {
-                    const existingHighlight = childSnapshot.val();
-
-                    if (existingHighlight && existingHighlight.tourHighlight) {
-                        const existingHighlightLowerCase =
-                            existingHighlight.tourHighlight.toLowerCase();
-                        if (
-                            existingHighlightLowerCase ===
-                            newTourHighlightValue.toLowerCase()
-                        ) {
-                            isNewTourHighlightExists = true;
-                        }
-                    }
-                });
-
-                if (!isNewTourHighlightExists) {
-                    // If the new tour highlight doesn't exist, save it
-                    const databaseRef = push(ref(database, "tourHighlights"));
-                    set(databaseRef, { tourHighlight: newTourHighlightValue });
-                }
-            }
-        });
-    } catch (error) {
-        console.error("Error saving data:", error);
+        // Focus on the input field to maintain cursor position
+        tourHighlightInput.focus();
+      } else {
+      }
+    } else {
+      // alert('Please enter a tour highlight before saving.');
     }
+
+    // Check for new tour highlights in dynamically added fields
+    const newTourHighlightInputs = document.querySelectorAll(
+      ".tour-highlights-input input"
+    );
+    newTourHighlightInputs.forEach(async (input) => {
+      const newTourHighlightValue = input.value.trim();
+
+      if (newTourHighlightValue !== "") {
+        // Check if the new tour highlight already exists
+        const existingDataSnapshot = await getExistingData();
+
+        let isNewTourHighlightExists = false;
+        existingDataSnapshot.forEach((childSnapshot) => {
+          const existingHighlight = childSnapshot.val();
+
+          if (existingHighlight && existingHighlight.tourHighlight) {
+            const existingHighlightLowerCase =
+              existingHighlight.tourHighlight.toLowerCase();
+            if (
+              existingHighlightLowerCase === newTourHighlightValue.toLowerCase()
+            ) {
+              isNewTourHighlightExists = true;
+            }
+          }
+        });
+
+        if (!isNewTourHighlightExists) {
+          // If the new tour highlight doesn't exist, save it
+          const databaseRef = push(ref(database, "tourHighlights"));
+          set(databaseRef, { tourHighlight: newTourHighlightValue });
+        }
+      }
+    });
+  } catch (error) {
+    console.error("Error saving data:", error);
+  }
 });
 
 // Add event listener for input changes to update the dropdown
 tourHighlightInput.addEventListener("input", async () => {
-    try {
-        const searchTerm = tourHighlightInput.value.trim().toLowerCase();
+  try {
+    const searchTerm = tourHighlightInput.value.trim().toLowerCase();
 
-        // Fetch existing data
-        const existingDataSnapshot = await getExistingData();
+    // Fetch existing data
+    const existingDataSnapshot = await getExistingData();
 
-        // Filter the highlights based on the search term
-        const filteredHighlights = [];
-        existingDataSnapshot.forEach((childSnapshot) => {
-            const highlight = childSnapshot.val();
-            if (
-                highlight &&
-                highlight.tourHighlight &&
-                highlight.tourHighlight.toLowerCase().includes(searchTerm)
-            ) {
-                filteredHighlights.push(highlight);
-            }
-        });
+    // Filter the highlights based on the search term
+    const filteredHighlights = [];
+    existingDataSnapshot.forEach((childSnapshot) => {
+      const highlight = childSnapshot.val();
+      if (
+        highlight &&
+        highlight.tourHighlight &&
+        highlight.tourHighlight.toLowerCase().includes(searchTerm)
+      ) {
+        filteredHighlights.push(highlight);
+      }
+    });
 
-        // Render the filtered highlights in the dropdown
-        renderTourHighlights(
-            filteredHighlights,
-            "tourhighlightsdropdown",
-            "tourHighlight"
-        );
-    } catch (error) {
-        console.error("Error updating dropdown:", error);
-    }
+    // Render the filtered highlights in the dropdown
+    renderTourHighlights(
+      filteredHighlights,
+      "tourhighlightsdropdown",
+      "tourHighlight"
+    );
+  } catch (error) {
+    console.error("Error updating dropdown:", error);
+  }
 });
 
 // Add event listener for the "plus" button to add a new tour highlight field
 addTourHighlightButton.addEventListener("click", () => {
-    addNewTourHighlightField();
+  addNewTourHighlightField();
 });
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////TOUR INCLUSIONS ADD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -527,13 +508,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Clear the previous dropdown content
     dropdownContainer.innerHTML = "";
 
-    // Check if the guestNameInput is empty
-    if (guestNameInput.length === 0) {
-      // Hide the dropdown and exit the function
-      dropdownContainer.classList.add("hidden");
-      return;
-    }
-
     // Query the database for all guest names and numbers
     onValue(guestsRef, (snapshot) => {
       const data = snapshot.val();
@@ -542,8 +516,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const guestDetails = Object.values(data);
 
         guestDetails.forEach((guest) => {
-          // Check if the guest name starts with the input
-          if (guest.guestName.toLowerCase().startsWith(guestNameInput)) {
+          // Check if the guest name includes the input
+          if (guest.guestName.toLowerCase().includes(guestNameInput)) {
             // Create a new option element
             const option = document.createElement("div");
             option.textContent = guest.guestName;
@@ -574,7 +548,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ... (your existing code) ...
 });
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////PAACKAGE & DESCRIPTION///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -671,49 +644,35 @@ packageNameInput.addEventListener("input", () => {
 });
 
 // Function to display package names in the container
-// Function to display package names in the container
-// Function to display package names in the container
 function displayPackageNames(packageNames) {
-    allPackageNamesContainer.innerHTML = ""; // Clear previous details
-  
-    const inputText = packageNameInput.value.toLowerCase();
-  
-    // Check if the package name is not empty before displaying the container
-    if (inputText.trim() === "") {
+  allPackageNamesContainer.innerHTML = ""; // Clear previous details
+
+  for (const packageName of packageNames) {
+    const packageNameDiv = document.createElement("div");
+    packageNameDiv.textContent = packageName;
+
+    // Add an event listener to each package name for autofilling, hiding the container, and fetching description
+    packageNameDiv.addEventListener("click", async () => {
+      packageNameInput.value = packageName;
       hidePackageNamesContainer();
-      return;
-    }
-  
-    for (const packageName of packageNames) {
-      // Check if the package name starts with the input text
-      if (packageName.toLowerCase().startsWith(inputText)) {
-        const packageNameDiv = document.createElement("div");
-        packageNameDiv.textContent = packageName;
-  
-        // Add an event listener to each package name for autofilling, hiding the container, and fetching description
-        packageNameDiv.addEventListener("click", async () => {
-          packageNameInput.value = packageName;
-          hidePackageNamesContainer();
-  
-          // Fetch description based on the selected package name
-          const description = await getDescriptionForPackage(packageName);
-  
-          // Auto-fill the description into the textarea
-          descriptionInput.value = description;
-  
-          // Set the autofill flag to true
-          isAutoFilled = true;
-        });
-  
-        allPackageNamesContainer.appendChild(packageNameDiv);
-      }
-    }
-  
-    // Show the container
-    showPackageNamesContainer();
+
+      // Fetch description based on the selected package name
+      const description = await getDescriptionForPackage(packageName);
+
+      // Auto-fill the description into the textarea
+      descriptionInput.value = description;
+
+      // Set the autofill flag to true
+      isAutoFilled = true;
+    });
+
+    allPackageNamesContainer.appendChild(packageNameDiv);
   }
-  
-  
+
+  // Show the container
+  showPackageNamesContainer();
+}
+
 // Function to fetch description based on the selected package name
 async function getDescriptionForPackage(packageName) {
   return new Promise((resolve, reject) => {
@@ -845,33 +804,40 @@ function createFormContainer(index, currentDate) {
   container.className = "w-full max-w-lg bg-white p-8 rounded shadow-lg mb-4";
 
   container.innerHTML = `
-    <h1 class="text-xl font-semibold">Day number: ${index + 1}</h1>
-    <input type="text" id="dayNumber${index}" name="dayNumber${index}" class="w-full p-2 border border-gray-300 rounded" value="${index + 1}">
+    
+      
+        <h1 class="text-xl id="dayNumber${index}" name="dayNumber${index}"  font-semibold">Day number: </h1>
+        <input type="text" id="dayNumber${index}" name="dayNumber${index}" class="w-full p-2 border border-gray-300 rounded" value="${
+    index + 1
+  }">
 
-    <label for="date${index}" class="block text-gray-600 text-sm font-semibold mb-2">Date:</label>
-    <input type="date" id="date${index}" name="date${index}" class="w-full p-2 border border-gray-300 rounded" value="${currentDate.toISOString().split("T")[0]}">
+        <label for="date${index}" class="block text-gray-600 text-sm font-semibold mb-2">Date:</label>
+        <input type="date" id="date${index}" name="date${index}" class="w-full p-2 border border-gray-300 rounded" value="${
+    currentDate.toISOString().split("T")[0]
+  }">
 
-    <div class="relative">
-      <label for="heading${index}" class="block text-gray-600 text-sm font-semibold mb-2">Heading:</label>
-      <input type="text" id="heading${index}" name="heading${index}" class="w-full p-2 border border-gray-300 rounded" placeholder="Search for a heading">
-      <div id="all-headings${index}" class="mt-2 absolute z-10 left-0 right-0 bg-white border border-gray-300 rounded" style="display: none;"></div>
-    </div>
+        <div class="relative">
+            <label for="heading${index}" class="block text-gray-600 text-sm font-semibold mb-2">Heading:</label>
+            <input type="text" id="heading${index}" name="heading${index}" class="w-full p-2 border border-gray-300 rounded" placeholder="Search for a heading">
+            <div id="all-headings${index}" class="mt-2 absolute z-10 left-0 right-0 bg-white border border-gray-300 rounded" style="display: none;"></div>
+        </div>
 
-    <label for="descriptionDetails${index}" class="block text-gray-600 text-sm font-semibold mb-2">Description:</label>
-    <textarea id="descriptionDetails${index}" name="descriptionDetails${index}" rows="4" class="w-full p-2 border border-gray-300 rounded"></textarea>
+        <label for="descriptionDetails${index}" class="block text-gray-600 text-sm font-semibold mb-2">Description:</label>
+        <textarea id="descriptionDetails${index}" name="descriptionDetails${index}" rows="4" class="w-full p-2 border border-gray-300 rounded"></textarea>
 
-    <label for="inclusions${index}" class="block text-gray-600 text-sm font-semibold mb-2">Inclusions:</label>
-    <textarea id="inclusions${index}" name="inclusions${index}" rows="4" class="w-full p-2 border border-gray-300 rounded"></textarea>
+        <label for="inclusions${index}" class="block text-gray-600 text-sm font-semibold mb-2">Inclusions:</label>
+        <textarea id="inclusions${index}" name="inclusions${index}" rows="4" class="w-full p-2 border border-gray-300 rounded"></textarea>
 
-    <label for="file${index}" class="block text-gray-600 text-sm font-semibold mb-2">Choose File:</label>
-    <input type="file" id="file${index}" name="file${index}" class="w-full p-2 border border-gray-300 rounded">
-    <div id="image-container${index}" class="mt-2"></div>
-  `;
+        <label for="file${index}" class="block text-gray-600 text-sm font-semibold mb-2">Choose File:</label>
+        <input type="file" id="file${index}" name="file${index}" class="w-full p-2 border border-gray-300 rounded">
+        <div id="image-container${index}" class="mt-2"></div>
+    `;
 
   document.getElementById("formContainer").appendChild(container);
 
   // Add event listener for the heading input with search functionality
   const headingInput = document.getElementById(`heading${index}`);
+
   const allHeadingsContainer = document.getElementById(`all-headings${index}`);
 
   headingInput.addEventListener("input", function () {
@@ -932,7 +898,6 @@ function createFormContainer(index, currentDate) {
   // ... (existing code)
 }
 
-
 let headingElement;
 let descriptionTextarea;
 
@@ -959,24 +924,18 @@ function fetchAndDisplayHeadings(index) {
       // Event listener for input changes (search)
       headingInput.addEventListener("input", function () {
         const searchQuery = headingInput.value.toLowerCase();
-
-        // Hide the headings container if the searchQuery is empty
-        if (!searchQuery) {
-          allHeadingsContainer.style.display = "none";
-          return;
-        }
-
         const filteredHeadings = headings.filter((heading) =>
-          heading.toLowerCase().startsWith(searchQuery)
+          heading.toLowerCase().includes(searchQuery)
         );
 
         // Display filtered headings
         filteredHeadings.forEach((heading) => {
-          const headingElement = document.createElement("div");
+          headingElement = document.createElement("div");
           headingElement.textContent = heading;
           headingElement.addEventListener("click", function () {
             // Autofill the selected heading in the input
             headingInput.value = heading;
+            // headArray.push(headingInput.value);
 
             // You can add additional logic here, like autofilling other fields based on the selected heading
             const selectedData = Object.values(data).find(
@@ -987,7 +946,7 @@ function fetchAndDisplayHeadings(index) {
               fetchImage(selectedData.imageUrl, `image-container${index}`);
 
               // Autofill the description textarea
-              const descriptionTextarea = document.getElementById(
+              descriptionTextarea = document.getElementById(
                 `descriptionDetails${index}`
               );
               descriptionTextarea.value = selectedData.description;
@@ -995,7 +954,7 @@ function fetchAndDisplayHeadings(index) {
 
               // printDuration.push(index + 1);
 
-              // Add more fields to autofill if needed
+              // Add more fields to autofill if neededs
             }
 
             // Hide the headings container when a selection is made
@@ -1010,10 +969,8 @@ function fetchAndDisplayHeadings(index) {
     }
   });
 }
-
 let imageElement = [];
 let imgArray = [];
-let fileUrl = "";
 // Function to fetch and display the image
 function fetchImage(imageUrl, containerId) {
   // Fetch the image and display it in the specified container
@@ -1073,6 +1030,25 @@ const newBtn = (index) => {
     incl = document.getElementById(`inclusions${index}`).value;
     Dates = document.getElementById(`date${index}`).value;
 
+    // printDuration.push(index + 1);
+    // headArray.push(heading);
+    // descArray.push(description);
+    // inclutions.push(incl);
+    // date.push(Dates);
+
+    // obj = [
+    //   {
+    //     duration: printDuration,
+    //     head: headArray,
+    //     desc: descArray,
+    //     img: imgArray,
+    //     inclutions: inclutions,
+    //     date: date,
+    //   },
+    // ];
+
+    // console.log(obj);
+    // Check if the heading already exists
     const headingExists = checkHeadingExists(dataRef, heading);
 
     if (!headingExists) {
@@ -1084,7 +1060,7 @@ const newBtn = (index) => {
 
       if (fileInput.files.length > 0) {
         const file = fileInput.files[0];
-        const storagePath = `yourStoragePath/${file.name}`;
+        const storagePath = `yourStoragePath/${newEntryRef.key}/${file.name}`;
 
         uploadBytes(storageRef(storage, storagePath), file)
           .then(() => getDownloadURL(storageRef(storage, storagePath)))
@@ -1101,7 +1077,7 @@ const newBtn = (index) => {
       }
 
       // Update other fields in the database (e.g., inclusions)
-      update(newEntryRef, { inclusions: inclutions });
+      update(newEntryRef, { inclusions: inclusions });
     } else {
       console.log("Heading already exists. Not saving duplicate.");
     }
@@ -1150,7 +1126,7 @@ function saveFormData(index) {
 
       if (fileInput.files.length > 0) {
         const file = fileInput.files[0];
-        const storagePath = `yourStoragePath/${file.name}`;
+        const storagePath = `yourStoragePath/${newEntryRef.key}/${file.name}`;
 
         uploadBytes(storageRef(storage, storagePath), file)
           .then(() => getDownloadURL(storageRef(storage, storagePath)))
@@ -1160,14 +1136,13 @@ function saveFormData(index) {
             // Save the image URL to the database
             update(newEntryRef, { imageUrl: downloadURL });
             imgArray = [downloadURL];
-            fileUrl = downloadURL;
             console.log(`${downloadURL}${[index]}`);
           })
           .catch((error) => console.error("Error during file upload:", error));
       }
 
       // Update other fields in the database (e.g., inclusions)
-      update(newEntryRef, { inclusions: inclutions });
+      update(newEntryRef, { inclusions: inclusions });
     } else {
       console.log("Heading already exists. Not saving duplicate.");
     }
@@ -1477,8 +1452,8 @@ function printForm() {
                            </div>
                          </div>
                          <div class="flex flex-col items-start gap-3">
-                         <div class="w-1/3 h-32 bg-black rounded-2xl">
-                         <img
+                           <div class="w-2/3 h-60 bg-black rounded-2xl">
+                             <img
                                class="w-full h-full object-cover rounded-2xl"
                                src="${items.img[index]}"
                                alt=""
@@ -1539,9 +1514,9 @@ function printForm() {
               <h1 class="uppercase font-semibold">accomodation details</h1>
             </div>
             <div class="flex w-full justify-center">
-              <table class="text-sm">
+              <table class=" ">
                 <tr class="border border-1 border-black">
-                  <th class="uppercase border    border-1 border-black px-5">
+                  <th class="uppercase border border-1 border-black px-5">
                     check in
                   </th>
                   <th class="uppercase border border-1 border-black px-5">
@@ -1557,7 +1532,7 @@ function printForm() {
                     no of rooms
                   </th>
                   <th class="uppercase border border-1 border-black px-5">
-                    no of ex bed /matters
+                    no of rooms
                   </th>
                   <th class="uppercase border border-1 border-black px-5">
                     meal plan
@@ -1826,9 +1801,10 @@ function saveItinerary(index) {
     .querySelectorAll(".w-full.max-w-lg.bg-white.p-8.rounded.shadow-lg.mb-4");
 
   const formContainerData = [];
+  let fileUrl;
 
   // Iterate through each form container
-  formContainers.forEach(async (container, index) => {
+  formContainers.forEach((container, index) => {
     const dayNumber = container.querySelector(`#dayNumber${index}`).value;
     const date = container.querySelector(`#date${index}`).value;
     const heading = container.querySelector(`#heading${index}`).value;
@@ -1838,7 +1814,7 @@ function saveItinerary(index) {
     dataRef = ref(database, "yourDataCollection");
     const inclusions = container.querySelector(`#inclusions${index}`).value;
     const fileInput = container.querySelector(`#file${index}`);
-    let fileUrl;
+
     const headingExists = checkHeadingExists(dataRef, heading);
     if (!headingExists) {
       const newEntryRef = push(dataRef, {
@@ -1849,13 +1825,15 @@ function saveItinerary(index) {
 
       if (fileInput.files.length > 0) {
         const file = fileInput.files[0];
-        const storagePath = `yourStoragePath/${file.name}`;
+        const storagePath = `yourStoragePath/${newEntryRef.key}/${file.name}`;
 
         uploadBytes(storageRef(storage, storagePath), file)
           .then(() => getDownloadURL(storageRef(storage, storagePath)))
           .then((downloadURL) => {
             // Update the file input and display the image
-            console.log(`this is the new URL ${downloadURL}`);
+
+            console.log(`${downloadURL}${[index]}`);
+            fileUrl = `${downloadURL}${[index]}`;
           })
           .catch((error) => console.error("Error during file upload:", error));
       }
@@ -1866,8 +1844,8 @@ function saveItinerary(index) {
     // Additional logic for handling file uploads// Replace this with the actual URL of the uploaded file
 
     const imageContainer = container.querySelector(`#image-container${index}`);
-    imageContainer.innerHTML = imgArray
-      ? `<img src="${imgArray}" alt="Uploaded Image" class="w-full h-auto">`
+    imageContainer.innerHTML = fileUrl
+      ? `<img src="${fileUrl}" alt="Uploaded Image" class="w-full h-auto">`
       : "";
 
     // Add data to the formContainerData array
@@ -1877,9 +1855,7 @@ function saveItinerary(index) {
       heading: heading,
       descriptionDetails: descriptionDetails,
       inclusions: inclusions,
-      fileUrl: `${imgArray}${[index]}`,
-
-      // Include the file URL
+      fileUrl: fileUrl, // Include the file URL
       // Include other fields as needed
     });
   });
@@ -1927,6 +1903,7 @@ function saveItinerary(index) {
     notes: notes, // Include the new notes data
     cancellationNotes: cancellationNotes, // Include the new cancellation notes data
     formContainers: formContainerData,
+    fileUrl: fileUrl,
   };
 
   // Push the data to the 'itinerary' node
@@ -1940,71 +1917,3 @@ function saveItinerary(index) {
       console.error("Error saving itinerary:", error.message);
     });
 }
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////
-
-document.addEventListener('DOMContentLoaded', function () {
-
-  function handleEnter(event, nextFieldId) {
-      if (event.key === 'Enter') {
-          event.preventDefault();
-          document.getElementById(nextFieldId).focus();
-      }
-  }
-
-    
-document.getElementById('traveldate').addEventListener('keydown', function (event) {
-  handleEnter(event, 'guestName');
-});
-
-document.getElementById('guestName').addEventListener('keydown', function (event) {
-  handleEnter(event, 'guestNumber');
-});
-
-document.getElementById('guestNumber').addEventListener('keydown', function (event) {
-  handleEnter(event, 'arrival-details');
-});
-
-document.getElementById('arrival-details').addEventListener('keydown', function (event) {
-  handleEnter(event, 'departure-details');
-});
-
-document.getElementById('departure-details').addEventListener('keydown', function (event) {
-  handleEnter(event, 'number-of-pax');
-});
- /////////////////////////////////////////////////////////////////////////////////////////
-
-document.getElementById('heading').addEventListener('keydown', function (event) {
-  handleEnter(event, 'anytext-description');
-});
-
-document.getElementById('anytext-description').addEventListener('keydown', function (event) {
-  handleEnter(event, 'packageName');
-});
-
-
-document.getElementById('packageName').addEventListener('keydown', function (event) {
-  handleEnter(event, 'description');
-});
-
-
-document.getElementById('description').addEventListener('keydown', function (event) {
-  handleEnter(event, 'duration');
-});
-
-document.getElementById('duration').addEventListener('keydown', function (event) {
-  handleEnter(event, 'night');
-});
-
-document.getElementById('tour-executive').addEventListener('keydown', function (event) {
-  handleEnter(event, 'tour-contact');
-});
-
-document.getElementById('tour-contact').addEventListener('keydown', function (event) {
-  handleEnter(event, 'tour-mail');
-});
-
-});

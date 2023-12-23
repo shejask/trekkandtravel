@@ -4,14 +4,14 @@ import { getDatabase, ref, onValue, get } from "https://www.gstatic.com/firebase
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
-    authDomain: "trekkandtravel-7daeb.firebaseapp.com",
-    databaseURL: "https://trekkandtravel-7daeb-default-rtdb.firebaseio.com",
-    projectId: "trekkandtravel-7daeb",
-    storageBucket: "trekkandtravel-7daeb.appspot.com",
-    messagingSenderId: "313424140423",
-    appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
-  };
+  apiKey: "AIzaSyD4LcJYB55sh3dGiCBVEkkZlKV5B4GWPVU",
+  authDomain: "trekkandtravel-7daeb.firebaseapp.com",
+  databaseURL: "https://trekkandtravel-7daeb-default-rtdb.firebaseio.com",
+  projectId: "trekkandtravel-7daeb",
+  storageBucket: "trekkandtravel-7daeb.appspot.com",
+  messagingSenderId: "313424140423",
+  appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
+};
 
 
 // Initialize Firebase
@@ -19,49 +19,62 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 // ... (previous code)
-
 document.addEventListener('DOMContentLoaded', () => {
     // Reference to the 'formData' node
     const formDataRef = ref(database, 'formData');
-
+  
     // Reference to the dropdown element, search input, and display div
     const voucherDropdown = document.getElementById('hotel-voucher-dropdown');
     const confirmationNumberInput = document.getElementById('confirmation-number');
     const displayFetchAll = document.getElementById('display_fetchall');
-
+  
     // Listen for changes in the data
     onValue(formDataRef, (snapshot) => {
-        const data = snapshot.val();
-
-        // Check if data is not null
-        if (data) {
-            // Extract confirmation numbers
-            const confirmationNumbers = Object.keys(data).map((key) => data[key].confirmationnumber);
-
-            // Handle input event to filter dropdown options
-            confirmationNumberInput.addEventListener('input', () => {
-                const searchTerm = confirmationNumberInput.value.toLowerCase();
-
-                // Filter confirmation numbers based on search term
-                const filteredConfirmationNumbers = confirmationNumbers.filter((number) =>
-                    number.toLowerCase().includes(searchTerm)
-                );
-
-                // Remove existing options
-                voucherDropdown.innerHTML = '';
-
-                // Add filtered options to the dropdown
-                filteredConfirmationNumbers.forEach((confirmationNumber) => {
-                    const option = document.createElement('div');
-                    option.textContent = confirmationNumber;
-                    option.classList.add('dropdown-item'); // You may want to add a class for styling
-                    voucherDropdown.appendChild(option);
-                });
-
-                // Show the dropdown
-                voucherDropdown.classList.remove('hidden');
+      const data = snapshot.val();
+  
+      // Check if data is not null
+      if (data) {
+        // Extract confirmation numbers
+        const confirmationNumbers = Object.keys(data).map((key) => data[key].confirmationnumber);
+  
+        // Handle input event to filter dropdown options
+        confirmationNumberInput.addEventListener('input', () => {
+          const searchTerm = confirmationNumberInput.value.trim().toLowerCase();
+  
+          // Hide the dropdown if the search term is empty or '0'
+          if (!searchTerm || searchTerm === '0') {
+            voucherDropdown.classList.add('hidden');
+            return;
+          }
+  
+          // Filter confirmation numbers based on search term
+          const filteredConfirmationNumbers = confirmationNumbers.filter((number) =>
+            number.toLowerCase().startsWith(searchTerm)
+          );
+  
+          // Remove existing options
+          voucherDropdown.innerHTML = '';
+  
+          // Add filtered options to the dropdown
+          filteredConfirmationNumbers.forEach((confirmationNumber) => {
+            const option = document.createElement('div');
+            option.textContent = confirmationNumber;
+            option.classList.add('dropdown-item'); // You may want to add a class for styling
+            option.addEventListener('click', () => {
+              // Auto-fill the confirmation-number field with the selected option
+              confirmationNumberInput.value = confirmationNumber;
+  
+              // Hide the dropdown after selection
+              voucherDropdown.classList.add('hidden');
             });
-
+            voucherDropdown.appendChild(option);
+          });
+  
+          // Show the dropdown
+          voucherDropdown.classList.remove('hidden');
+        });
+ 
+  
             // Add an event listener to handle item selection
            // ... (previous code)
 

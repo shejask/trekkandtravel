@@ -76,6 +76,7 @@ allTourIdDiv.addEventListener('click', async function (event) {
 
           } = childSnapshot.val();
 
+          
           if (tourId === selectedTourId) {
               traveldateInput.value = travelDate || '';
               document.getElementById('guestName').value = guestName || '';
@@ -144,6 +145,105 @@ allTourIdDiv.addEventListener('click', async function (event) {
 
 
 /////////////////////////////////////////////////////////////////////////////////
+
+// Assuming formContainers is an array inside the database snapshot
+// ... (previous code)
+
+// ... (previous code)
+
+// ... (previous code)
+
+// ... (previous code)
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+// ... (previous code)
+// ... (previous code)
+if (Array.isArray(formContainers)) {
+  formContainersDiv.innerHTML = ''; // Clear previous content
+
+  formContainers.forEach((container) => {
+    const { date, dayNumber, descriptionDetails, heading, inclusions, fileUrl } = container;
+
+    const containerDiv = document.createElement('div');
+    containerDiv.classList.add('form-container');
+
+    containerDiv.innerHTML = `
+
+     
+    <label   class="block">Day No :</label>
+    <input type="text" value="${dayNumber}" name="dayNumber" min="1" class="w-full p-2 border rounded border border-slate-700">
+
+    <label   class="block">Date :</label>
+    <input type="text" value="${formatDate(date)}" name="date" min="1" class="w-full p-2 border rounded border border-slate-700">
+
+    
+    <label   class="block">Heading :</label>
+    <input type="text" value="${heading}" min="1" name="heading"  class="w-full p-2 border rounded border border-slate-700">
+
+    
+    <label   class="block">Description :</label>
+    <input type="text" value="${descriptionDetails}" name="descriptionDetails" min="1" class="w-full mB-5 p-2 border rounded border border-slate-700">
+
+     
+     
+    <img width="70" class="mt-5" name="fileUrl"  src="${fileUrl} "  alt=""
+    />
+   
+     `;
+
+    if (inclusions) {
+      if (Array.isArray(inclusions)) {
+        containerDiv.innerHTML += `<p>Inclusions: ${inclusions.join(', ')}</p>`;
+      } else if (typeof inclusions === 'string') {
+        containerDiv.innerHTML += `<label   class="block">Inclusion :</label> <input name="inclusions" type="text" value="${inclusions}" min="1" class="w-full mB-5 p-2 border rounded border border-slate-700">`;
+      } else {
+        console.warn('Inclusions is not an array or string:', inclusions);
+      }
+    }
+
+    // if (fileUrl) {
+    //   containerDiv.innerHTML += ` `;
+
+    //   // Check if fileUrl is a string
+    //   if (typeof fileUrl === 'string') {
+    //     const imageElement = document.createElement('img');
+    //     imageElement.src = fileUrl;
+    //     imageElement.style.width = '100px'; // Set the width to 100 pixels
+    //     imageElement.setAttribute('name', fileUrl); // Set the name attribute to the value of fileUrl
+
+
+    //     containerDiv.appendChild(imageElement);
+    //   } else {
+    //     console.warn('File URL is not a string:', fileUrl);
+    //   }
+    // } else {
+    //   console.warn('File URL is not defined for this container:', container);
+    // }
+
+    formContainersDiv.appendChild(containerDiv);
+  });
+} else {
+  console.warn('formContainers is not an array or is not defined');
+}
+
+
+// ... (remaining code)
+
+// ... (remaining code)
+
+// ... (remaining code)
+
+// ... (remaining code)
+
+// ... (remaining code)
+
+// ... (remaining code)
+
        ////////////////////////////////////////////////////////////////////////
   // Display each index of inclusions in separate input fields
   // Display tourHighlights in a div
@@ -213,6 +313,7 @@ if (Array.isArray(tourexclusions)) {
 
 
        ///////////////////////////////////////////////////////////////////
+       
         ///////////////////////////////////////////////////////////////////
 
 
@@ -295,9 +396,7 @@ if (Array.isArray(cancellationNotes)) {
 } else {
     console.warn('cancellationContainer is not an array or is not defined');
 }
-  
 
-///////////////////////////////////////////////////////////////////
 
               allTourIdDiv.style.display = 'none';
           }
@@ -313,6 +412,7 @@ if (Array.isArray(cancellationNotes)) {
 
  ///////////////////////////////////////////////////////////////////////////////////
  //////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
 document.getElementById("printButton").addEventListener("click", function () {
@@ -321,6 +421,7 @@ document.getElementById("printButton").addEventListener("click", function () {
   
   // Function to print the form
   function printForm() {
+ 
     // Get values from form elements
     const tourId = document.getElementById("tourId").value;
     const travelDate = document.getElementById("traveldate").value;
@@ -422,6 +523,10 @@ const notesValues = Array.from(
     document.querySelectorAll("#tableDataInputsContainer table tr")
 );
   /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
+ // Get values from formContainers
+ 
+  /////////////////////////////////////////////////////////
 
 
     const printWindow = window.open("", "_blank");
@@ -439,12 +544,82 @@ const notesValues = Array.from(
   
     ///////////////////////////////////////////
     /////////////////////////////////////////////
-    ///////////////////////////////////////////////////
+   // You can customize the format in which you want to display the values
+    // Get values from formContainers
+  // Get values from formContainers
+  // Get values from formContainers
+   // Get values from formContainers
+     // Get values from formContainers
+     const formContainersDiv = document.getElementById('formContainersDiv');
+
+     // Check if formContainersDiv and its children are present
+    //  <img class="w-full h-full object-cover rounded-2xl" src="${fileUrl} "  name="fileUrl" alt="" />
+
+         // Construct the formContainersValues string
+         const formContainersValues = Array.from(formContainersDiv.children).map(container => {
+             const dateInput = container.querySelector('input[name="date"]');
+             const dayNumberInput = container.querySelector('input[name="dayNumber"]');
+             const descriptionDetailsInput = container.querySelector('input[name="descriptionDetails"]');
+             const headingInput = container.querySelector('input[name="heading"]');
+             const inclusionsInput = container.querySelector('input[name="inclusions"]');
+             const fileUrlInput = container.querySelector('img[name="fileUrl"]');
+ 
+             // Check if the inputs are found before accessing their values
+             const date = dateInput ? dateInput.value : '';
+             const dayNumber = dayNumberInput ? dayNumberInput.value : '';
+             const descriptionDetails = descriptionDetailsInput ? descriptionDetailsInput.value : '';
+             const heading = headingInput ? headingInput.value : '';
+             const inclusions = inclusionsInput ? inclusionsInput.value : '';
+             const fileUrl = fileUrlInput ? fileUrlInput.src : '';
+            
+             // Construct the container HTML
+             return `
+             <div class="flex flex-col gap-5">
+           <div>
+           
+
+                   <div >
+                       <div>
+                       <div class="flex flex-col gap-10">
+                         <div class="flex flex-col gap-2">
+                           <div
+                             class="w-full py-2 bg-orange-400 text-black px-2 flex items-center justify-between rounded-lg" >
+                             <h1 class="text-xl font-semibold">${dayNumber}</h1>
+                             <h1 class="text-lg">${date}</h1>
+                           </div>
+                         </div>
+                         <div class="flex flex-col items-start gap-3">
+                         <div class="w-1/3 h-32 bg-black rounded-2xl">
+                         <img class="w-full h-full object-cover rounded-2xl" src="${fileUrl}" alt="" />
+
+                           </div>
+                           <div class="flex flex-col gap-3 w-full justify-center">
+                             <h1 class="font-semibold">${heading}</h1>
+                             <h1>${descriptionDetails}</h1>
+                            </div>
+                         </div>
+                         <div class="flex flex-col gap-1">
+                           <h1 class="text-xl font-semibold">Inclutions</h1>
+                           <h1>
+                            ${inclusions}
+                           </h1>
+                         </div>
+                       </div>
+                     </div>
+                
+           </div> 
+          </div>
+             `;
+         }).join(''); // Use join to concatenate the containers
+ 
+ ///////////////////////////////////////////////////
   
     // Write the content to be printed
     printWindow.document.write(`
-         
-    
+      
+     
+ 
+
   <html lang="en">
     <head>
       <meta charset="UTF-8" />
@@ -461,7 +636,6 @@ const notesValues = Array.from(
     <body>
   
    
-  
       <div class="w-full h-auto pb-5">
         <div
           class="w-full bg-blue-500 h-24 flex items-center justify-between pl-5 bg-cover"
@@ -549,15 +723,8 @@ const notesValues = Array.from(
   
   
           <div>
-          <div class="flex flex-col gap-5">
-             
-  
-  
-  
-              
-   
-   
-            </div>
+          ${formContainersValues}
+
             <div
               class="w-full px-5 mt-3 py-2 border border-1 border-black rounded-lg"
             >
@@ -594,7 +761,7 @@ const notesValues = Array.from(
                       no of rooms
                     </th>
                     <th class="uppercase border border-1 border-black px-5">
-                      no of rooms
+                      no of ex bed / matter
                     </th>
                     <th class="uppercase border border-1 border-black px-5">
                       meal plan

@@ -156,17 +156,13 @@ toggle.onclick = function () {
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    var currentDateElement = document.getElementById('currentDate');
-    var currentDate = new Date();
-  
-    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    var formattedDate = currentDate.toLocaleDateString('en-US', options);
-  
-    currentDateElement.textContent =     formattedDate;
-  });
-  
+var currentDate = new Date();
 
+// Format the date as needed (e.g., "MM/DD/YYYY")
+var formattedDate = (currentDate.getMonth() + 1) + '/' + currentDate.getDate() + '/' + currentDate.getFullYear();
+
+// Set the formatted date as the content of the button
+document.getElementById('dateButton').innerText = formattedDate;
 
 
 
