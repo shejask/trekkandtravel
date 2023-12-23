@@ -1,4 +1,4 @@
- import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
 import { ref } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 import { getDatabase, ref as databaseRef, push, set, get,   onValue } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
  
@@ -90,8 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Duplicated input not found");
         }
     }
-    
-    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function populateHotelDropdown(inputId, dropdownId, addressInputId) {
         // Get the value from the input field
         const hotelInput = document.getElementById(inputId).value.toLowerCase();
@@ -148,28 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ... (your existing code) ...
+ 
 
 document.addEventListener("DOMContentLoaded", function () {
     // ... (your existing code) ...
@@ -180,6 +159,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Get the dropdown container
         const dropdownContainer = document.getElementById(dropdownId);
+
+        // Hide the dropdown if the input value is empty
+        if (guestNameInput.length === 0) {
+            dropdownContainer.classList.add("hidden");
+            return;
+        }
 
         // Clear the previous dropdown content
         dropdownContainer.innerHTML = "";
@@ -192,8 +177,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 const guestDetails = Object.values(data);
 
                 guestDetails.forEach((guest) => {
-                    // Check if the guest name includes the input
-                    if (guest.guestName.toLowerCase().includes(guestNameInput)) {
+                    // Check if the guest name starts with the input
+                    if (guest.guestName.toLowerCase().startsWith(guestNameInput)) {
                         // Create a new option element
                         const option = document.createElement("div");
                         option.textContent = guest.guestName;
@@ -224,7 +209,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // ... (your existing code) ...
 });
 
+
+
  
+//////////////////////////////////////////////////////////////////////////////////////////
+ ////////////////////////////////////////////////////////////////////////////////////////
 
 document.addEventListener("DOMContentLoaded", function () {
     // Get references to the input fields
@@ -263,6 +252,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
  
+//////////////////////////////////////////////////////////////////////////////////////////
+ ////////////////////////////////////////////////////////////////////////////////////////
 document.addEventListener("DOMContentLoaded", function () {
     const addRowButton = document.getElementById("add-row-btn");
 
@@ -669,11 +660,7 @@ setTimeout(() => {
 
 
 
-
-
-
-
-
+ 
 
 function getTourTableContent() {
     // You can adapt this function based on your actual data structure
@@ -690,16 +677,9 @@ function getTourTableContent() {
 
     
     // Function to get the value of an element by ID
- 
-    
     
 });
-
-
  
-
- 
-
 document.getElementById('save').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent the default form submission
     saveFormData(); // Call your function to save form data
@@ -715,8 +695,6 @@ function getValueById(id) {
 // Function to save form data to Firebase
   function saveFormData() { 
   
- 
-     
     // // Retrieve form data
     const voucherNo = getValueById("voucherNo");
     const confirmationNo = getValueById("ConfirmationNo");
@@ -736,24 +714,13 @@ function getValueById(id) {
     const  Contantno  = getValueById("Contant-no");
     const  notes  = getValueById("notes");
 
-
-     
-     
  
    // Get data from the tour table
    const tourTableData = getTourTableData();
-
- 
-  // Get data from the duplicated rows
+ // Get data from the duplicated rows
   const duplicatedRowsData = getDuplicatedRowsData();
-    
-    
-
-
-    
-       // Generate a new Tour ID with increment
-       
-
+        // Generate a new Tour ID with increment
+ 
     // Save the form data to the Firebase database
     const formData = {
         voucherNo,
@@ -832,7 +799,7 @@ function getValueById(id) {
 
 
 
-   // Function to get data from the tour table
+   // Function to get data from the tour table/////////////////////////////////////////////////////////////////
    function getTourTableData() {
     const tourTable = document.getElementById("tourTable");
     const rows = tourTable.getElementsByTagName("tr");
@@ -852,7 +819,7 @@ function getValueById(id) {
     return tourTableData;
 }
 
- 
+ ////////////////////////////////////////////////////////////////////////
 // Function to get data from the duplicated rows
 function getDuplicatedRowsData() {
     const container = document.getElementById("inputContainer");
@@ -1017,3 +984,95 @@ document.addEventListener('keydown', function(event) {
 ////////////////
 /////////////////
 ////////////////
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    function handleEnter(event, nextFieldId) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById(nextFieldId).focus();
+        }
+    }
+  
+    // Add event listeners for keydown events on input fields
+    document.getElementById('ConfirmationNo').addEventListener('keydown', function (event) {
+        handleEnter(event, 'transport');
+    });
+  
+    document.getElementById('transport').addEventListener('keydown', function (event) {
+        handleEnter(event, 'numVehicles');
+    });
+  
+
+    document.getElementById('numVehicles').addEventListener('keydown', function (event) {
+        handleEnter(event, 'numPax');
+    });
+  
+    document.getElementById('numPax').addEventListener('keydown', function (event) {
+        handleEnter(event, 'confirmedBy');
+    });
+  
+    document.getElementById('confirmedBy').addEventListener('keydown', function (event) {
+        handleEnter(event, 'arrival');
+    });
+
+    document.getElementById('arrival').addEventListener('keydown', function (event) {
+        handleEnter(event, 'departure');
+    });
+    
+
+    document.getElementById('departure').addEventListener('keydown', function (event) {
+        handleEnter(event, 'travelDate');
+    });
+ 
+    document.getElementById('travelDate').addEventListener('keydown', function (event) {
+        handleEnter(event, 'duration');
+    });
+ 
+    document.getElementById('duration').addEventListener('keydown', function (event) {
+        handleEnter(event, 'driver');
+    });
+     
+
+    document.getElementById('driver').addEventListener('keydown', function (event) {
+        handleEnter(event, 'Vehicleno');
+    });
+
+    document.getElementById('Vehicleno').addEventListener('keydown', function (event) {
+        handleEnter(event, 'guestName');
+    });
+
+    document.getElementById('guestName').addEventListener('keydown', function (event) {
+        handleEnter(event, 'guestNumber');
+    });
+    document.getElementById('guestNumber').addEventListener('keydown', function (event) {
+        handleEnter(event, 'checkIn');
+    });
+
+    document.getElementById('checkIn').addEventListener('keydown', function (event) {
+        handleEnter(event, 'checkOut');
+    });
+
+
+    document.getElementById('checkOut').addEventListener('keydown', function (event) {
+        handleEnter(event, 'hotel');
+    });
+
+
+
+    document.getElementById('hotel').addEventListener('keydown', function (event) {
+        handleEnter(event, 'hotelladdresss');
+    });
+
+
+
+    document.getElementById('notes').addEventListener('keydown', function (event) {
+        handleEnter(event, 'TourManager');
+    });
+
+
+    document.getElementById('TourManager').addEventListener('keydown', function (event) {
+        handleEnter(event, 'Contant-no');
+    });
+
+  });
