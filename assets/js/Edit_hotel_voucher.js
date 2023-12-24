@@ -73,15 +73,6 @@ const cancellationPolicyInput = document.getElementById('cancellation-policy');
 // Reference to the hotel photo preview element
 const hotelPhotoPreview = document.getElementById('hotel-photo-preview');
 
-
-// ...
-
-
-// ... (Previous code)
-
-
-
-
 // Function to update the dropdown based on the search query
 function updateDropdown(searchQuery) {
     // Fetch confirmation numbers from Firebase
@@ -112,11 +103,7 @@ function updateDropdown(searchQuery) {
             option.addEventListener('click', () => {
               // Update input fields with corresponding data
               const selectedConfirmationNumber = formData[confirmationNumber];
-  
-              
-            ///////////////////////////////////////////
- ///////////////////////////////////////////
- ///////////////////////////////////////////
+   
  ///////////////////////////////////////////
  ///////////////////////////////////////////
 
@@ -176,10 +163,7 @@ function updateDropdown(searchQuery) {
     roomDetailsContainer.innerHTML = 'No room details available';
   }
 
-    
-
-  // Additional field
-
+     
   ///////////////////////////////////////////
   const termsConditionsContainer = document.getElementById('Terms-container');
   if (selectedConfirmationNumber.termsConditions && selectedConfirmationNumber.termsConditions.length > 0) {
@@ -212,54 +196,65 @@ function updateDropdown(searchQuery) {
   } else {
     // If no cancellationPolicy, display a message or handle as needed
     cancellationPolicyContainer.innerHTML = 'No cancellation policy available';
-  }
- ///////////////////////////////////////////
- ///////////////////////////////////////////
-// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
-// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
-// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
-// Fetch and fill room details from the database
-// Fetch and fill room details from the database
-onValue(formDataRef, (snapshot) => {
-  const formData = snapshot.val();
-  if (formData && typeof formData === 'object') {
-    const selectedConfirmationNumber = formData[confirmationNumber];
+  } 
 
-    if (selectedConfirmationNumber && selectedConfirmationNumber.roomDetails) {
-      const roomDetailsContainer = document.getElementById('room-details-container');
 
-      // Clear existing content
-      roomDetailsContainer.innerHTML = '';
 
-      // Loop through each room detail item
-      selectedConfirmationNumber.roomDetails.forEach((room, index) => {
-        const roomContainer = document.createElement('div');
-        roomContainer.id = `room-${index}`;
-        roomContainer.classList.add('mb-4');
+// Fetch and fill room details from the databas// Function to create input fields for room details
+// function createRoomInputField(container, label, value, name) {
+//   const labelElement = document.createElement('label');
+//   labelElement.textContent = label;
 
-        // Create input fields for each property
-        createRoomInputField(roomContainer, 'Room Type:', room.roomType || 'N/A');
-        createRoomInputField(roomContainer, 'No. of Rooms:', room.noOfRooms || 'N/A');
-        createRoomInputField(roomContainer, 'No. of Extra Beds:', room.noOfExtraBed || 'N/A');
-        createRoomInputField(roomContainer, 'Child Without Bed:', room.childWithoutBed || 'N/A');
-        createRoomInputField(roomContainer, 'Meal Plan:', room.mealPlan || 'N/A');
+//   const inputElement = document.createElement('input');
+//   inputElement.type = 'text';
+//   inputElement.value = value;
+//   inputElement.name = name; // Set the name attribute dynamically
+//   inputElement.classList.add('w-full', 'p-2', 'rounded', 'border', 'border-slate-700');
 
-        // Append the room container to the room details container
-        roomDetailsContainer.appendChild(roomContainer);
-      });
-    }
-  }
+//   container.appendChild(labelElement);
+//   container.appendChild(inputElement);
+// }
+
+// Function to create input fields for room details
+function createInputField(container, label, value, name) {
+  const labelElement = document.createElement('label');
+  labelElement.textContent = label;
+  container.appendChild(labelElement);
+
+  const inputElement = document.createElement('input');
+  inputElement.type = 'text';
+  inputElement.value = value;
+  inputElement.name = name; // Set the name attribute dynamically
+
+  inputElement.classList.add('w-full', 'p-2', 'border', 'rounded');
+  container.appendChild(inputElement);
+}
+
+// ...
+
+// Loop through each room detail item
+// Loop through each room detail item
+selectedConfirmationNumber.roomDetails.forEach((room, index) => {
+  const roomContainer = document.createElement('div');
+  roomContainer.id = `room-${index}`;
+  roomContainer.classList.add('mb-4');
+
+  // Clear existing content
+  roomDetailsContainer.innerHTML = '';
+
+  // Create input fields for each property with dynamic names
+  createInputField(roomContainer, 'Room Type:', room.roomType || 'N/A', `roomType-${index}`);
+  createInputField(roomContainer, 'No. of Rooms:', room.noOfRooms || 'N/A', `noOfRooms-${index}`);
+  createInputField(roomContainer, 'No. of Extra Beds:', room.noOfExtraBed || 'N/A', `noOfExtraBed-${index}`);
+  createInputField(roomContainer, 'Child Without Bed:', room.childWithoutBed || 'N/A', `childWithoutBed-${index}`);
+  createInputField(roomContainer, 'Meal Plan:', room.mealonly || 'N/A', `mealPlan-${index}`); // Corrected property name
+
+  // Append the room container to the room details container
+  roomDetailsContainer.appendChild(roomContainer);
 });
-// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
-// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
-// Assuming roomDetails is an array of objects
- 
-// Initialize a variable to store the image URL
- // Initialize a variable to store the image URL
- 
 
-// Fetch hotel photo URL from selectedConfirmationNumber
-// Fetch hotel photo URL from selectedConfirmationNumber and display it in the preview
+
+
 onValue(formDataRef, (snapshot) => {
   const formData = snapshot.val();
   if (formData && typeof formData === 'object') {
@@ -297,9 +292,7 @@ onValue(formDataRef, (snapshot) => {
 // Variable to store the imageURL
 let imageURL;
   
-
-
-
+ 
 
 // Add an event listener to the input for real-time search
 confirmationNumberInput.addEventListener('input', () => {
@@ -311,142 +304,122 @@ confirmationNumberInput.addEventListener('input', () => {
 });
 
 
-function createInputField(container, label, value) {
-    const labelElement = document.createElement('label');
-    labelElement.innerText = label;
-    container.appendChild(labelElement);
-  
-    const inputElement = document.createElement('input');
-    inputElement.type = 'text';
-    inputElement.value = value;
-    inputElement.classList.add('w-full', 'p-2', 'border', 'rounded');
-    container.appendChild(inputElement);
-  }
+ 
 ////////////////////////////////////////////////
 /////////////////////////////////////////////
 ///////////////////////////////////////////////
 // Function to create input fields for room details
 // Function to create input fields for room details
-function createRoomInputField(container, label, value) {
-  const labelElement = document.createElement('label');
-  labelElement.textContent = label;
+// function createRoomInputField(container, label, value) {
+//   const labelElement = document.createElement('label');
+//   labelElement.textContent = label;
 
-  const inputElement = document.createElement('input');
-  inputElement.type = 'text';
-  inputElement.value = value;
-  inputElement.classList.add('w-full', 'p-2', 'rounded', 'border', 'border-slate-700');
+//   const inputElement = document.createElement('input');
+//   inputElement.type = 'text';
+//   inputElement.value = value;
+//   inputElement.classList.add('w-full', 'p-2', 'rounded', 'border', 'border-slate-700');
 
-  container.appendChild(labelElement);
-  container.appendChild(inputElement);
-}
+//   container.appendChild(labelElement);
+//   container.appendChild(inputElement);
+// }
 
  
 
-function updateFirebaseData() {
-    // Fetch the selected confirmation number
-    const selectedConfirmationNumber = confirmationNumberInput.value;
+// function updateFirebaseData() {
+//     // Fetch the selected confirmation number
+//     const selectedConfirmationNumber = confirmationNumberInput.value;
   
-    // Create an object with the updated data
-    const updatedData = {
-      hotelName: hotelNameInput.value,
-      hotelAddress: hotelAddressInput.value,
-      googleMapLink: googleMapLinkInput.value,
-      hotelPhone: hotelPhoneInput.value,
-      guestName: guestNameInput.value,
-      guestNumber: guestNumberInput.value,
-      NoofAdult: noOfAdultsInput.value,
-      issuedBy: issuedByInput.value,
-      issuedDate: issuedDateInput.value,
-      bookedBy: bookedByInput.value,
-      contactNo: contactNoInput.value,
-      mailId: mailIdInput.value,
-      checkInDate: checkInDateInput.value,
-      checkInTime: checkInTimeInput.value,
-      checkOutDate: checkOutDateInput.value,
-      checkOutTime: checkOutTimeInput.value,
-      notes: notesInput.value,
-      specialRequest: specialRequestInput.value,
-      paymentInfo: paymentInfoInput.value,
-      arrival: arrivalInput.value,
-      ticketNo: ticketNoTwoInput.value,
-      departure: departureInput.value,
-      ticketNotwo: ticketNoInput.value,
-      cancellationPolicy: cancellationPolicyInput.value,
-      // ... (Add other fields as needed)
-    };
+//     // Create an object with the updated data
+//     const updatedData = {
+//       hotelName: hotelNameInput.value,
+//       hotelAddress: hotelAddressInput.value,
+//       googleMapLink: googleMapLinkInput.value,
+//       hotelPhone: hotelPhoneInput.value,
+//       guestName: guestNameInput.value,
+//       guestNumber: guestNumberInput.value,
+//       NoofAdult: noOfAdultsInput.value,
+//       issuedBy: issuedByInput.value,
+//       issuedDate: issuedDateInput.value,
+//       bookedBy: bookedByInput.value,
+//       contactNo: contactNoInput.value,
+//       mailId: mailIdInput.value,
+//       checkInDate: checkInDateInput.value,
+//       checkInTime: checkInTimeInput.value,
+//       checkOutDate: checkOutDateInput.value,
+//       checkOutTime: checkOutTimeInput.value,
+//       notes: notesInput.value,
+//       specialRequest: specialRequestInput.value,
+//       paymentInfo: paymentInfoInput.value,
+//       arrival: arrivalInput.value,
+//       ticketNo: ticketNoTwoInput.value,
+//       departure: departureInput.value,
+//       ticketNotwo: ticketNoInput.value,
+//       cancellationPolicy: cancellationPolicyInput.value,
+//       // ... (Add other fields as needed)
+//     };
   
-    // Update the data in the database at the specific path based on the selected confirmation number
-    set(ref(database, `formData/${selectedConfirmationNumber}`), updatedData)
-      .then(() => {
-        console.log('Data updated successfully!');
-      })
-      .catch((error) => {
-        console.error('Error updating data:', error);
-      });
-  }
+//     // Update the data in the database at the specific path based on the selected confirmation number
+//     set(ref(database, `formData/${selectedConfirmationNumber}`), updatedData)
+//       .then(() => {
+//         console.log('Data updated successfully!');
+//       })
+//       .catch((error) => {
+//         console.error('Error updating data:', error);
+//       });
+//   }
   
-  // Add an event listener to the save button
-  const saveButton = document.getElementById('save-button');
-  saveButton.addEventListener('click', updateFirebaseData);
+//   // Add an event listener to the save button
+//   const saveButton = document.getElementById('save-button');
+//   saveButton.addEventListener('click', updateFirebaseData);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  
- 
+//  // Function to create HTML for room details
+//  function generateRoomDetailsHTML(roomDetails) {
+//   let roomDetailsHTML = '';
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
- // Function to create HTML for room details
- function generateRoomDetailsHTML(roomDetails) {
-  let roomDetailsHTML = '';
+//   if (roomDetails && roomDetails.length > 0) {
+//     roomDetails.forEach((room, index) => {
+//       roomDetailsHTML += `
+//         <div id="room-${index}" class="mb-4">
+//           <label>Room Type:</label>
+//           <input type="text" value="${room.roomType || 'N/A'}" class="w-full p-2 border rounded">
+//           <label>No. of Rooms:</label>
+//           <input type="text" value="${room.noOfRooms || 'N/A'}" class="w-full p-2 border rounded">
+//           <label>No. of Extra Beds:</label>
+//           <input type="text" value="${room.noOfExtraBed || 'N/A'}" class="w-full p-2 border rounded">
+//           <label>Child Without Bed:</label>
+//           <input type="text" value="${room.childWithoutBed || 'N/A'}" class="w-full p-2 border rounded">
+//           <label>Meal Plan:</label>
+//           <input type="text" value="${room.mealPlan || 'N/A'}" class="w-full p-2 border rounded">
+//         </div>
+//       `;
+//     });
+//   }
 
-  if (roomDetails && roomDetails.length > 0) {
-    roomDetails.forEach((room, index) => {
-      roomDetailsHTML += `
-        <div id="room-${index}" class="mb-4">
-          <label>Room Type:</label>
-          <input type="text" value="${room.roomType || 'N/A'}" class="w-full p-2 border rounded">
-          <label>No. of Rooms:</label>
-          <input type="text" value="${room.noOfRooms || 'N/A'}" class="w-full p-2 border rounded">
-          <label>No. of Extra Beds:</label>
-          <input type="text" value="${room.noOfExtraBed || 'N/A'}" class="w-full p-2 border rounded">
-          <label>Child Without Bed:</label>
-          <input type="text" value="${room.childWithoutBed || 'N/A'}" class="w-full p-2 border rounded">
-          <label>Meal Plan:</label>
-          <input type="text" value="${room.mealPlan || 'N/A'}" class="w-full p-2 border rounded">
-        </div>
-      `;
-    });
-  }
-
-  return roomDetailsHTML;
-}
+//   return roomDetailsHTML;
+// }
 
 // Function to update the room details container
-function updateRoomDetailsContainer(selectedConfirmationNumber) {
-  const roomDetailsContainer = document.getElementById('room-details-container');
+// function updateRoomDetailsContainer(selectedConfirmationNumber) {
+//   const roomDetailsContainer = document.getElementById('room-details-container');
 
-  // Clear existing content
-  roomDetailsContainer.innerHTML = '';
+//   // Clear existing content
+//   roomDetailsContainer.innerHTML = '';
 
-  // Generate HTML for room details
-  const roomDetailsHTML = generateRoomDetailsHTML(selectedConfirmationNumber.roomDetails);
+//   // Generate HTML for room details
+//   const roomDetailsHTML = generateRoomDetailsHTML(selectedConfirmationNumber.roomDetails);
 
-  // Append the room details HTML to the container
-  roomDetailsContainer.innerHTML = roomDetailsHTML;
-}
+//   // Append the room details HTML to the container
+//   roomDetailsContainer.innerHTML = roomDetailsHTML;
+// }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Function to generate HTML for room details
+ 
+ //////////////////////////////////////////////////////////////////////////////////////////////////
 const printButton = document.getElementById('print-button');
  
 
@@ -455,8 +428,8 @@ printButton.addEventListener('click', () => {
     // Open a new window
     const printWindow = window.open('', '_blank');
 
-  
-
+      // Extract values from the room details container
+    
  
   // Extract values from the input fields within the "Terms-container" div
   const termsContainer = document.getElementById('Terms-container');
@@ -484,18 +457,69 @@ printButton.addEventListener('click', () => {
   // Get values for "Cancellation Policy" input fields
   getInputFieldValues(cancellationInputFields, cancellationInputFieldValues);
 
-
-
+  ///////////////////////////////////////////////////////////////////// 
+      // Extract values from the room details container
+      const roomDetailsContainer = document.getElementById('room-details-container');
+      const roomDetails = roomDetailsContainer.querySelectorAll('input');
+  
+      // Create an array to store the input field values
+      const roomDetailsValues = [];
+  
+      // Function to retrieve input field values
+      const ggetInputFieldValues = (inputFields, valuesArray) => {
+          inputFields.forEach(inputField => {
+              valuesArray.push(inputField.value);
+          });
+      };
+  
+      // Get values for room details input fields
+      ggetInputFieldValues(roomDetails, roomDetailsValues);
+  
+      // Create an array of room objects
+      const rooms = [
+          {
+              roomType: roomDetailsValues[0],
+              noOfRooms: roomDetailsValues[1],
+              noOfExtraBed: roomDetailsValues[2],
+              childWithoutBed: roomDetailsValues[3],
+              mealPlan: roomDetailsValues[4]
+          },
+          // Add more room objects if needed
+      ];
+  
+      // Generate HTML for each room detail
+      const roomDetailsHTML = rooms.map(room => `
+          <div class="flex flex-shrink-0 flex-col gap-2">
+              <div class="flex gap-1">
+                  <h1 class="text-lg font-semibold">Room type :</h1>
+                  <h1 class="text-lg font-semibold">${room.roomType}</h1>
+              </div>
+              <div class="flex flex-col">
+                  <div class="flex gap-1">
+                      <h1>No of Rooms :</h1>
+                      <h1>${room.noOfRooms}</h1>
+                  </div>
+                  <div class="flex gap-1">
+                      <h1>No of Extra Bed :</h1>
+                      <h1>${room.noOfExtraBed}</h1>
+                  </div>
+                  <div class="flex gap-1">
+                      <h1>Child without bed :</h1>
+                      <h1>${room.childWithoutBed}</h1>
+                  </div>
+                  <div class="flex gap-1">
+                      <h1>Meal plan :</h1>
+                      <h1>${room.mealPlan}</h1>
+                  </div>
+              </div>
+          </div>
+      `).join('');
+  //////////////////////////////////////////////////////////////////////////////////////
  
- 
- //////////////////////
-   // Extract room details from the database 
- ///////////////////////////
-    // Write the HTML content to the new window
     printWindow.document.write(`
-    
-   
-  <head>
+ 
+
+     <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -633,8 +657,12 @@ printButton.addEventListener('click', () => {
     <div class="mt-3 px-10">
       <div class="w-full flex justify-between gap-5 flex-wrap h-auto">
         <!-- map from here to 👇 -->
-        
+    
+
+        ${roomDetailsHTML}
+
  
+       
         <!-- to here -->
         </div>
       </div>
@@ -716,15 +744,10 @@ printButton.addEventListener('click', () => {
   </div>
 </body>
 
-
-    `);
-
- 
-  
+    `);  
     // Close the document for writing
     printWindow.document.close();
     printWindow.print();
-    // Trigger the print dialog
     setTimeout(() => {
       printWindow.print();
   }, 500);

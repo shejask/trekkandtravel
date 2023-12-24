@@ -118,6 +118,7 @@ function filterHotelNames(searchTerm) {
                    } else {
                        // If hotelPhoto is not defined, reset the image source
                        hotelPhotoPreview.src = '';
+                        
 
                        fileInput.style.display = 'block';
                    }
@@ -146,111 +147,7 @@ hotelNameInput.addEventListener("focus", function () {
   const searchTerm = this.value;
   filterHotelNames(searchTerm);
 });
-
-
-// Function to populate other input fields based on selected hotel name
-// function populateHotelDropdown(searchTerm) {
-//     const dropdownContainer = document.getElementById("hotel-name-dropdown");
-//     dropdownContainer.innerHTML = ""; // Clear previous data
-
  
-//     document.getElementById('hotel-address').removeAttribute('readonly');
-// document.getElementById('google-map-link').removeAttribute('readonly');
-// document.getElementById('hotel-phone').removeAttribute('readonly');
-
-// const fileInput = document.getElementById("hotel-photo");
-   
-
-//     onValue(vouchersRef, (snapshot) => {
-//         snapshot.forEach((childSnapshot) => {
-//             const voucher = childSnapshot.val();
-//             const hotelName = voucher.hotelName;
-
-//             // Check if the hotel name matches the search term
-//             if (hotelName.toLowerCase().includes(searchTerm.toLowerCase())) {
-//                 const option = document.createElement("div");
-//                 option.textContent = hotelName;
-//                 option.className = "p-2 cursor-pointer hover:bg-gray-200";
-//                 option.addEventListener("click", () => {
-//                     document.getElementById("hotel-name").value = hotelName;
-//                     dropdownContainer.classList.add("hidden");
-//                     document.getElementById('hotel-address').value = voucher.hotelAddress;
-//                     document.getElementById('google-map-link').value = voucher.googleMapLink;
-//                     document.getElementById('hotel-phone').value = voucher.hotelPhone;
-
-
-//                      // Enable input fields
-//                      document.getElementById('hotel-address').removeAttribute('readonly');
-//                      document.getElementById('google-map-link').removeAttribute('readonly');
-//                      document.getElementById('hotel-phone').removeAttribute('readonly');
-//                      document.getElementById('photo').style.display = 'none';
-
- 
-//                      // Auto-fill terms and conditions
-//                      updateTermsAndConditions(voucher.termsAndCondition);
-//                      updateCancellationPolicy(voucher.cancellationPolicy);
-
- 
-//                     // Fetch and display the image
-//                     const hotelPhotoPreview = document.getElementById('hotel-photo-preview');
-//                     if (voucher.hotelPhoto) {
-//                         hotelPhotoPreview.src = voucher.hotelPhoto;
-
-                     
-
-
-//                     } else {
-//                         // If hotelPhoto is not defined, reset the image source
-//                         hotelPhotoPreview.src = '';
-
-//                         fileInput.style.display = 'block';
-//                     }
-
-//                     // Enable input fields
-//                     document.getElementById('hotel-address').removeAttribute('readonly');
-//                     document.getElementById('google-map-link').removeAttribute('readonly');
-//                     document.getElementById('hotel-phone').removeAttribute('readonly');
-//                 });
-
-//                 dropdownContainer.appendChild(option);
-//             }
-//         });
-//     });
-
-//     // Handle the case when no hotel name is selected
-//     dropdownContainer.addEventListener("mouseleave", () => {
-//         const selectedHotelName = document.getElementById("hotel-name").value;
-
-//         if (!selectedHotelName) {
-//             document.getElementById('hotel-address').value = '';
-//             document.getElementById('google-map-link').value = '';
-//             document.getElementById('hotel-phone').value = '';
-
-
-            
-
-//             // Reset the image source
-//             document.getElementById('hotel-photo-preview').src = '';
-//             fileInput.style.display = 'block';
-//             // Disable input fields
-//             document.getElementById('hotel-address').setAttribute('readonly', 'readonly');
-//             document.getElementById('google-map-link').setAttribute('readonly', 'readonly');
-//             document.getElementById('hotel-phone').setAttribute('readonly', 'readonly');
-
-
-//              // Clear terms and conditions
-//              updateTermsAndConditions([]);
-//              updateCancellationPolicy([]);
-//         }
-
-//     });
-// }
-
-// ... (Your existing code)
-
-// Function to update terms and conditions
-// ... (Your existing code)
-
 // Function to update terms and conditions
 function updateTermsAndConditions(termsAndConditions) {
   const termsContainer = document.getElementById('terms-container');
@@ -323,95 +220,7 @@ function updateCancellationPolicy(cancellationPolicy) {
       return inputField;
   }
 }
-
-
-////////////////////////////////////
  
-
-
-
-
-
-// Event listener for input field
-// const hotelNameInput = document.getElementById("hotel-name");
-// hotelNameInput.addEventListener("input", function () {
-//     const searchTerm = this.value;
-//     populateHotelDropdown(searchTerm);
-
-//     // Show/hide the dropdown based on user input
-//     const dropdownContainer = document.getElementById("hotel-name-dropdown");
-//     dropdownContainer.classList.toggle("hidden", searchTerm === "");
-// });
-
-// Event listener for guest name input field
-// const guestNameInput = document.getElementById("guest-name");
-// guestNameInput.addEventListener("input", function () {
-//     const searchTerm = this.value;
-//     populateGuestDropdown(searchTerm);
-
-//     // Show/hide the dropdown based on user input
-//     const dropdownContainer = document.getElementById("guest-name-dropdown");
-//     dropdownContainer.classList.toggle("hidden", searchTerm === "");
-// });
- 
-
-// // Function to populate guest names in the dropdown based on search term
-// function populateGuestDropdown(searchTerm) {
-//     const dropdownContainer = document.getElementById("guest-name-dropdown");
-//     dropdownContainer.innerHTML = ""; // Clear previous data
-
-//     onValue(guestsRef, (snapshot) => {
-//         snapshot.forEach((childSnapshot) => {
-//             const guestKey = childSnapshot.key;
-//             const guest = childSnapshot.val();
-
-//             // Adjust this part based on your data structure
-//             const guestName = guest.guestName; // Update to the actual property name
-//             const guestNumber = guest.contactNumber; // Update to the actual property name
-//             const guestCitizen = guest.citizen;
-
-
-
-             
-
-
-//             // Check if the guest name matches the search term
-//             if (guestName.toLowerCase().includes(searchTerm.toLowerCase())) {
-//                 const option = document.createElement("div");
-//                 option.textContent = guestName;
-//                 option.className = "p-2 cursor-pointer hover:bg-gray-200";
-//                 option.addEventListener("click", () => {
-//                     document.getElementById("guest-name").value = guestName;
-//                     dropdownContainer.classList.add("hidden");
-
-//                     // Set guest number based on selected guest name
-//                     document.getElementById("guest-number").value = guestNumber;
-
-
-//                     document.getElementById("guest-citizen").value = guestCitizen;
-//                 });
-
-//                 dropdownContainer.appendChild(option);
-//             }
-//         });
-//     });
-
-//     // Handle the case when no guest name is selected
-//     dropdownContainer.addEventListener("mouseleave", () => {
-//         const selectedGuestName = document.getElementById("guest-name").value;
-
-//         if (!selectedGuestName) {
-//             // Reset the guest number
-//             document.getElementById("guest-number").value = '';
-//             document.getElementById("guest-citizen").value = '';
-//         }
-//     });
-// }
-
- 
-// Call the functions to populate hotel and guest names
-// populateHotelNames();
-// populateGuestNames();
 
 const guestNameInput = document.getElementById("guest-name");
 guestNameInput.addEventListener("input", function () {
@@ -471,23 +280,7 @@ function populateGuestDropdown(searchTerm) {
 }
 
 
-
-
-
-
-
-
-
  
-
-
-
-
-
-
-
-
-
 document.getElementById("add-room-button").addEventListener("click", function () {
   // Clone the room details div
   const roomDetailsContainer = document.getElementById("room-details-container");
@@ -502,11 +295,7 @@ document.getElementById("add-room-button").addEventListener("click", function ()
 
 // Modify the openPrintPage function to include room details
 
-
-
-
-
-
+ 
 function handleFormSubmission() {
  
     // Additional fields
@@ -1190,9 +979,25 @@ fetchConfirmationNumbers();
    }).catch(function (error) {
      console.error('Error saving data:', error);
    });
-   
-   
-   
+   /////////////////////////////////////////////////////
+   const hotelPhotoInputFile = document.getElementById('photo');
+   const selectedPhoto = hotelPhotoInputFile.files[0];
+
+   let hotellPhoto;
+
+   if (selectedPhoto) {
+       // Upload the selected photo to Firebase Storage
+       const storageRefVar = storageRef(storage, 'hotel_photos/' + selectedPhoto.name);
+       const snapshot = await uploadBytes(storageRefVar, selectedPhoto);
+
+       // Get the download URL for the uploaded photo
+       hotellPhoto = await getDownloadURL(snapshot.ref);
+   } else {
+       // If no photo is selected, use the URL from the preview
+       hotellPhoto = document.getElementById('hotel-photo-preview').src;
+   }
+
+   /////////////////////////////////////////////////
    
      var confirmationnumber = document.getElementById('confirmation-number').value;
      var hotelName = document.getElementById('hotel-name').value;
@@ -1202,11 +1007,11 @@ fetchConfirmationNumbers();
       
 
 
-     var hotellPhoto = document.getElementById('hotel-photo-preview').src;
+    //  var hotellPhoto = document.getElementById('hotel-photo-preview').src;
 
     
      
-     var hotelPhotoInput = document.getElementById('hotel-photo');
+    //  var hotelPhotoInput = document.getElementById('hotel-photo');
     //  var hotelphoto = hotelPhotoInput.files[0]; // Get the selected file
       
      var guestName = document.getElementById('guest-name').value;
