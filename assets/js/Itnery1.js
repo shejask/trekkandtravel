@@ -1494,7 +1494,7 @@ function printForm() {
                            </div>
                          </div>
                          <div class="flex flex-col gap-1">
-                           <h1 class="text-xl font-semibold">Inclutions</h1>
+                           <h1 class="text-xl font-semibold">inclusions</h1>
                            <h1>
                              ${items.inclutions[index]}
                            </h1>
