@@ -508,7 +508,7 @@ var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : ''; // Get a
             <h1>${guestNumber}</h1>
           </div>
           <div class="flex gap-1">
-            <h1>Citizen :</h1>
+            <h1>Mail :</h1>
             <h1>${guestCitizen}</h1>
           </div>
           <div class="flex gap-1">
