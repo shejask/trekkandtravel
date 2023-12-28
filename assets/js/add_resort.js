@@ -350,7 +350,7 @@ const editGuest = (guestKey) => {
 
         // Citizen input
         const citizenLabel = document.createElement("label");
-        citizenLabel.textContent = "Citizen:";
+        citizenLabel.textContent = "Mail id:";
         const citizenInput = document.createElement("input");
         citizenInput.type = "text";
         citizenInput.id = "edit-citizen";
