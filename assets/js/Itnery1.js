@@ -1539,7 +1539,7 @@ function printForm() {
               <h1 class="uppercase font-semibold">accomodation details</h1>
             </div>
             <div class="flex w-full justify-center">
-              <table class="text-sm">
+              <table class="text-xs">
                 <tr class="border border-1 border-black">
                   <th class="uppercase border    border-1 border-black px-5">
                     check in
