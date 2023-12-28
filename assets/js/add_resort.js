@@ -304,7 +304,7 @@ onValue(guestsRef, (snapshot) => {
         contactNumberElement.textContent = `Contact Number: ${guest.contactNumber}`;
 
         const citizenElement = document.createElement("p"); // Added this line
-        citizenElement.textContent = `Citizen: ${guest.citizen || "N/A"}`; // Added this line
+        citizenElement.textContent = `Mail id: ${guest.citizen || "N/A"}`; // Added this line
 
         guestElement.appendChild(guestNameElement);
         guestElement.appendChild(contactNumberElement);
