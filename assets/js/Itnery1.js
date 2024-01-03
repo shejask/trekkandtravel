@@ -27,7 +27,6 @@ const firebaseConfig = {
   messagingSenderId: "313424140423",
   appId: "1:313424140423:web:43dfbbe67b8dfafc564022"
 };
-
 // Initialize Firebase
 initializeApp(firebaseConfig);
 const database = getDatabase();
@@ -1035,6 +1034,7 @@ function fetchImage(imageUrl, containerId) {
 // Function to fetch and display the image
 function fetchImageAndUpdateInput(imageUrl, index) {
   const imageContainer = document.getElementById(`image-container${index}`);
+  console.log(imageUrl);
 
   // Clear existing content in the image container
   imageContainer.innerHTML = "";
@@ -1155,12 +1155,12 @@ function saveFormData(index) {
         uploadBytes(storageRef(storage, storagePath), file)
           .then(() => getDownloadURL(storageRef(storage, storagePath)))
           .then((downloadURL) => {
+            console.log("hello shijas");
             // Update the file input and display the image
             fetchImageAndUpdateInput(downloadURL, index);
             // Save the image URL to the database
             update(newEntryRef, { imageUrl: downloadURL });
-            imgArray = [downloadURL];
-            fileUrl = downloadURL;
+            imgArray.push(downloadURL)
             console.log(`${downloadURL}${[index]}`);
           })
           .catch((error) => console.error("Error during file upload:", error));
@@ -1346,6 +1346,57 @@ function printForm() {
 
   ///////////////////////////////////////////
   /////////////////////////////////////////////
+  var alloptionsHTML = '';
+  
+  document.querySelectorAll(".alloptions .alloptions-option").forEach(function (option) {
+      var title = option.querySelector("h2").textContent;
+      var amount = option.querySelector('#amount-details').value;
+
+      alloptionsHTML += ` 
+                  <h1 class="uppercase mt-5 font-semibold">${title}</h1>
+              
+              
+           <div class="w-full px-5 mt-8 py-2 border border-1 border-black rounded-lg" >
+              <div class="flex items-center">
+                <div class="flex item-center gap-2">
+                  <h1>Rate:</h1>
+                  <h1>${amount}</h1>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div
+                class="w-full py-2 flex items-center justify-center text-black bg-orange-400 mt-2 rounded-lg"
+              >
+                <h1 class="uppercase font-semibold">accomodation details</h1>
+              </div>
+              <div class="flex w-full justify-center">
+
+                  <table class="text-xs">
+                      <tr class="border border-1 border-black">
+                          <th class="uppercase border border-1 border-black px-5">check in</th>
+                          <th class="uppercase border border-1 border-black px-5">check out</th>
+                          <th class="uppercase border border-1 border-black px-5">destination</th>
+                          <th class="uppercase border border-1 border-black px-5">hotel</th>
+                          <th class="uppercase border border-1 border-black px-5">no of rooms</th>
+                          <th class="uppercase border border-1 border-black px-5">no of ex bed /matters</th>
+                          <th class="uppercase border border-1 border-black px-5">meal plan</th>
+                      </tr>
+
+ 
+
+      `;
+
+      option.querySelector("table tbody").querySelectorAll("tr").forEach(function (row) {
+          alloptionsHTML += '<tr class="border border-1 border-black">' +
+              Array.from(row.querySelectorAll("td")).map(cell => `<td class="border border-1 border-black text-center">${cell.querySelector("input").value}</td>`).join('') +
+              '</tr>';
+      });
+
+      alloptionsHTML += '</table>          </div></div><hr class=" w-full mt-5 border bg-black border-1" />';
+  });
+  //////////////////////////////////////////////////
   ///////////////////////////////////////////////////
 
   // Write the content to be printed
@@ -1521,9 +1572,7 @@ function printForm() {
  
  
           </div>
-          <div
-            class="w-full px-5 mt-3 py-2 border border-1 border-black rounded-lg"
-          >
+          <div class="w-full px-5 mt-3 py-2 border border-1 border-black rounded-lg" >
             <div class="flex items-center">
               <div class="flex item-center gap-2">
                 <h1>Rate:</h1>
@@ -1570,6 +1619,15 @@ function printForm() {
               </table>
             </div>
           </div>
+
+          ${alloptionsHTML}
+
+
+         
+
+
+
+
           <div class="mt-5 px-5 flex flex-col gap-3">
             <div class="flex flex-col gap-1">
               <h1 class="text-xl font-semibold">Tour Inclusions</h1>
@@ -1641,6 +1699,7 @@ function printForm() {
            
    
     `);
+     
 
   printWindow.document.close();
 
@@ -1655,27 +1714,141 @@ function printForm() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Add event listener to the button
-document.getElementById("addRowBtn").addEventListener("click", function () {
-  var table = document
-    .getElementById("originalTable")
-    .getElementsByTagName("tbody")[0];
+// document.getElementById("addRowBtn").addEventListener("click", function () {
+//   var table = document
+//     .getElementById("originalTable")
+//     .getElementsByTagName("tbody")[0];
+//   var newRow = table.insertRow(table.rows.length);
+//   var cells = [];
+
+//   for (var i = 0; i < 7; i++) {
+//     cells.push(newRow.insertCell(i));
+
+//     if (i < 2) {
+//       // Set the first two cells to have input type "date"
+//       cells[i].innerHTML =
+//         '<input type="date" class="w-full p-2 border border-gray-300 rounded">';
+//     } else {
+//       // For other cells, use the default text input
+//       cells[i].innerHTML =
+//         '<input type="text" class="w-full p-2 border border-gray-300 rounded">';
+//     }
+//   }
+// });
+
+
+// Function to add a row to a table
+// Function to add a row to a table// Function to add a row to a table
+function addRowToTable(tableId) {
+  var table = document.getElementById(tableId).getElementsByTagName("tbody")[0];
   var newRow = table.insertRow(table.rows.length);
   var cells = [];
 
   for (var i = 0; i < 7; i++) {
-    cells.push(newRow.insertCell(i));
+      cells.push(newRow.insertCell(i));
 
-    if (i < 2) {
-      // Set the first two cells to have input type "date"
-      cells[i].innerHTML =
-        '<input type="date" class="w-full p-2 border border-gray-300 rounded">';
-    } else {
-      // For other cells, use the default text input
-      cells[i].innerHTML =
-        '<input type="text" class="w-full p-2 border border-gray-300 rounded">';
-    }
+      if (i < 2) {
+          // Set the first two cells to have input type "date"
+          cells[i].innerHTML = '<input type="date" class="w-full p-2 border border-gray-300 rounded">';
+      } else {
+          // For other cells, use the default text input
+          cells[i].innerHTML = '<input type="text" class="w-full p-2 border border-gray-300 rounded">';
+      }
   }
-});
+}
+
+// Function to create the HTML structure for an option
+ // Add New Option button logic
+ var optionCounter = 1;
+
+ document.getElementById("addOptionBtn").addEventListener("click", function () {
+   // Create a new <div> for each option
+   var divContainer = document.createElement("div");
+   divContainer.className = "mb-4 alloptions-option"; // Added alloptions-option class
+   divContainer.id = 'option' + optionCounter;
+
+   // Add the option title inside the <div>
+   var optionTitle = document.createElement("h2");
+   optionTitle.textContent = "Option " + optionCounter;
+   divContainer.appendChild(optionTitle);
+
+   // Add the specified HTML structure for "Amount" field
+   var amountDetailsDiv = document.createElement("div");
+   amountDetailsDiv.className = "mb-4";
+   amountDetailsDiv.innerHTML = '<label for="amount-details" class="block">Amount:</label>' +
+     '<input type="text" id="amount-details" class="w-full p-2 border rounded border border-slate-700">';
+   divContainer.appendChild(amountDetailsDiv);
+
+   // Create a new table for each option
+   var newTable = document.createElement("table");
+   newTable.className = "mb-4";
+   newTable.id = "table" + optionCounter; // Unique ID for each table
+
+   var tableHeader = newTable.createTHead();
+   var headerRow = tableHeader.insertRow(0);
+
+   // Customize table header as needed
+   var headers = ["Check-in", "Check-out", "Destination", "Hotel", "Number of Rooms", "Matters", "Meal Plan"];
+   for (var i = 0; i < headers.length; i++) {
+     var headerCell = document.createElement("th");
+     headerCell.textContent = headers[i];
+     headerRow.appendChild(headerCell);
+   }
+
+   // Create a table body for the new table
+   var newTableBody = newTable.createTBody();
+   var newRow = newTableBody.insertRow(0);
+
+   // Customize the first row of the new table as needed
+   for (var i = 0; i < 7; i++) {
+     var newCell = newRow.insertCell(i);
+
+     if (i < 2) {
+       // Set the first two cells to have input type "date"
+       newCell.innerHTML = '<input type="date" class="w-full p-2 border border-gray-300 rounded">';
+     } else {
+       // For other cells, use the default text input
+       newCell.innerHTML = '<input type="text" class="w-full p-2 border border-gray-300 rounded">';
+     }
+   }
+
+   // Create the "Add Row" button for each table
+   var addRowButton = document.createElement("button");
+   addRowButton.type = "button";
+   addRowButton.textContent = "Add Row";
+   addRowButton.className = "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4";
+   addRowButton.addEventListener("click", function () {
+     addRowToTable(newTable.id);
+   });
+
+   divContainer.appendChild(newTable);
+   divContainer.appendChild(addRowButton);
+
+   // Append the new <div> with table and "Add Row" button to the body
+   document.querySelector(".alloptions").appendChild(divContainer);
+
+   optionCounter++;
+ });
+
+ // Original "Add Row" button logic
+ document.getElementById("addRowBtn").addEventListener("click", function () {
+   var table = document.getElementById("originalTable").getElementsByTagName("tbody")[0];
+   var newRow = table.insertRow(table.rows.length);
+   var cells = [];
+
+   for (var i = 0; i < 7; i++) {
+     cells.push(newRow.insertCell(i));
+
+     if (i < 2) {
+       // Set the first two cells to have input type "date"
+       cells[i].innerHTML = '<input type="date" class="w-full p-2 border border-gray-300 rounded">';
+     } else {
+       // For other cells, use the default text input
+       cells[i].innerHTML = '<input type="text" class="w-full p-2 border border-gray-300 rounded">';
+     }
+   }
+ });
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////SAVING AS ITNERY //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1856,6 +2029,7 @@ function saveItinerary(index) {
           .then((downloadURL) => {
             // Update the file input and display the image
             console.log(`this is the new URL ${downloadURL}`);
+            fileUrl = downloadURL
           })
           .catch((error) => console.error("Error during file upload:", error));
       }
@@ -1866,8 +2040,8 @@ function saveItinerary(index) {
     // Additional logic for handling file uploads// Replace this with the actual URL of the uploaded file
 
     const imageContainer = container.querySelector(`#image-container${index}`);
-    imageContainer.innerHTML = imgArray
-      ? `<img src="${imgArray}" alt="Uploaded Image" class="w-full h-auto">`
+    imageContainer.innerHTML = imgArray[index]
+      ? `<img src="${imgArray[index]}" alt="Uploaded Image" class="w-full h-auto">`
       : "";
 
     // Add data to the formContainerData array
@@ -1877,7 +2051,7 @@ function saveItinerary(index) {
       heading: heading,
       descriptionDetails: descriptionDetails,
       inclusions: inclusions,
-      fileUrl: `${imgArray}${[index]}`,
+      fileUrl: imgArray[index],
 
       // Include the file URL
       // Include other fields as needed
@@ -1885,6 +2059,11 @@ function saveItinerary(index) {
   });
 
   ///////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
+ 
+ 
+  // Iterate through each option and push the values to the database
+   
   ///////////////////////////////////////////////////////////////////
 
   // Push the data to the 'itinerary' node
@@ -1927,6 +2106,8 @@ function saveItinerary(index) {
     notes: notes, // Include the new notes data
     cancellationNotes: cancellationNotes, // Include the new cancellation notes data
     formContainers: formContainerData,
+    
+
   };
 
   // Push the data to the 'itinerary' node
@@ -1939,72 +2120,40 @@ function saveItinerary(index) {
     .catch((error) => {
       console.error("Error saving itinerary:", error.message);
     });
+
+
 }
 
 
+ ////////////////////////////////////////////////////////////////////////
+ 
+ function saveToDatabase() {
+  // Reference to the "itinerary/alloption" path in your database
+  const itineraryRef = databaseRef(database, "itinerary/alloption");
 
+  // Iterate through each option and push the values to the database
+  document.querySelectorAll(".alloptions .alloptions-option").forEach(function (option) {
+      var title = option.querySelector("h2").textContent;
+      var amount = option.querySelector('#amount-details').value;
 
-/////////////////////////////////////////////////////////////////////////////////////
+      // Create an object with the option details
+      const optionData = {
+          title: title,
+          amount: amount,
+          // Add more properties as needed based on your structure
+      };
 
-document.addEventListener('DOMContentLoaded', function () {
+      // Set the option data under the "itinerary/alloption" path
+      set(itineraryRef, optionData);
 
-  function handleEnter(event, nextFieldId) {
-      if (event.key === 'Enter') {
-          event.preventDefault();
-          document.getElementById(nextFieldId).focus();
-      }
-  }
-
-    
-document.getElementById('traveldate').addEventListener('keydown', function (event) {
-  handleEnter(event, 'guestName');
-});
-
-document.getElementById('guestName').addEventListener('keydown', function (event) {
-  handleEnter(event, 'guestNumber');
-});
-
-document.getElementById('guestNumber').addEventListener('keydown', function (event) {
-  handleEnter(event, 'arrival-details');
-});
-
-document.getElementById('arrival-details').addEventListener('keydown', function (event) {
-  handleEnter(event, 'departure-details');
-});
-
-document.getElementById('departure-details').addEventListener('keydown', function (event) {
-  handleEnter(event, 'number-of-pax');
-});
- /////////////////////////////////////////////////////////////////////////////////////////
-
-document.getElementById('heading').addEventListener('keydown', function (event) {
-  handleEnter(event, 'anytext-description');
-});
-
-document.getElementById('anytext-description').addEventListener('keydown', function (event) {
-  handleEnter(event, 'packageName');
-});
-
-
-document.getElementById('packageName').addEventListener('keydown', function (event) {
-  handleEnter(event, 'description');
-});
-
-
-document.getElementById('description').addEventListener('keydown', function (event) {
-  handleEnter(event, 'duration');
-});
-
-document.getElementById('duration').addEventListener('keydown', function (event) {
-  handleEnter(event, 'night');
-});
-
-document.getElementById('tour-executive').addEventListener('keydown', function (event) {
-  handleEnter(event, 'tour-contact');
-});
-
-document.getElementById('tour-contact').addEventListener('keydown', function (event) {
-  handleEnter(event, 'tour-mail');
-});
-
-});
+      // Iterate through the table rows and push the table data to the database
+      option.querySelector("table tbody").querySelectorAll("tr").forEach(function (row, rowIndex) {
+          const rowData = {};
+          row.querySelectorAll("td").forEach(function (cell, cellIndex) {
+              const headerText = option.querySelector("table thead th:nth-child(" + (cellIndex + 1) + ")").textContent;
+              rowData[headerText.toLowerCase().replace(/\s/g, "_")] = cell.querySelector("input").value;
+          });
+          set(databaseRef(database, "itinerary/alloption/tableData/" + rowIndex), rowData);
+      });
+  });
+}
