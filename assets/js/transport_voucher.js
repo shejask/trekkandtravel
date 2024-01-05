@@ -610,7 +610,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class=" flex flex-col">
         <div class=" flex gap-2 items-center">
         <h1 class=" flex flex-shrink-0">Tour Manager :</h1>
-        <h1>${notes}</h1>
+        <h1 class="whitespace-pre-line" >${notes}</h1>
     </div>
             <div class=" flex gap-2 items-center">
                 <h1>Tour Manager :</h1>

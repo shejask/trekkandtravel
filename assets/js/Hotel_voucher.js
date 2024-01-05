@@ -582,13 +582,13 @@ var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : ''; // Get a
       <div class="w-full flex justify-between h-auto gap-10">
         <div class="flex flex-col gap-1">
           <h1 class="text-lg font-semibold">Notes:</h1>
-          <h1>
+          <h1 class="whitespace-pre-line">
           ${notes}
           </h1>
         </div>
         <div class="flex flex-col gap-1">
           <h1 class="text-lg font-semibold">Special Request:</h1>
-          <h1>
+          <h1 class="whitespace-pre-line">
           ${specialRequest}
           </h1>
         </div>
@@ -598,7 +598,7 @@ var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : ''; // Get a
     <div class="mt-5 px-10">
       <div class="flex flex-col gap-1">
         <h1 class="text-lg font-semibold">Payment Information</h1>
-        <h1>
+        <h1 class="whitespace-pre-line">
         ${paymentInfo}
         </h1>
       </div>
@@ -619,7 +619,7 @@ var photoURL = selectedPhoto ? URL.createObjectURL(selectedPhoto) : ''; // Get a
             </div>
     <div class="mt-3 px-10">
       <div class="flex justify-between">
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1 w-1/2">
           <h1 class="text-lg font-semibold">Terms & conditions</h1>
           <div class="px-5">
             <ul class="list-disc text-sm">
@@ -1189,144 +1189,144 @@ document.addEventListener('keydown', function(event) {
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
+// document.addEventListener('DOMContentLoaded', function () {
 
-  function handleEnter(event, nextFieldId) {
-      if (event.key === 'Enter') {
-          event.preventDefault();
-          document.getElementById(nextFieldId).focus();
-      }
-  }
+//   function handleEnter(event, nextFieldId) {
+//       if (event.key === 'Enter') {
+//           event.preventDefault();
+//           document.getElementById(nextFieldId).focus();
+//       }
+//   }
 
-  // Add event listeners for keydown events on input fields
-  document.getElementById('confirmation-number').addEventListener('keydown', function (event) {
-      handleEnter(event, 'hotel-name');
-  });
+//   // Add event listeners for keydown events on input fields
+//   document.getElementById('confirmation-number').addEventListener('keydown', function (event) {
+//       handleEnter(event, 'hotel-name');
+//   });
 
-  document.getElementById('No-of-Adults').addEventListener('keydown', function (event) {
-      handleEnter(event, 'issued-by');
-  });
-
-
-  document.getElementById('issued-by').addEventListener('keydown', function (event) {
-    handleEnter(event, 'issued-date');
-});
-
-document.getElementById('issued-date').addEventListener('keydown', function (event) {
-  handleEnter(event, 'booked-by');
-});
+//   document.getElementById('No-of-Adults').addEventListener('keydown', function (event) {
+//       handleEnter(event, 'issued-by');
+//   });
 
 
-document.getElementById('booked-by').addEventListener('keydown', function (event) {
-  handleEnter(event, 'contact-no');
-});
+//   document.getElementById('issued-by').addEventListener('keydown', function (event) {
+//     handleEnter(event, 'issued-date');
+// });
+
+// document.getElementById('issued-date').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'booked-by');
+// });
 
 
-document.getElementById('contact-no').addEventListener('keydown', function (event) {
-  handleEnter(event, 'mail-id');
-});
+// document.getElementById('booked-by').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'contact-no');
+// });
 
 
-document.getElementById('mail-id').addEventListener('keydown', function (event) {
-  handleEnter(event, 'room-type');
-});
+// document.getElementById('contact-no').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'mail-id');
+// });
 
 
-document.getElementById('room-type').addEventListener('keydown', function (event) {
-  handleEnter(event, 'no-of-rooms');
-});
+// document.getElementById('mail-id').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'room-type');
+// });
+
+
+// document.getElementById('room-type').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'no-of-rooms');
+// });
 
 
 
-document.getElementById('no-of-rooms').addEventListener('keydown', function (event) {
-  handleEnter(event, 'no-of-extra-bed');
-});
+// document.getElementById('no-of-rooms').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'no-of-extra-bed');
+// });
 
-document.getElementById('no-of-extra-bed').addEventListener('keydown', function (event) {
-  handleEnter(event, 'child-without-bed');
-});
+// document.getElementById('no-of-extra-bed').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'child-without-bed');
+// });
 
-document.getElementById('child-without-bed').addEventListener('keydown', function (event) {
-  handleEnter(event, 'meal-plan');
-});
+// document.getElementById('child-without-bed').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'meal-plan');
+// });
 
-document.getElementById('meal-plan').addEventListener('keydown', function (event) {
-  handleEnter(event, 'check-in-date');
-});
+// document.getElementById('meal-plan').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'check-in-date');
+// });
 
-document.getElementById('check-in-date').addEventListener('keydown', function (event) {
-  handleEnter(event, 'check-in-time');
-});
+// document.getElementById('check-in-date').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'check-in-time');
+// });
 
-document.getElementById('check-in-time').addEventListener('keydown', function (event) {
-  handleEnter(event, 'check-out-date');
-});
+// document.getElementById('check-in-time').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'check-out-date');
+// });
 
-document.getElementById('check-out-date').addEventListener('keydown', function (event) {
-  handleEnter(event, 'check-out-time');
-});
+// document.getElementById('check-out-date').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'check-out-time');
+// });
 
-document.getElementById('check-out-time').addEventListener('keydown', function (event) {
-  handleEnter(event, 'notes');
-});
+// document.getElementById('check-out-time').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'notes');
+// });
 
-document.getElementById('notes').addEventListener('keydown', function (event) {
-  handleEnter(event, 'special-request');
-});
+// document.getElementById('notes').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'special-request');
+// });
 
-document.getElementById('special-request').addEventListener('keydown', function (event) {
-  handleEnter(event, 'payment-info');
-});
+// document.getElementById('special-request').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'payment-info');
+// });
 
-document.getElementById('payment-info').addEventListener('keydown', function (event) {
-  handleEnter(event, 'arrival');
-});
+// document.getElementById('payment-info').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'arrival');
+// });
 
-document.getElementById('arrival').addEventListener('keydown', function (event) {
-  handleEnter(event, 'ticket-no-two');
-});
+// document.getElementById('arrival').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'ticket-no-two');
+// });
 
-document.getElementById('ticket-no-two').addEventListener('keydown', function (event) {
-  handleEnter(event, 'departure');
-});
+// document.getElementById('ticket-no-two').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'departure');
+// });
 
-document.getElementById('departure').addEventListener('keydown', function (event) {
-  handleEnter(event, 'ticket-no');
-});
+// document.getElementById('departure').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'ticket-no');
+// });
 
-document.getElementById('departure').addEventListener('keydown', function (event) {
-  handleEnter(event, 'ticket-no');
-});
-/////////////////////////////////////////////////////////////////////////////////////////
+// document.getElementById('departure').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'ticket-no');
+// });
+// /////////////////////////////////////////////////////////////////////////////////////////
 
-document.getElementById('hotel-name').addEventListener('keydown', function (event) {
-  handleEnter(event, 'hotel-address');
-});
+// document.getElementById('hotel-name').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'hotel-address');
+// });
 
-document.getElementById('hotel-address').addEventListener('keydown', function (event) {
-  handleEnter(event, 'google-map-link');
-});
-
-
-document.getElementById('google-map-link').addEventListener('keydown', function (event) {
-  handleEnter(event, 'hotel-phone');
-});
+// document.getElementById('hotel-address').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'google-map-link');
+// });
 
 
-document.getElementById('google-map-link').addEventListener('keydown', function (event) {
-  handleEnter(event, 'hotel-phone');
-});
+// document.getElementById('google-map-link').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'hotel-phone');
+// });
 
-document.getElementById('guest-name').addEventListener('keydown', function (event) {
-  handleEnter(event, 'guest-number');
-});
 
-document.getElementById('guest-number').addEventListener('keydown', function (event) {
-  handleEnter(event, 'guest-citizen');
-});
+// document.getElementById('google-map-link').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'hotel-phone');
+// });
 
-document.getElementById('guest-citizen').addEventListener('keydown', function (event) {
-  handleEnter(event, 'No-of-Adults');
-});
+// document.getElementById('guest-name').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'guest-number');
+// });
 
-});
+// document.getElementById('guest-number').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'guest-citizen');
+// });
+
+// document.getElementById('guest-citizen').addEventListener('keydown', function (event) {
+//   handleEnter(event, 'No-of-Adults');
+// });
+
+// });
