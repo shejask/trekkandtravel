@@ -72,7 +72,7 @@ allTourIdDiv.addEventListener('click', async function (event) {
       snapshot.forEach((childSnapshot) => {
           const { tourId, travelDate, guestName, guestNumber, arrivalDetails, departureDetails, numberOfPax, packagename,amountdetails,anytextdescription,applicabletaxes,customersupport,
             driverallowances,duration,fieldfive,fieldfour,fieldone,fieldthree,fieldtwo,govttaxes, night,notesinput,personalnature,tourcontact,tourexecutive,tourmail,
-            transferssightseeing,heading,description,cancellationNotes,notes,tourexclusions,tourHighlights,inclusions,tableData,formContainers,
+            transferssightseeing,heading,description,cancellationNotes,notes,tourexclusions,tourHighlights,inclusions,tableData,formContainers,formData,
 
           } = childSnapshot.val();
 
@@ -137,13 +137,106 @@ allTourIdDiv.addEventListener('click', async function (event) {
            console.warn('tourHighlightsDiv is null');
        }
 
+/////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+// ... (previous code)
+
+// ... (previous code)
+
+// Check if formData is defined and is an object
+// Check if formData is defined and is an object
+
+// Check if formData is defined and is an object
+// Check if formData is defined and is an object
+
+// Check if formData is defined and is an object
+
+// Check if formData is defined and is an object
+ 
+// ... (remaining code)
 
 
+// Check if formData is defined and is an object
+ 
+// Check if formData is defined and is an object
+if (formData && typeof formData === 'object' && !Array.isArray(formData)) {
+  const formDataInputsContainer = document.getElementById('formDataInputsContainer');
+  formDataInputsContainer.innerHTML = ''; // Clear previous content
+
+  // Check if 'options' exists in formData
+  if (formData.options && typeof formData.options === 'object' && !Array.isArray(formData.options)) {
+    // Iterate over options in formData.options and display them
+    Object.keys(formData.options).forEach((optionKey) => {
+      const option = formData.options[optionKey];
+
+      // Check if the option has required properties
+      if (option && option.amount && option.title) {
+        // Display "Title" in an h1 tag
+        const titleElement = document.createElement('h1');
+        titleElement.textContent = option.title;
+
+        // Display "Amount" label
+        const amountLabel = document.createElement('label');
+        amountLabel.textContent = 'Amount';
+
+        // Display "Amount" in an input field
+        const amountInputField = document.createElement('input');
+        amountInputField.type = 'text';
+        amountInputField.value = option.amount;
+        amountInputField.classList.add('w-full', 'p-2', 'mb-3', 'border', 'rounded', 'border-slate-700');
+        amountInputField.readOnly = true;
+
+        // Display "accommodationDetails" as a table
+        if (option.accommodationDetails && Array.isArray(option.accommodationDetails)) {
+          const accommodationTable = document.createElement('table');
+          accommodationTable.classList.add('w-full', 'border', 'border-collapse', 'mb-4');
+
+          // Create table rows
+          option.accommodationDetails.forEach((item, rowIndex) => {
+            const row = document.createElement('tr');
+            for (const key in item) {
+              const cell = document.createElement('td');
+              cell.textContent = item[key];
+
+              // Only add the header row if it's the first row
+              if (rowIndex === 0) {
+                const headerCell = document.createElement('th');
+                headerCell.textContent = key;
+                headerCell.classList.add('p-2', 'border', 'border-slate-700');
+                accommodationTable.appendChild(headerCell);
+              }
+
+              cell.classList.add('p-2', 'border', 'border-slate-700');
+              row.appendChild(cell);
+            }
+            accommodationTable.appendChild(row);
+          });
+
+          // Append the table to the container
+          formDataInputsContainer.appendChild(titleElement);
+          formDataInputsContainer.appendChild(amountLabel);
+          formDataInputsContainer.appendChild(amountInputField);
+          formDataInputsContainer.appendChild(accommodationTable);
+        } else {
+          console.warn(`Invalid structure for accommodationDetails in formData option: ${optionKey}`);
+        }
+      } else {
+        console.warn(`Invalid structure for formData option: ${optionKey}`);
+      }
+    });
+  } else {
+    console.warn('Invalid structure for formData.options');
+  }
+} else {
+  console.warn('formData is not an object or is not defined.');
+}
 
 
+// ... (remaining code)
 
-
-
+ 
+ 
 /////////////////////////////////////////////////////////////////////////////////
 
 // Assuming formContainers is an array inside the database snapshot
