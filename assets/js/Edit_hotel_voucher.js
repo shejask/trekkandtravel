@@ -73,37 +73,47 @@ const cancellationPolicyInput = document.getElementById('cancellation-policy');
 // Reference to the hotel photo preview element
 const hotelPhotoPreview = document.getElementById('hotel-photo-preview');
 
+// Function to update the dropdown based on the search querylet selectedConfirmationNumber;
+
+// Function to update the dropdown based on the search query// Declare selectedConfirmationNumber outside the updateDropdown function
+let selectedConfirmationNumber;
+
 // Function to update the dropdown based on the search query
 function updateDropdown(searchQuery) {
     // Fetch confirmation numbers from Firebase
     onValue(formDataRef, (snapshot) => {
-      const formData = snapshot.val();
-  
-      // Check if data exists and is an object
-      if (formData && typeof formData === 'object') {
-        // Extract confirmation numbers
-        const confirmationNumbers = Object.keys(formData);
-  
-        // Clear existing content in the dropdown
-        confirmationNameDropdown.innerHTML = '';
-  
-        // Populate the dropdown with matching confirmation numbers
-        confirmationNumbers.forEach((confirmationNumber) => {
-          console.log('confirmationNumber:', confirmationNumber);
-          const currentConfirmationNumber = formData[confirmationNumber]?.confirmationnumber?.toLowerCase();
-          console.log('currentConfirmationNumber:', currentConfirmationNumber);
-          
-          if (currentConfirmationNumber && currentConfirmationNumber.includes(searchQuery)) {
-            const option = document.createElement('div');
-            option.textContent = formData[confirmationNumber].confirmationnumber;
-            option.classList.add('dropdown-item'); // Add Tailwind CSS class if needed
-            confirmationNameDropdown.appendChild(option);
-  
-            // Add click event listener to populate input fields on item click
-            option.addEventListener('click', () => {
-              // Update input fields with corresponding data
-              const selectedConfirmationNumber = formData[confirmationNumber];
-   
+        const formData = snapshot.val();
+
+        // Check if data exists and is an object
+        if (formData && typeof formData === 'object') {
+            // Extract confirmation numbers
+            const confirmationNumbers = Object.keys(formData);
+
+            // Clear existing content in the dropdown
+            confirmationNameDropdown.innerHTML = '';
+
+            // Populate the dropdown with matching confirmation numbers
+            confirmationNumbers.forEach((confirmationNumber) => {
+                const currentConfirmationNumber = formData[confirmationNumber]?.confirmationnumber?.toLowerCase();
+
+                if (currentConfirmationNumber && currentConfirmationNumber.includes(searchQuery)) {
+                    const option = document.createElement('div');
+                    option.textContent = formData[confirmationNumber].confirmationnumber;
+                    option.classList.add('dropdown-item'); // Add Tailwind CSS class if needed
+                    confirmationNameDropdown.appendChild(option);
+
+                    // Add click event listener to populate input fields on item click
+                  // Update this part of your code where you set the value
+                  option.addEventListener('click', () => {
+                    // Update input fields with corresponding data
+                    selectedConfirmationNumber = formData[confirmationNumber];
+                
+                    // Set the value of the input field
+                    confirmationNumberInput.value = selectedConfirmationNumber.confirmationnumber;
+                
+
+       // Hide the dropdown after selection
+       confirmationNameDropdown.classList.add('hidden');
  ///////////////////////////////////////////
  ///////////////////////////////////////////
 
@@ -295,15 +305,48 @@ let imageURL;
  
 
 // Add an event listener to the input for real-time search
-confirmationNumberInput.addEventListener('input', () => {
+// Add an event listener to the input for real-time search
+// Add an event listener to the input for real-time search
+// Add an event listener to the input for real-time search
+// Add an event listener to the input for real-time search
+// Add an event listener to the input for real-time search
+ 
+
+ // Add an event listener to the input for real-time search
+ confirmationNumberInput.addEventListener('input', (event) => {
   const searchQuery = confirmationNumberInput.value.toLowerCase();
+
+  // Check if the value is empty or zero
+  if (searchQuery.trim() === '' || searchQuery === '0') {
+      // Hide the dropdown and exit the function
+      confirmationNameDropdown.classList.add('hidden');
+      return;
+  }
+
+  // If the value is not empty or zero, proceed with the search
   updateDropdown(searchQuery);
-  
-  // Hide the dropdown if the input has no value
-  confirmationNameDropdown.classList.add('hidden');
+
+  // Show the dropdown
+  confirmationNameDropdown.classList.remove('hidden');
+});
+
+// Handle backspace key event
+confirmationNumberInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Backspace') {
+      // Show related options when backspace is pressed
+      const searchQuery = confirmationNumberInput.value.toLowerCase();
+      updateDropdown(searchQuery);
+  }
 });
 
 
+
+
+document.addEventListener('click', (event) => {
+  if (!confirmationNameDropdown.contains(event.target) && event.target !== confirmationNumberInput) {
+      confirmationNameDropdown.classList.add('hidden');
+  }
+});
  
 ////////////////////////////////////////////////
 /////////////////////////////////////////////
