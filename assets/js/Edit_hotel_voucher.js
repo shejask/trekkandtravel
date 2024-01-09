@@ -598,25 +598,29 @@ printButton.addEventListener('click', () => {
       </div>
     </div>
     <div class="mt-5 w-full h-auto px-5">
-      <div class="flex w-full h-40 bg-black">
-        <div class="w-1/2 h-full bg-gray-300"> 
-          <img class="w-full h-full object-cover" src="${imageURL}" alt="" />
-        </div>
-        <div
-          class="w-full h-full bg-yellow-500 flex flex-col items-start justify-center gap-5 text-black px-5 py-3"
-        >
-          <h1 class="font-semibold text-xl">${hotelNameInput.value}</h1>
-
-          <div class="flex flex-col">
-            <div class="flex gap-1 items-center">
-              <h1>Address :</h1>
-              <h1>${hotelAddressInput.value}</h1>
-            </div>
-            <div class="flex gap-1 items-center">
-            <h1>Google map :</h1>
+    <div class="flex w-full h-auto bg-black">
+      <div class="w-1/2 h-48 bg-gray-300">
+        <img
+          class="w-full h-full object-cover"
+          src="${imageURL}"
+          alt=""
+        />
+      </div>
+      <div  class="w-full h-auto bg-yellow-500 flex flex-col items-start justify-center gap-2 text-black px-3 py-3" >
+        <h1 class="font-semibold text-xl">${hotelNameInput.value}</h1>
+        
+        <div class="flex flex-col">
+          <!-- change item center to item-start -->
+          <div class="flex gap-1 items-start ">
+            <h1>Address:</h1>
+            <h1>${hotelAddressInput.value}</h1>
+          </div>
+          <div class="flex gap-1 items-start">
+            <h1>Google map:</h1>
+            <a href=" ${googleMapLinkInput.value}">  
             <h1>${googleMapLinkInput.value}</h1>
-
-         </div>
+          </a>
+          </div>
         
         
         
