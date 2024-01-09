@@ -756,7 +756,7 @@ printButton.addEventListener('click', () => {
             </div>
     <div class="mt-3 px-10">
       <div class="flex justify-between">
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1  w-1/2">
           <h1 class="text-lg font-semibold">Term & conditions</h1>
           <div class="px-5">
             <ul class="list-disc text-sm">
