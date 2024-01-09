@@ -794,10 +794,10 @@ printButton.addEventListener('click', () => {
     `);  
     // Close the document for writing
     printWindow.document.close();
-    printWindow.print();
+    
     setTimeout(() => {
       printWindow.print();
-  }, 500);
+  }, 300);
   });
   
 
