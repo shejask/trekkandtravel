@@ -609,7 +609,7 @@ document.addEventListener("DOMContentLoaded", function () {
       <div class=" mt-5 px-5">
         <div class=" flex flex-col">
         <div class=" flex gap-2 items-center">
-        <h1 class=" flex flex-shrink-0">Tour Manager :</h1>
+        <h1 class=" flex flex-shrink-0">Notes :</h1>
         <h1 class="whitespace-pre-line" >${notes}</h1>
     </div>
             <div class=" flex gap-2 items-center">
